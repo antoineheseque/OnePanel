@@ -1,4 +1,8 @@
 {
+  "menu": {
+    "dashboard": "Tableau de bord!!!"
+
+  },
   "dashboard": {
     "completedTasks": "Tâches complétées",
     "dailySales": "Daily Sales",

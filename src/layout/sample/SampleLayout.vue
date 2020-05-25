@@ -21,8 +21,8 @@
 <script>
   import TopNavbar from "./SampleNavbar.vue";
   import ContentFooter from "./SampleFooter.vue";
-  import DashboardContent from "./Content.vue";
-  import MobileMenu from "./MobileMenu";
+  import DashboardContent from "../dashboard/Content.vue";
+  import MobileMenu from "../dashboard/MobileMenu";
   export default {
     components: {
       TopNavbar,

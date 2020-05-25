@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="row">
       <div class="col-12">
         <card type="chart">
@@ -142,6 +141,7 @@
       UserTable
     },
     data() {
+      //TODO: BDD DONNEES A AFFICHER DANS LES BLOCS (refaire le système pour séparer par blocs
       return {
         bigLineChart: {
           allData: [
