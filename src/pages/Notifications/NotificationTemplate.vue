@@ -1,5 +1,5 @@
 <template>
-  <div>Welcome to <b>Black Dashboard</b> - a beautiful freebie for every web developer.</div>
+  <div>Affichage d'une notification -> src/pages/Notifications/NotificationTemplate.vue.</div>
 </template>
 
 <script>

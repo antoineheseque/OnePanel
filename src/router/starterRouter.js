@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import DashboardLayout from '../layout/starter/SampleLayout.vue';
-import Starter from '../layout/starter/SamplePage.vue';
+import DashboardLayout from '../layout/dashboard/SampleLayout.vue';
+import Starter from '../layout/dashboard/SamplePage.vue';
 
 Vue.use(Router);
 

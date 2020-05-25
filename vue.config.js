@@ -16,7 +16,7 @@ module.exports = {
     ]
   },
   pwa: {
-    name: 'Vue Black Dashboard',
+    name: 'OnePanel',
     themeColor: '#344675',
     msTileColor: '#344675',
     appleMobileWebAppCapable: 'yes',
@@ -24,8 +24,8 @@ module.exports = {
   },
   pluginOptions: {
     i18n: {
-      locale: 'en',
-      fallbackLocale: 'en',
+      locale: 'fr',
+      fallbackLocale: 'fr',
       localeDir: 'locales',
       enableInSFC: false
     }

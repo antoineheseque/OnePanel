@@ -1,16 +1,13 @@
 {
-  "name": "vue-black-dashboard",
+  "name": "OnePanel",
   "version": "1.0.0",
   "private": true,
-  "description": "A sample admin dashboard based on black dashboard UI template",
-  "author": "cristian.jora <joracristi@gmail.com>",
+  "description": "",
+  "author": "",
   "scripts": {
+    "start": "node server.js",
     "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build",
-    "e2e": "node test/e2e/runner.js",
-    "lint": "vue-cli-service lint",
-    "dev": "vue-cli-service serve --open",
-    "lint-fix": "vue-cli-service lint --fix"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "chart.js": "^2.9.3",
