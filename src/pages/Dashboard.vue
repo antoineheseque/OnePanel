@@ -5,13 +5,12 @@
         <card type="chart">
           <template slot="header">
             <div class="row">
-              <div class="col-sm-6" :class="isRTL ? 'text-right' : 'text-left'">
+              <div class="col-sm-6 text-left">
                 <h5 class="card-category">{{$t('dashboard.totalShipments')}}</h5>
                 <h2 class="card-title">{{$t('dashboard.performance')}}</h2>
               </div>
               <div class="col-sm-6">
-                <div class="btn-group btn-group-toggle"
-                     :class="isRTL ? 'float-left' : 'float-right'"
+                <div class="btn-group btn-group-toggle float-right"
                      data-toggle="buttons">
                   <label v-for="(option, index) in bigLineChartCategories"
                          :key="option"
@@ -42,7 +41,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4" :class="{'text-right': isRTL}">
+      <div class="col-lg-4">
         <card type="chart">
           <template slot="header">
             <h5 class="card-category">{{$t('dashboard.totalShipments')}}</h5>
@@ -59,7 +58,7 @@
           </div>
         </card>
       </div>
-      <div class="col-lg-4" :class="{'text-right': isRTL}">
+      <div class="col-lg-4">
         <card type="chart">
           <template slot="header">
             <h5 class="card-category">{{$t('dashboard.dailySales')}}</h5>
@@ -75,7 +74,7 @@
           </div>
         </card>
       </div>
-      <div class="col-lg-4" :class="{'text-right': isRTL}">
+      <div class="col-lg-4">
         <card type="chart">
           <template slot="header">
             <h5 class="card-category">{{$t('dashboard.completedTasks')}}</h5>
@@ -94,15 +93,14 @@
     </div>
     <div class="row">
       <div class="col-lg-6 col-md-12">
-        <card type="tasks" :header-classes="{'text-right': isRTL}">
+        <card type="tasks">
           <template slot="header">
             <h6 class="title d-inline">{{$t('dashboard.tasks', {count: 5})}}</h6>
             <p class="card-category d-inline">{{$t('dashboard.today')}}</p>
             <base-dropdown menu-on-right=""
                            tag="div"
                            title-classes="btn btn-link btn-icon"
-                           aria-label="Settings menu"
-                           :class="{'float-left': isRTL}">
+                           aria-label="Settings menu">
               <i slot="title" class="tim-icons icon-settings-gear-63"></i>
               <a class="dropdown-item" href="#pablo">{{$t('dashboard.dropdown.action')}}</a>
               <a class="dropdown-item" href="#pablo">{{$t('dashboard.dropdown.anotherAction')}}</a>
@@ -115,7 +113,7 @@
         </card>
       </div>
       <div class="col-lg-6 col-md-12">
-        <card class="card" :header-classes="{'text-right': isRTL}">
+        <card class="card">
           <h4 slot="header" class="card-title">{{$t('dashboard.simpleTable')}}</h4>
           <div class="table-responsive">
             <user-table></user-table>
@@ -224,12 +222,6 @@
       }
     },
     computed: {
-      enableRTL() {
-        return this.$route.query.enableRTL;
-      },
-      isRTL() {
-        return this.$rtl.isRTL;
-      },
       bigLineChartCategories() {
         return this.$t('dashboard.chartCategories');
       }
@@ -258,20 +250,10 @@
         this.bigLineChart.chartData = chartData;
         this.bigLineChart.activeIndex = index;
       }
+
     },
-    mounted() {
-      this.i18n = this.$i18n;
-      if (this.enableRTL) {
-        this.i18n.locale = 'fr';
-        this.$rtl.enableRTL();
-      }
+    mounted() { // S'initialise au démarrage
       this.initBigChart(0);
-    },
-    beforeDestroy() {
-      if (this.$rtl.isRTL) {
-        this.i18n.locale = 'fr';
-        this.$rtl.disableRTL();
-      }
     }
   };
 </script>

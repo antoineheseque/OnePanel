@@ -32,7 +32,7 @@
           about: 'Lamborghini Mercy, Your chick she so thirsty, I\'m in that two seat Lambo.'
         },
         user: {
-          fullName: 'Mike Andrew',
+          fullName: 'gne nirngrlgoepggtrhtd Andrew',
           title: 'Ceo/Co-Founder',
           description: `Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...`,
         }

@@ -1,6 +1,7 @@
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
+
 // GeneralViews
-const NotFound = () => import(/* webpackChunkName: "common" */ "@/pages/NotFoundPage.vue");
+const NotFound = () => import(/* webpackChunkName: "dashboard" */"@/pages/NotFoundPage.vue");
 
 // Admin pages
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */"@/pages/Dashboard.vue");
@@ -11,8 +12,6 @@ const Maps = () => import(/* webpackChunkName: "common" */ "@/pages/Maps.vue");
 const Typography = () => import(/* webpackChunkName: "common" */ "@/pages/Typography.vue");
 const TableList = () => import(/* webpackChunkName: "common" */ "@/pages/TableList.vue");
 
-
-
 const routes = [
   {
     path: "/",
@@ -20,8 +19,13 @@ const routes = [
     redirect: "/dashboard",
     children: [
       {
+        path: "",
+        name: "dashboard",
+        component: Dashboard
+      },
+      {
         path: "dashboard",
-        name: "Tableau de bord",
+        name: "dashboard",
         component: Dashboard
       },
       {
@@ -56,7 +60,7 @@ const routes = [
       },
       {
         path: "*",
-        name: "Erreur 404",
+        name: "Error",
         component: NotFound
       }
     ]
