@@ -163,7 +163,7 @@
 
     .input-group-prepend .input-group-text,
     .input-group-append .input-group-text{
-        background-color: rgba($background-black, 0.2);
+        background-color: rgba($background-first, 0.2);
         border-color: $color1;
         color: $color2;
 
@@ -173,7 +173,7 @@
     .input-group-focus{
         .input-group-prepend .input-group-text,
         .input-group-append .input-group-text{
-            background-color: rgba($background-black, 0.3);
+            background-color: rgba($background-first, 0.3);
             border-color: $color3;
             color: $color3;
         }
@@ -182,25 +182,25 @@
     .form-group.no-border,
     .input-group.no-border{
         .form-control{
-            background-color: rgba($background-black,0.2);
+            background-color: rgba($background-first,0.2);
             color: $color2;
 
             &:focus,
             &:active,
             &:active{
-                background-color: rgba($background-black,0.3);
+                background-color: rgba($background-first,0.3);
                 color: $color3;
             }
         }
 
         .form-control + .input-group-prepend .input-group-text,
         .form-control + .input-group-append .input-group-text{
-            background-color: rgba($background-black,0.2);;
+            background-color: rgba($background-first,0.2);;
 
             &:focus,
             &:active,
             &:active{
-                background-color: rgba($background-black,0.3);
+                background-color: rgba($background-first,0.3);
                 color: $color3;
             }
         }
@@ -209,7 +209,7 @@
             &:focus{
                 & + .input-group-prepend .input-group-text,
                 & + .input-group-append .input-group-text{
-                    background-color: rgba($background-black, 0.3);
+                    background-color: rgba($background-first, 0.3);
                     color: $color3;
                 }
             }
@@ -217,7 +217,7 @@
 
         .input-group-prepend .input-group-text,
         .input-group-append .input-group-text{
-            background-color: rgba($background-black, 0.2);
+            background-color: rgba($background-first, 0.2);
             border: none;
             color: $color2;
         }
@@ -225,7 +225,7 @@
         &.input-group-focus{
             .input-group-prepend .input-group-text,
             .input-group-append .input-group-text{
-                background-color: rgba($background-black, 0.3);
+                background-color: rgba($background-first, 0.3);
                 color: $color3;
             }
         }

@@ -1,5 +1,5 @@
 .card{
-    background: $card-black-background;
+    background: $widget-background;
     border: 0;
     position: relative;
     width: 100%;
@@ -24,7 +24,7 @@
       }
 
       .card-title{
-        color: $widget-title;
+        color: $text-title;
         text-transform: inherit;
         font-weight: $font-weight-light;
         margin-bottom: .75rem;
@@ -44,12 +44,12 @@
       color: rgba($white,0.8);
 
       .card-title{
-          color: $white;
+          color: $text-title;
           font-weight: 100;
       }
 
       .card-category{
-        color: $dark-gray;
+        color: $text-undertitle;
         margin-bottom: 5px;
         font-weight: 300;
       }

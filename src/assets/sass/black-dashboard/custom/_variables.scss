@@ -4,7 +4,16 @@
 @import "mixins";
 
 // PERSONNALISE
-$widget-title: red;
+$widget-background: #1B3052 !default;
+$text-title: #F1FAEE;
+$text-undertitle: #A8DADC;
+
+$sidebar-background-first: #29496B;
+$sidebar-background-second: #101D40;
+
+$background-first: #0C1639;
+$background-second: #070D32;
+
 
 // Global settings
 
@@ -77,9 +86,6 @@ $opacity-8:                  rgba(255,255,255, .8) !default;
 $opacity-1:                  rgba(255,255,255, .1) !default;
 $opacity-2:                  rgba(255,255,255, .2) !default;
 
-
-// end beniamin
-
 $colors: () !default;
 $colors: map-merge((
   "blue":       $blue,
@@ -121,9 +127,6 @@ $warning-states:       #ff6491 !default;
 $danger-states:        #ec250d !default;
 $black-states:         #1d253b !default;
 $vue-states:           #389466 !default;
-
-$background-black:           #0C1639 !default;
-$background-states-black:    #070D32 !default;
 
 // opacity
 $default-opacity:      rgba(182, 182, 182, .6) !default;
@@ -241,7 +244,7 @@ $love-color: $red !default;
 
 // Body
 
-$body-bg: $background-black !default;
+$body-bg: $background-first !default;
 $body-color: $gray-700 !default;
 
 
@@ -902,7 +905,6 @@ $card-border-color:                 rgba($black, .05);
 $card-inner-border-radius:          calc(#{$card-border-radius} - #{$card-border-width});
 $card-cap-bg:                       $gray-100 !default;
 $card-bg:                           $white !default;
-$card-black-background:             #1B3052 !default;
 $card-img-overlay-padding:          1.25rem !default;
 
 //$card-group-margin:                 ($grid-gutter-width / 2);
