@@ -19,6 +19,7 @@
     },
     data() {
       //TODO: FAIRE ICI APPEL A LA BDD POUR AFFICHER DANS LE RETURN LES DONNES PROFILE
+
       return {
         model: {
           company: 'Creative Code Inc.',
