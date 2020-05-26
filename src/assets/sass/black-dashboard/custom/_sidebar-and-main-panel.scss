@@ -354,15 +354,8 @@
         }
     }
 
-    &[data="blue"]{
-      @include linear-gradient($info-states, $info);
-    }
-    &[data="green"]{
-      @include linear-gradient($success-states, $success);
-    }
-
     &[data="vue"] {
-      @include linear-gradient($vue-states, $vue);
+      @include linear-gradient($sidebar-background-first, $sidebar-background-second);
     }
 
     .user{
