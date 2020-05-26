@@ -24,7 +24,7 @@
         model: {
           company: 'Creative Code Inc.',
           email: 'mike@email.com',
-          username: 'michaegrgrdgrl23',
+          username: 'mickael',
           firstName: 'Mike',
           lastName: 'Andrew',
           address: 'Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09',

@@ -1,47 +1,63 @@
 <template>
-  <div class="wrapper">
-    <side-bar>
-      <template slot="links">
-        <sidebar-link to="/dashboard" :name="$t('sidebar.dashboard')" icon="tim-icons icon-chart-pie-36"/>
-        <sidebar-link to="/icons" :name="$t('sidebar.icons')" icon="tim-icons icon-atom"/>
-        <sidebar-link to="/maps" :name="$t('sidebar.maps')" icon="tim-icons icon-pin"/>
-        <sidebar-link to="/notifications" :name="$t('sidebar.notifications')" icon="tim-icons icon-bell-55"/>
-        <sidebar-link to="/profile" :name="$t('sidebar.userProfile')" icon="tim-icons icon-single-02"/>
-        <sidebar-link to="/table-list" :name="$t('sidebar.tableList')" icon="tim-icons icon-puzzle-10"/>
-        <sidebar-link to="/typography" :name="$t('sidebar.typography')" icon="tim-icons icon-align-center"/>
-      </template>
-    </side-bar>
-    <div class="main-panel">
-      <top-navbar></top-navbar>
+    <div class="wrapper">
+        <side-bar>
+            <template slot="links">
+                <!--TODO: Optimiser avec v-if et v-else-->
+                <!-- Utilisateur connecté -->
+                <sidebar-link to="/dashboard" v-if="isConnected" :name="$t('sidebar.dashboard')" icon="tim-icons icon-chart-pie-36"/>
+                <sidebar-link to="/add-widget" v-if="isConnected" :name="$t('sidebar.add-widget')" icon="tim-icons icon-simple-add"/>
+                <sidebar-link to="/profile" v-if="isConnected" :name="$t('sidebar.profile')" icon="tim-icons icon-single-02"/>
+                <sidebar-link to="/logout" v-if="isConnected":name="$t('sidebar.logout')" icon="tim-icons icon-button-power"/>
 
-      <dashboard-content @click.native="toggleSidebar">
+                <!-- Utilisateur non connecté -->
+                <sidebar-link to="/login" v-if="!isConnected" :name="$t('sidebar.login')" icon="tim-icons icon-badge"/>
+                <sidebar-link to="/sign-in" v-if="!isConnected" :name="$t('sidebar.sign-in')" icon="tim-icons icon-badge"/>
 
-      </dashboard-content>
+                <!--<sidebar-link to="/icons" :name="$t('sidebar.icons')" icon="tim-icons icon-atom"/>
+                <sidebar-link to="/maps" :name="$t('sidebar.maps')" icon="tim-icons icon-pin"/>
+                <sidebar-link to="/notifications" :name="$t('sidebar.notifications')" icon="tim-icons icon-bell-55"/>
+                <sidebar-link to="/table-list" :name="$t('sidebar.tableList')" icon="tim-icons icon-puzzle-10"/>
+                <<sidebar-link to="/typography" :name="$t('sidebar.typography')" icon="tim-icons icon-align-center"/>-->
+            </template>
+        </side-bar>
+        <div class="main-panel">
+            <top-navbar></top-navbar>
 
-      <content-footer></content-footer>
+            <dashboard-content @click.native="toggleSidebar">
+
+            </dashboard-content>
+
+            <content-footer></content-footer>
+        </div>
     </div>
-  </div>
 </template>
 <style lang="scss">
 </style>
 <script>
-import TopNavbar from "./TopNavbar.vue";
-import ContentFooter from "./ContentFooter.vue";
-import DashboardContent from "./Content.vue";
-import MobileMenu from "./MobileMenu";
-export default {
-  components: {
-    TopNavbar,
-    ContentFooter,
-    DashboardContent,
-    MobileMenu
-  },
-  methods: {
-    toggleSidebar() {
-      if (this.$sidebar.showSidebar) {
-        this.$sidebar.displaySidebar(false);
-      }
-    }
-  }
-};
+    import TopNavbar from "./TopNavbar.vue";
+    import ContentFooter from "./ContentFooter.vue";
+    import DashboardContent from "./Content.vue";
+    import MobileMenu from "./MobileMenu";
+    import User from '@/user';
+
+    export default {
+        components: {
+            TopNavbar,
+            ContentFooter,
+            DashboardContent,
+            MobileMenu
+        },
+        methods: {
+            toggleSidebar() {
+                if (this.$sidebar.showSidebar) {
+                    this.$sidebar.displaySidebar(false);
+                }
+            }
+        },
+        computed: {
+            isConnected: function(){
+                return User.isConnected();
+            }
+        }
+    };
 </script>

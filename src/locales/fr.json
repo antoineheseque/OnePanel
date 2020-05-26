@@ -1,6 +1,13 @@
 {
-  "menu": {
-    "dashboard": "Tableau de bord!!!"
+  "sidebar": {
+    "title": "OnePanel",
+    "shortTitle": "OP",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "sign-in": "Inscription",
+    "add-widget": "Ajouter un Widget"
   },
   "dashboard": {
     "completedTasks": "Tâches complétées",
@@ -112,16 +119,5 @@
         "done": false
       }
     ]
-  },
-  "sidebar": {
-    "title": "OnePanel",
-    "shortTitle": "OP",
-    "dashboard": "Tableau de bord",
-    "icons": "Icons",
-    "maps": "Maps",
-    "notifications": "Notifications",
-    "userProfile": "Profil",
-    "tableList": "Table List",
-    "typography": "Typography"
   }
 }
