@@ -24,7 +24,7 @@
       }
 
       .card-title{
-        color: $white;
+        color: $widget-title;
         text-transform: inherit;
         font-weight: $font-weight-light;
         margin-bottom: .75rem;
@@ -33,7 +33,6 @@
       .card-description, .card-category{
         color: rgba($white, 0.6);
       }
-
     }
 
     .card-header{

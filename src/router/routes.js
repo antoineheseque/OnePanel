@@ -19,11 +19,6 @@ const routes = [
     redirect: "/dashboard",
     children: [
       {
-        path: "",
-        name: "dashboard",
-        component: Dashboard
-      },
-      {
         path: "dashboard",
         name: "dashboard",
         component: Dashboard
@@ -57,6 +52,11 @@ const routes = [
         path: "table-list",
         name: "table-list",
         component: TableList
+      },
+      {
+        path: "",
+        name: "dashboard",
+        component: Dashboard
       },
       {
         path: "*",

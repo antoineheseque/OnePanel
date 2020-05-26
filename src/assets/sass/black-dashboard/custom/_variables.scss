@@ -2,6 +2,10 @@
 @import "../bootstrap/functions";
 @import "functions";
 @import "mixins";
+
+// PERSONNALISE
+$widget-title: red;
+
 // Global settings
 
 $enable-caret:              true !default;
@@ -11,7 +15,6 @@ $enable-gradients:          false !default;
 $enable-transitions:        true !default;
 $enable-grid-classes:       true !default;
 $enable-print-styles:       true !default;
-
 
 // Color system
 
@@ -119,8 +122,8 @@ $danger-states:        #ec250d !default;
 $black-states:         #1d253b !default;
 $vue-states:           #389466 !default;
 
-$background-black:           #1e1e2f !default;
-$background-states-black:    #1e1e24 !default;
+$background-black:           #0C1639 !default;
+$background-states-black:    #070D32 !default;
 
 // opacity
 $default-opacity:      rgba(182, 182, 182, .6) !default;
@@ -224,7 +227,7 @@ $yiq-contrasted-threshold:  200 !default;
 
 // Customize the light and dark text colors for use in our YIQ color contrast function.
 $yiq-text-dark:             $gray-900 !default;
-$yiq-text-light:            $white !default;
+$yiq-text-light:            #F1FAEE !default;
 
 // Action colors
 
@@ -899,7 +902,7 @@ $card-border-color:                 rgba($black, .05);
 $card-inner-border-radius:          calc(#{$card-border-radius} - #{$card-border-width});
 $card-cap-bg:                       $gray-100 !default;
 $card-bg:                           $white !default;
-$card-black-background:             #27293d !default;
+$card-black-background:             #1B3052 !default;
 $card-img-overlay-padding:          1.25rem !default;
 
 //$card-group-margin:                 ($grid-gutter-width / 2);

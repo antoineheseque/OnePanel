@@ -88,45 +88,12 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   .blockquote, .blockquote p, .card p{
     color: rgba($white,0.8);
   }
-  .bd-example {
-    background: linear-gradient(#1e1e2f,#1e1e24);
-
-  }
 
   .navbar {
     border-top: none;
 
     .navbar-nav .nav-link {
       color: rgba(255,255,255,.8) !important;
-    }
-  }
-
-  .bd-example {
-
-    .btn{
-      margin: 4px 0;
-    }
-    .btn .badge {
-      display: inline-block;
-    }
-
-    .tim-icons{
-      color: $white;
-    }
-
-    .popover .popover-header {
-    color: hsla(0,0%,71%,.6);
-  }
-
-
-    .popover-body {
-      p {
-        color: $gray-900;
-      }
-    }
-
-    &.tooltip-demo p{
-      color: rgba($white,.8);
     }
   }
 
