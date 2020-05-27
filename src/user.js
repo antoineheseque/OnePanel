@@ -27,8 +27,10 @@ export default {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(this.profile)
-        }).then((res) => {
-            console.log(res)
-        });
+        }).then(function(res){
+            return res.json();
+        }).then(function(data){
+            console.log(data);
+        })
     }
 }
