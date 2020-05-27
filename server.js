@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.post("/updateProfile", (req, res) => {
     console.log("ROUTE OK");
-    //res.({ message: json}); // +  req.body.user.firstName + " - " + req.body.user.lastName
+    res.json({ message: "Message reçu!: " + req.body});
 });
 
 app.get(/.*/, function (req, res) {
