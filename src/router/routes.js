@@ -56,7 +56,7 @@ const routes = [
                 name: "login",
                 component: LogIn,
                 meta: {
-                    requiresAuth: false
+                    requiresNotAuth: true
                 }
             },
             {
@@ -64,7 +64,7 @@ const routes = [
                 name: "sign-in",
                 component: SignIn,
                 meta: {
-                    requiresAuth: false
+                    requiresNotAuth: true
                 }
             },
             {
