@@ -10,8 +10,7 @@ app.use(express.urlencoded());
 app.use(express.json());
 
 app.post("/updateProfile", (req, res) => {
-    console.log("ROUTE OK");
-    res.json({ message: "Message reçu!: " + req.body});
+    res.json({ message: "Message reçu!"});
 });
 
 app.get(/.*/, function (req, res) {
