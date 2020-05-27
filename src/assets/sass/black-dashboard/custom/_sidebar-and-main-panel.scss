@@ -692,32 +692,8 @@
           position: relative;
           overflow-x: hidden;
       }
-
-      .menu-on-right{
-
-        .main-panel{
-          @include transform-translate-x(-260px);
-        }
-
-        .navbar-collapse,
-        .sidebar{
-            @include transform-translate-x(0px);
-        }
-
-        #bodyClick{
-            right: 260px;
-            left: auto;
-        }
-      }
   }
 
-  .menu-on-right{
-    .sidebar{
-      left: auto;
-      right: 0;
-      @include transform-translate-x(260px);
-    }
-  }
 
   #bodyClick{
       height: 100%;
@@ -737,10 +713,8 @@
 }
 
 @media screen and (max-width: 768px){
-
   .main-panel .content {
     padding-left: 15px;
     padding-right: 15px;
   }
-
 }

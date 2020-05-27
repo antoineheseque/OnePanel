@@ -8,9 +8,9 @@ const NotFound = () => import(/* webpackChunkName: "dashboard" */"@/pages/NotFou
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */"@/pages/Dashboard.vue");
 const Profile = () => import(/* webpackChunkName: "common" */ "@/pages/Profile.vue");
 const AddWidget = () => import(/* webpackChunkName: "common" */ "@/pages/AddWidget.vue");
-const LogIn = () => import(/* webpackChunkName: "dashboard" */"@/pages/Login.vue");
-const LogOut = () => import(/* webpackChunkName: "dashboard" */"@/pages/Logout.vue");
-const SignIn = () => import(/* webpackChunkName: "dashboard" */"@/pages/SignIn.vue");
+const LogIn = () => import(/* webpackChunkName: "common" */"@/pages/Login.vue");
+const LogOut = () => import(/* webpackChunkName: "common" */"@/pages/Logout.vue");
+const SignIn = () => import(/* webpackChunkName: "common" */"@/pages/SignIn.vue");
 const Notifications = () => import(/* webpackChunkName: "common" */"@/pages/Notifications.vue");
 const Icons = () => import(/* webpackChunkName: "common" */ "@/pages/Icons.vue");
 const Maps = () => import(/* webpackChunkName: "common" */ "@/pages/Maps.vue");
@@ -21,7 +21,6 @@ const routes = [
     {
         path: "/",
         component: DashboardLayout,
-        redirect: User.isConnected() ? "/dashboard" : "/login",
         children: [
             {
                 path: "",
@@ -31,38 +30,50 @@ const routes = [
             {
                 path: "dashboard",
                 name: "dashboard",
-                get redirect() { if(!User.isConnected()) return "login"; },
-                get component() { if(User.isConnected()) return Dashboard; }
+                component: Dashboard,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path: "profile",
                 name: "profile",
-                get redirect() { if(!User.isConnected()) return "login"; },
-                get component() { if(User.isConnected()) return Profile; }
+                component: Profile,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path: "add-widget",
                 name: "add-widget",
-                get redirect() { if(!User.isConnected()) return "login"; },
-                get component() { if(User.isConnected()) return AddWidget; }
+                component: AddWidget,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path: "login",
                 name: "login",
-                get redirect() { if(User.isConnected()) return "dashboard"; },
-                get component() { if(!User.isConnected()) return LogIn; }
+                component: LogIn,
+                meta: {
+                    requiresAuth: false
+                }
             },
             {
                 path: "sign-in",
                 name: "sign-in",
-                get redirect() { if(User.isConnected()) return "dashboard"; },
-                get component() { if(!User.isConnected()) return SignIn; }
+                component: SignIn,
+                meta: {
+                    requiresAuth: false
+                }
             },
             {
                 path: "logout",
                 name: "logout",
-                get redirect() { if(!User.isConnected()) return "login"; },
-                get component() { if(User.isConnected()) return LogOut; }
+                component: LogOut,
+                meta: {
+                    requiresAuth: true
+                }
             },
             {
                 path: "notifications",

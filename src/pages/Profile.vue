@@ -1,42 +1,27 @@
 <template>
   <div class="row">
     <div class="col-md-8">
-      <edit-profile-form :model="model">
+      <edit-profile-form :profile="profile">
       </edit-profile-form>
     </div>
     <div class="col-md-4">
-      <user-card :user="user"></user-card>
+      <user-card :profile="profile"></user-card>
     </div>
   </div>
 </template>
 <script>
   import EditProfileForm from './Profile/EditProfileForm';
-  import UserCard from './Profile/UserCard'
+  import UserCard from './Profile/UserCard';
+  import User from '@/user';
+
   export default {
     components: {
       EditProfileForm,
       UserCard
     },
     data() {
-      //TODO: FAIRE ICI APPEL A LA BDD POUR AFFICHER DANS LE RETURN LES DONNES PROFILE
-
       return {
-        model: {
-          company: 'Creative Code Inc.',
-          email: 'mike@email.com',
-          username: 'mickael',
-          firstName: 'Mike',
-          lastName: 'Andrew',
-          address: 'Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09',
-          city: 'Melbourne',
-          country: 'Australia',
-          about: 'Lamborghini Mercy, Your chick she so thirsty, I\'m in that two seat Lambo.'
-        },
-        user: {
-          fullName: 'gne nirngrlgoepggtrhtd Andrew',
-          title: 'Ceo/Co-Founder',
-          description: `Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...`,
-        }
+        profile:User.profile
       }
     }
   }

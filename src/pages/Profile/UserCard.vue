@@ -2,22 +2,19 @@
   <card type="user">
     <p class="card-text">
     </p>
-    <div class="author">
+    <div class="profile">
       <div class="block block-one"></div>
       <div class="block block-two"></div>
       <div class="block block-three"></div>
       <div class="block block-four"></div>
-      <a href="#">
-        <img class="avatar" src="img/default-avatar.png" alt="...">
-        <h5 class="title">{{user.fullName}}</h5>
-      </a>
-      <p class="description">
-        {{user.title}}
-      </p>
+
+      <img class="avatar" src="img/default-avatar.png" alt="...">
+      <h5 class="title">{{profile.firstName + " " + profile.lastName}}</h5>
+      <h5 class="description">{{profile.username}}</h5>
     </div>
     <p></p>
     <p class="card-description">
-      {{user.description}}
+      {{profile.description}}
     </p>
     <div slot="footer" class="button-container">
       <base-button icon round class="btn-facebook">
@@ -35,7 +32,7 @@
 <script>
   export default {
     props: {
-      user: {
+      profile: {
         type: Object,
         default: () => {
           return {};

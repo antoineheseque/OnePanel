@@ -3,7 +3,6 @@ const webpack = require('webpack');
 module.exports = {
   lintOnSave: false,
   configureWebpack: {
-    // Set up all the aliases we use in our app.
     resolve: {
       alias: {
         'chart.js': 'chart.js/dist/Chart.js'

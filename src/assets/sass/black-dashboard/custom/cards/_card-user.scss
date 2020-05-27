@@ -4,7 +4,7 @@
         height: 120px;
     }
 
-    .author {
+    .profile {
         text-align: center;
         text-transform: none;
         margin-top: 25px;
@@ -17,22 +17,24 @@
           position: absolute;
           height: 100px;
           width: 250px;
+
+          // Visuels dans la carte du profil au dessus de l'image du profil
           &.block-one {
-            @include linear-gradient-right(rgba($primary,0.6), rgba($primary,0));
+            @include linear-gradient-right(rgba($background-first,0.6), rgba($background-second,0));
             @include nc-rotate(150deg,10);
             margin-top: -90px;
             margin-left: -50px;
           }
 
           &.block-two {
-            @include linear-gradient-right(rgba($primary,0.6), rgba($primary,0));
+            @include linear-gradient-right(rgba($background-first,0.6), rgba($background-second,0));
             @include nc-rotate(30deg,10);
             margin-top: -40px;
             margin-left: -100px;
           }
 
           &.block-three {
-            @include linear-gradient-right(rgba($primary,0.6), rgba($primary,0));
+            @include linear-gradient-right(rgba($background-first,0.6), rgba($background-second,0));
             @include nc-rotate(170deg,10);
             margin-top: -70px;
             right: -45px;
@@ -40,7 +42,7 @@
           }
 
           &.block-four {
-            @include linear-gradient-right(rgba($primary,0.6), rgba($primary,0));
+            @include linear-gradient-right(rgba($background-first,0.6), rgba($background-second,0));
             @include nc-rotate(150deg,10);
             margin-top: -25px;
             right: -45px;
