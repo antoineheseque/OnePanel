@@ -18,7 +18,6 @@ export default {
     },
     setConnected: function(value){
         this.user.isConnected = value;
-        console.log(value);
     },
     onClickEditProfile: function () {
         fetch('/api/updateProfile', {
