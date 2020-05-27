@@ -24,8 +24,8 @@ const routes = [
         children: [
             {
                 path: "",
-                name: "dashboard",
-                component: Dashboard
+                name: "login",
+                redirect: User.isConnected ? "/login" : "/dashboard"
             },
             {
                 path: "dashboard",

@@ -1,6 +1,10 @@
 const webpack = require('webpack');
+const configureAPI = require('./src/server/configure')
 
 module.exports = {
+  devServer: {
+    before: configureAPI
+  },
   lintOnSave: false,
   configureWebpack: {
     resolve: {

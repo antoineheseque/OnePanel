@@ -21,7 +21,7 @@ export default {
         console.log(value);
     },
     onClickEditProfile: function () {
-        fetch('/updateProfile', {
+        fetch('/api/updateProfile', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
