@@ -11,6 +11,7 @@ app.use(express.urlencoded());
 
 // API
 configureAPI(app)
+
 const publicPath = resolve(__dirname, '../../dist')
 app.use(express.static(publicPath));
 
