@@ -1,5 +1,7 @@
 <template>
-    <base-button slot="footer" type="primary" v-on:click="onClickLogin" fill>Se connecter (temporaire)</base-button>
+    <div class="row">
+        <base-button slot="footer" type="primary" v-on:click="onClickLogin" fill>Se connecter (temporaire)</base-button>
+    </div>
 </template>
 <script>
     //TODO: A FAIRE

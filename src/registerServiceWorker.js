@@ -14,22 +14,23 @@ if (process.env.NODE_ENV === 'production') {
       )
     },
     registered () {
-      console.log('Service worker has been registered.')
+      console.log('Service worker actif.')
     },
     cached () {
-      console.log('Content has been cached for offline use.')
+      console.log('Contenu mis en cache.')
     },
     updatefound () {
-      console.log('New content is downloading.')
+      console.log('Nouveau contenu en téléchargement.')
     },
     updated () {
-      console.log('New content is available; please refresh.')
+      console.log('Nouveau contenu téléchargé, veuillez recharger la page.')
     },
     offline () {
-      console.log('No internet connection found. App is running in offline mode.')
+      console.log('Page hors ligne.')
     },
     error (error) {
-      console.error('Error during service worker registration:', error)
+      console.error('Erreur:', error)
     }
   })
+
 }
