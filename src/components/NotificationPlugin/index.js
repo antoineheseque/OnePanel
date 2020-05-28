@@ -9,7 +9,8 @@ const NotificationStore = {
     type: 'info',
     timeout: 5000,
     closeOnClick: true,
-    showClose: true
+    showClose: true,
+    message: "Unknown."
   },
   setOptions(options) {
     this.settings = Object.assign(this.settings, options);

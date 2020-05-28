@@ -25,6 +25,8 @@
   </div>
 </template>
 <script>
+import NotificationTemplate from "@/pages/Notifications/NotificationTemplate";
+
 export default {
   name: 'notification',
   components: {

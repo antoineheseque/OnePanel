@@ -29,14 +29,6 @@ module.exports = {
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: '#344675'
   },
-  pluginOptions: {
-    i18n: {
-      locale: 'fr',
-      fallbackLocale: 'fr',
-      localeDir: 'locales',
-      enableInSFC: false
-    }
-  },
   css: {
     // Enable CSS source maps.
     sourceMap: process.env.NODE_ENV !== 'production'

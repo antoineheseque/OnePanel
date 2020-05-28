@@ -1,3 +1,5 @@
+import router from "@/router";
+
 export default {
     user: {
         isConnected: false
@@ -16,9 +18,6 @@ export default {
     isConnected: function(){ //TODO: RETOURNER LA VARIABLE SI UTILISATEUR CONNECTE
         return this.user.isConnected;
     },
-    setConnected: function(value){
-        this.user.isConnected = value;
-    },
     onClickEditProfile: function () {
         fetch('/api/updateProfile', {
             method: 'POST',
@@ -31,5 +30,58 @@ export default {
         }).then(function(data){
             console.log(data);
         })
+    },
+
+    // LOG IN FUNCTION
+    login: function(loginData){
+        return new Promise((r) => {
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginData)
+            }).then(function (res) {
+                return res.json();
+            }).then(function (data) {
+                this.user.isConnected = data.logged
+                r(data)
+            }.bind(this))
+        });
+    },
+
+    // LOG OUT FUNCTION
+    logout: function(logoutData){
+        return new Promise((r) => {
+            fetch('/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(logoutData)
+            }).then(function (res) {
+                return res.json();
+            }).then(function (data) {
+                this.user.isConnected = data.logged
+                r(data)
+            }.bind(this))
+        });
+    },
+
+    // SIGN IN FUNCTION
+    signIn: function(signInData){
+        return new Promise((r) => {
+            fetch('/api/signIn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(signInData)
+            }).then(function (res) {
+                return res.json()
+            }).then(function (data) {
+                r(data)
+            })
+        });
     }
 }

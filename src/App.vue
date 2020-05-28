@@ -6,7 +6,13 @@
 </template>
 
 <script>
+  import {BaseAlert} from "@/components";
+  import NotificationTemplate from "@/pages/Notifications/NotificationTemplate";
+
   export default {
+    components: {
+      BaseAlert
+    },
     methods: {
       toggleNavOpen() {
         let root = document.getElementsByTagName('html')[0];

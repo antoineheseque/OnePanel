@@ -4,14 +4,14 @@
             <template slot="links">
                 <!--TODO: Optimiser avec v-if et v-else-->
                 <!-- Utilisateur connecté -->
-                <sidebar-link to="/dashboard" v-if="isConnected" :name="$t('sidebar.dashboard')" icon="tim-icons icon-chart-pie-36"/>
-                <sidebar-link to="/add-widget" v-if="isConnected" :name="$t('sidebar.add-widget')" icon="tim-icons icon-simple-add"/>
-                <sidebar-link to="/profile" v-if="isConnected" :name="$t('sidebar.profile')" icon="tim-icons icon-single-02"/>
-                <sidebar-link to="/logout" v-if="isConnected":name="$t('sidebar.logout')" icon="tim-icons icon-button-power"/>
+                <sidebar-link to="/dashboard" v-if="isConnected" name="Dashboard" icon="tim-icons icon-chart-pie-36"/>
+                <sidebar-link to="/add-widget" v-if="isConnected" name="Ajouter un widget" icon="tim-icons icon-simple-add"/>
+                <sidebar-link to="/profile" v-if="isConnected" name="Profil" icon="tim-icons icon-single-02"/>
+                <sidebar-link to="/logout" v-if="isConnected" name="Déconnexion" icon="tim-icons icon-button-power"/>
 
                 <!-- Utilisateur non connecté -->
-                <sidebar-link to="/login" v-if="!isConnected" :name="$t('sidebar.login')" icon="tim-icons icon-badge"/>
-                <sidebar-link to="/sign-in" v-if="!isConnected" :name="$t('sidebar.sign-in')" icon="tim-icons icon-badge"/>
+                <sidebar-link to="/login" v-if="!isConnected" name="Connexion" icon="tim-icons icon-badge"/>
+                <sidebar-link to="/sign-in" v-if="!isConnected" name="Inscription" icon="tim-icons icon-badge"/>
 
                 <!--<sidebar-link to="/icons" :name="$t('sidebar.icons')" icon="tim-icons icon-atom"/>
                 <sidebar-link to="/maps" :name="$t('sidebar.maps')" icon="tim-icons icon-pin"/>
