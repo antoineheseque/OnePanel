@@ -2,13 +2,7 @@
     <card>
         <h5 slot="header" class="title">Mon Profil</h5>
         <div class="row">
-            /*<div class="col-md-5 pr-md-1">
-               // <base-input label="Company (disabled)"
-                            placeholder="Company"
-                            v-model="profile.company"
-                            disabled>
-                </base-input>
-            </div>*/
+
             <div class="col-md-3 px-md-1">
                 <base-input label="Nom d'utilisateur"
                             placeholder="Username"
