@@ -3,8 +3,13 @@
   "short_name": "OnePanel",
   "icons": [
     {
-      "src": "./img/onePanel.png",
-      "sizes": "111x101",
+      "src": "./img/onePanel-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/onePanel-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
