@@ -20,6 +20,7 @@ module.exports = {
   },
   pwa: {
     name: 'OnePanel',
+    workboxPluginMode: 'GenerateSW',
     themeColor: '#344675',
     msTileColor: '#344675',
     appleMobileWebAppCapable: 'yes',

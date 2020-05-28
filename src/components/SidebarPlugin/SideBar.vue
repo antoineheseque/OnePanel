@@ -8,7 +8,7 @@
            class="simple-text logo-mini">
           <div class="logo-img">
             <img
-              src="img/onepanel.png"
+              src="img/onePanel.png"
               alt="">
           </div>
         </a>
