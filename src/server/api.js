@@ -1,17 +1,16 @@
 var express = require('express')
 var router = express.Router()
 const sql = require('./bdd')
+const sha1 = require('sha1');
 
 // Accès à la bdd avec sql.base. ...
 // J'ai fait une fonction dans bdd.js pour simplifier tout il faut la tester aussi jsp si ca marche
 // Pour l'utiliser:
 
 /*
-
 sql.request("FROM * IN AEZIOEZI").then((result) => {
     // Résultat de la requete ici;
 })
-
  */
 
 router.post("/updateProfile", (req, res) => {
@@ -38,18 +37,29 @@ router.post("/signIn", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-    let data = req.body // (temporaire) -> Changer avec le contenu de la requete une fois fait bdd
+    let data = req.body
+    data.logged = false
 
+    if(data.username.length <= 3 || data.password.length <= 3){
+        data.reason = "Nom d'utilisateur ou mot de passe incorrect."
+        res.json(data)
+        return;
+    }
 
+    // Convert password
+    data.password = sha1(data.password);
 
-    //TODO: check si utilisateur avec username+password connecté
-    // Si valide enregistrer ces données dans User.profile sous la bonne forme json
-    // Si non valide changer data.logged et data.reason
-    // (pas oublier de hasher le mdp avant envoi a la bdd)
-
-    data.logged = true // TRUE OU FALSE SI CONNECTE OU NON CONNECTE
-    data.reason = "" // CONTIENT LE MESSAGE A AFFICHER EN NOTIF SI UTILISATEUR OU MDP NON VALIDE (donc a modifier si erreur avec bdd)
-    res.json(data)
+    sql.request(`SELECT * FROM \`Logins\` WHERE ID_LOGINS='${data.username}' AND MDP_LOGIN='${data.password}' LIMIT 1`).then((result) => {
+        if(result.length > 0){ // non teste, pas sur que ca marche
+            data = result[0]
+            data.logged = true
+            //TODO: enregistrer ces données dans User.profile sous la bonne forme json
+        }
+        else{
+            data.reason = "Nom d'utilisateur ou mot de passe incorrect."
+        }
+        res.json(data)
+    })
 });
 
 router.post("/logout", (req, res) => {

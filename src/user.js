@@ -5,15 +5,15 @@ export default {
         isConnected: false
     },
     profile: {
-        company: 'Creative Code Inc.',
-        email: 'mike@email.com',
-        username: 'mickael',
-        firstName: 'Mike',
-        lastName: 'Andrew',
-        address: 'Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09',
-        city: 'Melbourne',
-        country: 'Australia',
-        description: 'Lamborghini Mercy, Your chick she so thirsty, I\'m in that two seat Lambo.'
+        company: '',
+        email: '',
+        username: '',
+        firstName: '',
+        lastName: '',
+        address: '',
+        city: '',
+        country: '',
+        description: ''
     },
     isConnected: function(){ //TODO: RETOURNER LA VARIABLE SI UTILISATEUR CONNECTE
         return this.user.isConnected;
@@ -44,7 +44,13 @@ export default {
             }).then(function (res) {
                 return res.json();
             }).then(function (data) {
-                this.user.isConnected = data.logged
+                //TODO: Convertir les données reçues pour les enregistrer dans user.js
+                if(data.logged){
+                    this.user.isConnected = data.logged
+                    // Enregistrer les données reçues via la BDD
+                    this.profile.username = data.ID_LOGINS;
+                }
+
                 r(data)
             }.bind(this))
         });

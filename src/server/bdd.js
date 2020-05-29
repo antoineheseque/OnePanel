@@ -1,25 +1,27 @@
 var mysql = require('mysql');
 
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "myusername",
-    password: "mypassword",
-    database: "mydb"
-});
+var config = {
+    host: "remotemysql.com",
+    user: "yaReSadaEn",
+    password: "1yrM842enf",
+    database: "yaReSadaEn"
+}
 
 exports.request = function (request) {
     return new Promise((r) => {
-        con.connect(function (err) {
-            request.query(request, function (err, recordset) {
-                if (err) {
-                    console.log(err)
-                    r(err)
-                } else {
-                    console.log(recordset)
-                    r(recordset)
-                }
-                con.end()
-            });
+        var con = mysql.createConnection(config);
+        con.connect();
+
+        con.query(request, function (err, result) {
+            if (err){
+                console.log(err)
+                return
+            }
+
+            console.log(result)
+
+            r(result)
         });
+        con.end()
     });
 }
