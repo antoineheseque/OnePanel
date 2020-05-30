@@ -10,7 +10,7 @@
     export default {
         methods: {
             onClickLogout: function () {
-                this.notify('info', 'Déconnexion en cours.')
+                //this.notify('info', 'Déconnexion en cours.')
                 User.logout(this.logout).then((result) => {
                     console.log(result)
 

@@ -49,10 +49,24 @@ router.post("/signIn", (req, res) => {
         return;
     }
 
-    // ON INSCRIT L'UTILISATEUR
-
-
-    res.json(data)
+    // ON INSCRIT L'UTILISATEUR (ON SAURA SI L'UTILISATEUR EXISTE DEJA AVEC LA REPONSE DE LA REQUETE
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(data.password, salt, function(err, hash) {
+            sql.request(`INSERT INTO \`users\` (username, password) VALUES ('${data.username}', '${hash}')`).then((result, err) => { // ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
+                if(result.affectedRows === 1)
+                    data.registered = true
+                else
+                    data.reason = "Un problème est survenu."
+                res.json(data)
+            }).catch((err) => {
+                if(err.code === 'ER_DUP_ENTRY')
+                    data.reason = "Ce nom d'utilisateur existe déjà."
+                else
+                    data.reason = "Un problème est survenu."
+                res.json(data)
+            });
+        });
+    });
 });
 
 router.post("/login", (req, res) => {
@@ -74,6 +88,8 @@ router.post("/login", (req, res) => {
                     data.logged = true
                     sql.request(`INSERT INTO \`logins\` (userID) VALUES ('${data.id}')`).then(() => { // ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
                         res.json(data)
+                    }).catch((err) => {
+                        console.log("Un problème est survenu dans la BDD")
                     });
                 } else {
                     data.reason = "Nom d'utilisateur ou mot de passe incorrect."
@@ -85,6 +101,8 @@ router.post("/login", (req, res) => {
             data.reason = "Nom d'utilisateur ou mot de passe incorrect."
             res.json(data)
         }
+    }).catch((err) => {
+        console.log("Un problème est survenu dans la BDD")
     });
 });
 

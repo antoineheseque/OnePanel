@@ -8,19 +8,18 @@ var config = {
 }
 
 exports.request = function (request) {
-    return new Promise((r) => {
+    return new Promise((r, error) => {
         var con = mysql.createConnection(config);
         con.connect();
 
         con.query(request, function (err, result) {
             if (err){
                 console.log(err)
-                return
+                error(err)
+            }else{
+                console.log(result)
+                r(result)
             }
-
-            console.log(result)
-
-            r(result)
         });
         con.end()
     });

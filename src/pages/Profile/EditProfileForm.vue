@@ -29,7 +29,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <base-input label="Addresse"
+                <base-input label="Adresse"
                             v-model="profile.address">
                 </base-input>
             </div>

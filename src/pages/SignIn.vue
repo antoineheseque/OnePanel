@@ -20,7 +20,7 @@
                 </base-input>
             </div>
         </div>
-        <base-button class="center" type="primary" v-on:click="onClickSignIn" fill>Inscription (temporaire)</base-button>
+        <base-button class="center" type="primary" v-on:click="onClickSignIn" fill>S'inscrire</base-button>
         <div>
             <img src="/img/paysage.jpg" alt="Paysage">
         </div>

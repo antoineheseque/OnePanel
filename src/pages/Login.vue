@@ -14,7 +14,7 @@
                 </base-input>
             </div>
         </div>
-        <base-button type="primary" v-on:click="onClickLogin" fill>Connexion</base-button>
+        <base-button type="primary" v-on:click="onClickLogin" fill>Se connecter</base-button>
         <div>
             <img src="/img/paysage.jpg" alt="Paysage">
         </div>
@@ -42,7 +42,7 @@
                     console.log(result)
 
                     if(result.logged == true){ // Si l'utilisateur à pu être connecté
-                        this.notify('info', `Heureux de vous revoir, ${result.username}.`)
+                        this.notify('info', `Heureux de vous voir, ${result.username}.`)
                         router.push('dashboard')
                     }
                     else{
