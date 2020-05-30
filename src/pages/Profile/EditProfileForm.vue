@@ -5,51 +5,44 @@
 
             <div class="col-md-4">
                 <base-input label="Nom d'utilisateur"
-                            placeholder="Username"
                             v-model="profile.username">
                 </base-input>
             </div>
             <div class="col-md-8">
                 <base-input label="Adresse Mail"
                             type="email"
-                            placeholder="mike@email.com"
                             v-model="profile.email">
                 </base-input>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <base-input label="Nom"
-                            v-model="profile.firstName"
-                            placeholder="First Name">
+                <base-input label="Prénom"
+                            v-model="profile.firstName">
                 </base-input>
             </div>
             <div class="col-md-6">
-                <base-input label="Prénom"
-                            v-model="profile.lastName"
-                            placeholder="Last Name">
+                <base-input label="Nom"
+                            v-model="profile.lastName">
                 </base-input>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <base-input label="Addresse"
-                            v-model="profile.address"
-                            placeholder="Home Address">
+                            v-model="profile.address">
                 </base-input>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
                 <base-input label="City"
-                            v-model="profile.city"
-                            placeholder="City">
+                            v-model="profile.city">
                 </base-input>
             </div>
             <div class="col-md-3">
                 <base-input label="Country"
-                            v-model="profile.country"
-                            placeholder="Country">
+                            v-model="profile.country">
                 </base-input>
             </div>
         </div>

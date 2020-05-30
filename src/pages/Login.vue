@@ -14,7 +14,7 @@
                 </base-input>
             </div>
         </div>
-        <base-button class="center" type="primary" v-on:click="onClickLogin" fill>Connexion (sans bdd)</base-button>
+        <base-button type="primary" v-on:click="onClickLogin" fill>Connexion</base-button>
         <div>
             <img src="/img/paysage.jpg" alt="Paysage">
         </div>
@@ -37,12 +37,12 @@
         },
         methods: {
             onClickLogin: function () {
-                this.notify('info', 'Connexion en cours.')
+                //this.notify('info', 'Connexion en cours.')
                 User.login(this.login).then((result) => {
                     console.log(result)
 
                     if(result.logged == true){ // Si l'utilisateur à pu être connecté
-                        this.notify('info', 'Vous êtes connecté.')
+                        this.notify('info', `Heureux de vous revoir, ${result.username}.`)
                         router.push('dashboard')
                     }
                     else{

@@ -44,7 +44,7 @@
         },
         methods: {
             onClickSignIn: function () {
-                this.notify('info', 'Inscription en cours.');
+                //this.notify('info', 'Inscription en cours.');
                 User.signIn(this.register).then((result) => {
                     console.log(result)
                     if(result.registered == true){ // Si l'utilisateur à pu être enregistré

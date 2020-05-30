@@ -23,11 +23,11 @@
 </template>
 <script>
   export default {
-    name: "card",
+    name: "widget",
     props: {
       title: {
         type: String,
-        description: "Card title"
+        description: "W title"
       },
       subTitle: {
         type: String,

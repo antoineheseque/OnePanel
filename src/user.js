@@ -1,35 +1,39 @@
-import router from "@/router";
-
 export default {
     user: {
         isConnected: false
     },
     profile: {
-        company: '',
         email: '',
         username: '',
         firstName: '',
         lastName: '',
+        birthdayDate: '',
+        registerDate: '',
         address: '',
         city: '',
-        country: '',
-        description: ''
+        country: ''
     },
     isConnected: function(){ //TODO: RETOURNER LA VARIABLE SI UTILISATEUR CONNECTE
         return this.user.isConnected;
     },
-    onClickEditProfile: function () {
-        fetch('/api/updateProfile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.profile)
-        }).then(function(res){
-            return res.json();
-        }).then(function(data){
-            console.log(data);
-        })
+    onClickEditProfile: function (password) {
+        return new Promise((r) => {
+            let data = this.profile
+            data.password = password
+            fetch('/api/updateProfile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(function (res) {
+                return res.json();
+            }).then(function (result) {
+                if(result){
+
+                }
+            }.bind(this))
+        });
     },
 
     // LOG IN FUNCTION
@@ -48,7 +52,15 @@ export default {
                 if(data.logged){
                     this.user.isConnected = data.logged
                     // Enregistrer les données reçues via la BDD
-                    this.profile.username = data.ID_LOGINS;
+                    this.profile = {
+                        id: data.id,
+                        username: data.username,
+                        email: data.email,
+                        lastName: data.lastName,
+                        firstName: data.firstName,
+                        birthdayDate: data.birthdayDate,
+                        registerDate: data.registerDate
+                    }
                 }
 
                 r(data)
