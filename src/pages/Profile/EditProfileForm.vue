@@ -2,56 +2,60 @@
     <card>
         <h5 slot="header" class="title">Mon Profil</h5>
         <div class="row">
-
+            <div class="col-md-2">
+                <base-input label="ID"
+                            v-model="profile.id" readonly="true">
+                </base-input>
+            </div>
             <div class="col-md-4">
                 <base-input label="Nom d'utilisateur"
                             v-model="profile.username">
                 </base-input>
             </div>
-            <div class="col-md-8">
-                <base-input label="Adresse Mail"
+            <div class="col-md-6">
+                <base-input label="Email"
                             type="email"
                             v-model="profile.email">
                 </base-input>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <base-input label="Prénom"
                             v-model="profile.firstName">
                 </base-input>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <base-input label="Nom"
                             v-model="profile.lastName">
                 </base-input>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <base-input label="Adresse"
-                            v-model="profile.address">
-                </base-input>
+            <div class="col-md-4">
+                <div class="form-group datepicker-div">
+                    <label class="control-label">Date de naissance</label>
+                    <datepicker v-model="profile.birthdayDate" class="form-control"></datepicker>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <base-input label="City"
-                            v-model="profile.city">
-                </base-input>
-            </div>
-            <div class="col-md-3">
-                <base-input label="Country"
-                            v-model="profile.country">
+            <div class="col-md-6">
+                <base-input label="Confirmez avec votre mot de passe" type="password"
+                            v-model="passwordConfirmation">
                 </base-input>
             </div>
         </div>
-        <base-button slot="footer" type="primary"  v-on:click="onClickEditProfile" fill>Save</base-button>
+        <base-button type="primary"  v-on:click="onClickEditProfile" :loading="this.isUpdatingProfile" :disabled="this.isUpdatingProfile" fill>Editer mon profil</base-button>
     </card>
 </template>
 <script>
+    import Datepicker from 'vuejs-datepicker';
     import User from '@/user';
+    import NotificationTemplate from "@/pages/Notifications/NotificationTemplate";
+
     export default {
+        components: {
+            Datepicker
+        },
         props: {
             profile: {
                 type: Object,
@@ -60,10 +64,39 @@
                 }
             }
         },
+        data(){
+            return{
+                passwordConfirmation:"",
+                isUpdatingProfile:false
+            }
+        },
         methods: {
             onClickEditProfile: function () {
-                User.onClickEditProfile();
+                this.isUpdatingProfile = true
+                User.onClickEditProfile(this.passwordConfirmation).then((result) =>{
+                    console.log(result)
+
+                    if(result.updated === true){ // Si l'utilisateur à pu être connecté
+                        this.notify('info', `Les données ont été sauvegardées.`)
+                    }
+                    else{
+                        this.passwordConfirmation = ""
+                        this.notify('danger', result.reason)
+                    }
+                    this.isUpdatingProfile = false
+                });
             }
+        },
+        notify: function(info,message){
+            this.$notify({
+                component: NotificationTemplate,
+                icon: "tim-icons icon-bell-55",
+                horizontalAlign: "right",
+                verticalAlign: "top",
+                type: info,
+                timeout: 2000,
+                message: message
+            })
         }
     }
 </script>

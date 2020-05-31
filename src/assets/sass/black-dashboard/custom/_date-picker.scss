@@ -1,0 +1,30 @@
+div.vdp-datepicker.form-control {
+  padding: 0;
+}
+
+.vdp-datepicker input{
+  width: 100%;
+  min-height: 100%;
+  background-color: transparent !important;
+  border: 0 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: 0.5rem 0.7rem;
+}
+.vdp-datepicker input:focus{
+  outline-width: 0px;
+  outline-offset: 0px;
+}
+
+.vdp-datepicker__calendar{
+  color: #F1FAEE !important;
+  background-color: #192D4F !important;
+  border: 1px solid #192D4F !important;
+}
+
+.prev, .day__month_btn, .next, .month__year_btn{
+  color: #F1FAEE !important;
+}
+
+.prev:hover, .day__month_btn:hover, .next:hover, .month__year_btn:hover{
+  background-color: #29496B !important;
+}

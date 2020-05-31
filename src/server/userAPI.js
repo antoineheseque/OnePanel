@@ -22,6 +22,16 @@ bcrypt.genSalt(10, function(err, salt) {
  */
 
 router.post("/updateProfile", (req, res) => {
+    let data = req.body
+    data.updated = false
+
+    if(data.password.length <= 3){
+        data.reason = "Le mot de passe doit faire plus de 5 caractères."
+        res.json(data)
+        return;
+    }
+
+
     res.json({ message: "Message reçu!"})
     //TODO: envoyer requete avec l'utilisateur (et token?) correspondant pour actualiser toute les données
     // Les données envoyées sont stockées sout forme json dans user.js donc il faudra faire la requete avec par

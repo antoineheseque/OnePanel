@@ -3,6 +3,7 @@ export default {
         isConnected: false
     },
     profile: {
+        id: '',
         email: '',
         username: '',
         firstName: '',

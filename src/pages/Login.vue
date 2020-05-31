@@ -14,7 +14,7 @@
                 </base-input>
             </div>
         </div>
-        <base-button type="primary" v-on:click="onClickLogin" fill>Se connecter</base-button>
+        <base-button type="primary" v-on:click="onClickLogin" :loading="this.isLogging" :disabled="isLogging" fill>Se connecter</base-button>
         <div>
             <img src="/img/paysage.jpg" alt="Paysage">
         </div>
@@ -33,10 +33,13 @@
                     username:"",
                     password:""
                 },
+                isLogging:false
             }
         },
         methods: {
             onClickLogin: function () {
+                this.isLogging = true
+
                 //this.notify('info', 'Connexion en cours.')
                 User.login(this.login).then((result) => {
                     console.log(result)
@@ -49,6 +52,7 @@
                         this.login.password = ""
                         this.notify('danger', result.reason)
                     }
+                    this.isLogging = false
                 });
             },
             notify: function(info,message){

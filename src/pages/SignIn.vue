@@ -20,7 +20,7 @@
                 </base-input>
             </div>
         </div>
-        <base-button class="center" type="primary" v-on:click="onClickSignIn" fill>S'inscrire</base-button>
+        <base-button class="center" type="primary" v-on:click="onClickSignIn" :loading="isSigning" :disabled="isSigning" fill>S'inscrire</base-button>
         <div>
             <img src="/img/paysage.jpg" alt="Paysage">
         </div>
@@ -40,11 +40,13 @@
                     password:"",
                     password2:""
                 },
+                isSigning:false
             }
         },
         methods: {
             onClickSignIn: function () {
                 //this.notify('info', 'Inscription en cours.');
+                this.isSigning = true
                 User.signIn(this.register).then((result) => {
                     console.log(result)
                     if(result.registered == true){ // Si l'utilisateur à pu être enregistré
@@ -56,6 +58,7 @@
                         this.register.password2 = ""
                         this.notify('danger', result.reason)
                     }
+                    this.isSigning = false
                 });
             },
             notify: function(info,message){
