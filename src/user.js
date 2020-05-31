@@ -30,9 +30,7 @@ export default {
             }).then(function (res) {
                 return res.json();
             }).then(function (result) {
-                if(result){
-
-                }
+                r(result)
             }.bind(this))
         });
     },

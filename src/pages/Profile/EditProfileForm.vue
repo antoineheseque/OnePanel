@@ -44,7 +44,7 @@
                 </base-input>
             </div>
         </div>
-        <base-button type="primary"  v-on:click="onClickEditProfile" :loading="this.isUpdatingProfile" :disabled="this.isUpdatingProfile" fill>Editer mon profil</base-button>
+        <base-button type="primary"  v-on:click="onClickEditProfile" :loading="isUpdatingProfile" :disabled="isUpdatingProfile" fill>Editer mon profil</base-button>
     </card>
 </template>
 <script>
@@ -56,18 +56,11 @@
         components: {
             Datepicker
         },
-        props: {
-            profile: {
-                type: Object,
-                default: () => {
-                    return {};
-                }
-            }
-        },
         data(){
             return{
                 passwordConfirmation:"",
-                isUpdatingProfile:false
+                isUpdatingProfile:false,
+                profile:User.profile
             }
         },
         methods: {
@@ -85,18 +78,18 @@
                     }
                     this.isUpdatingProfile = false
                 });
+            },
+            notify: function(info,message){
+                this.$notify({
+                    component: NotificationTemplate,
+                    icon: "tim-icons icon-bell-55",
+                    horizontalAlign: "right",
+                    verticalAlign: "top",
+                    type: info,
+                    timeout: 2000,
+                    message: message
+                })
             }
-        },
-        notify: function(info,message){
-            this.$notify({
-                component: NotificationTemplate,
-                icon: "tim-icons icon-bell-55",
-                horizontalAlign: "right",
-                verticalAlign: "top",
-                type: info,
-                timeout: 2000,
-                message: message
-            })
         }
     }
 </script>

@@ -26,16 +26,48 @@ router.post("/updateProfile", (req, res) => {
     data.updated = false
 
     if(data.password.length <= 3){
-        data.reason = "Le mot de passe doit faire plus de 5 caractères."
+        data.reason = "Le mot de passe doit faire plus de 3 caractères."
         res.json(data)
         return;
     }
 
+    sql.request(`SELECT * FROM \`users\` WHERE id='${data.id}' LIMIT 1`).then((result) => {
+        if(result.length > 0){ // SI UN UTILISATEUR CORRESPONDS ON COMPARE LES MDP
+            bcrypt.compare(data.password, result[0].password, function(err, comparePassword){ // COMPARAISON AVEC LE MOT DE PASSE STOCKE EN BASE DE DONNEE
+                if(err) console.log(err)
+                else if (comparePassword) { // LES MOTS DE PASSE SONT BON
+                    data = result[0]
+                    data.logged = true
 
-    res.json({ message: "Message reçu!"})
-    //TODO: envoyer requete avec l'utilisateur (et token?) correspondant pour actualiser toute les données
-    // Les données envoyées sont stockées sout forme json dans user.js donc il faudra faire la requete avec par
-    // ex: firstName=user.profile.firstName lastName=user.profile.lastName ...
+                    // FORMAT DATE
+                    //let date = new Date(data.birthdayDate)
+                    //let formatedDate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay()
+                    //console.log(date)
+
+                    // , birthdayDate='${formatedDate}'
+                    //TODO: Ajouter l'envoi de la date de naissance
+
+                    // ON MET A JOUR LA TABLE
+                    sql.request(`UPDATE \`users\` SET username='${data.username}', email='${data.email}', firstName='${data.firstName}', lastName='${data.lastName}' WHERE id='${data.id}'`).then(() => {
+                        res.json(data)
+                    }).catch((err) => {
+                        console.log("Un problème est survenu dans la BDD")
+                        console.log(err)
+                    });
+                } else {
+                    data.reason = "Mot de passe incorrect."
+                    res.json(data)
+                }
+            });
+        }
+        else {
+            data.reason = "Utilisateur inexistant."
+            res.json(data)
+        }
+    }).catch((err) => {
+        console.log("Un problème est survenu dans la BDD")
+        console.log(err)
+    });
 });
 
 router.post("/signIn", (req, res) => {
