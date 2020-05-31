@@ -20,7 +20,7 @@ export default {
         return new Promise((r) => {
             let data = this.profile
             data.password = password
-            fetch('/api/updateProfile', {
+            fetch('/api/user/updateProfile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ export default {
     // LOG IN FUNCTION
     login: function(loginData){
         return new Promise((r) => {
-            fetch('/api/login', {
+            fetch('/api/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ export default {
     // LOG OUT FUNCTION
     logout: function(logoutData){
         return new Promise((r) => {
-            fetch('/api/logout', {
+            fetch('/api/user/logout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ export default {
     // SIGN IN FUNCTION
     signIn: function(signInData){
         return new Promise((r) => {
-            fetch('/api/signIn', {
+            fetch('/api/user/signIn', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

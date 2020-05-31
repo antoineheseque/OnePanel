@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const configureAPI = require('./src/server/configure')
+const configureAPI = require('./src/server/api')
 
 module.exports = {
   devServer: {
