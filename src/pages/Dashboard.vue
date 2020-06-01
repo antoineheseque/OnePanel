@@ -29,12 +29,6 @@
     },
     computed: {
 
-    },
-    methods: {
-
-    },
-    mounted() {
-
     }
   };
 </script>
