@@ -11,7 +11,7 @@
         methods: {
             onClickLogout: function () {
                 //this.notify('info', 'Déconnexion en cours.')
-                User.logout(this.logout).then((result) => {
+                User.logout().then((result) => {
                     console.log(result)
 
                     if(result.logged == false){ // Si l'utilisateur à pu être déconnecté

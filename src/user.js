@@ -62,7 +62,7 @@ export default {
     },
 
     // LOG OUT FUNCTION
-    logout: function(logoutData){
+    logout: function(){
         //TODO: Virer le token?
         this.user.isConnected = false // temporaire
     },
