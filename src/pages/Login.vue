@@ -44,7 +44,7 @@
                 User.login(this.login).then((result) => {
                     console.log(result)
 
-                    if(result.logged == true){ // Si l'utilisateur à pu être connecté
+                    if(result.logged === true){ // Si l'utilisateur à pu être connecté
                         this.notify('info', `Heureux de vous voir, ${result.username}.`)
                         router.push('dashboard')
                     }

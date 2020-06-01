@@ -33,7 +33,7 @@
             <div class="col-md-4">
                 <div class="form-group datepicker-div">
                     <label class="control-label">Date de naissance</label>
-                    <datepicker v-model="profile.birthdayDate" class="form-control"></datepicker>
+                    <datepicker v-model="profile.birthdayDate" :language="fr" class="form-control"></datepicker>
                 </div>
             </div>
         </div>
@@ -44,13 +44,14 @@
                 </base-input>
             </div>
         </div>
-        <base-button type="primary"  v-on:click="onClickEditProfile" :loading="isUpdatingProfile" :disabled="isUpdatingProfile" fill>Editer mon profil</base-button>
+        <base-button type="primary"  v-on:click="onClickEditProfile" :loading="isUpdatingProfile" :disabled="isUpdatingProfile" fill>Mettre à jour mon profil</base-button>
     </card>
 </template>
 <script>
     import Datepicker from 'vuejs-datepicker';
     import User from '@/user';
     import NotificationTemplate from "@/pages/Notifications/NotificationTemplate";
+    import fr_datepicker from "vuejs-datepicker/dist/locale/translations/fr"
 
     export default {
         components: {
@@ -60,22 +61,27 @@
             return{
                 passwordConfirmation:"",
                 isUpdatingProfile:false,
-                profile:User.profile
+                profile:"",
+                fr:fr_datepicker
             }
+        },
+        mounted:function(){
+            this.profile=User.profile
         },
         methods: {
             onClickEditProfile: function () {
                 this.isUpdatingProfile = true
-                User.onClickEditProfile(this.passwordConfirmation).then((result) =>{
+                this.profile.password = this.passwordConfirmation
+                User.onClickEditProfile(this.profile).then((result) =>{
                     console.log(result)
 
                     if(result.updated === true){ // Si l'utilisateur à pu être connecté
                         this.notify('info', `Les données ont été sauvegardées.`)
                     }
                     else{
-                        this.passwordConfirmation = ""
                         this.notify('danger', result.reason)
                     }
+                    this.passwordConfirmation = ""
                     this.isUpdatingProfile = false
                 });
             },

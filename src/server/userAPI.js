@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 const sql = require('./bdd')
 const bcrypt = require('bcrypt');
+const format = require('fecha');
 
 // Accès à la bdd avec sql.base. ...
 // J'ai fait une fonction dans bdd.js pour simplifier tout il faut la tester aussi jsp si ca marche
@@ -36,23 +37,24 @@ router.post("/updateProfile", (req, res) => {
             bcrypt.compare(data.password, result[0].password, function(err, comparePassword){ // COMPARAISON AVEC LE MOT DE PASSE STOCKE EN BASE DE DONNEE
                 if(err) console.log(err)
                 else if (comparePassword) { // LES MOTS DE PASSE SONT BON
-                    data = result[0]
-                    data.logged = true
 
                     // FORMAT DATE
-                    //let date = new Date(data.birthdayDate)
-                    //let formatedDate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay()
-                    //console.log(date)
+                    let date = format.format(new Date(data.birthdayDate), 'isoDate')
+                    console.log(date)
 
-                    // , birthdayDate='${formatedDate}'
-                    //TODO: Ajouter l'envoi de la date de naissance
 
                     // ON MET A JOUR LA TABLE
-                    sql.request(`UPDATE \`users\` SET username='${data.username}', email='${data.email}', firstName='${data.firstName}', lastName='${data.lastName}' WHERE id='${data.id}'`).then(() => {
+                    sql.request(`UPDATE \`users\` SET username='${data.username}', email='${data.email}', firstName='${data.firstName}', lastName='${data.lastName}', birthdayDate='${date}' WHERE id='${data.id}'`).then((result) => {
+                        data.updated = true
+                        data.password = ""
                         res.json(data)
                     }).catch((err) => {
-                        console.log("Un problème est survenu dans la BDD")
-                        console.log(err)
+                        if(err.code === "ER_DUP_ENTRY"){
+                            data.reason = "Ce nom d'utilisateur existe déjà."
+                        }else{
+                            data.reason = "Un problème est survenu dans la BDD: ." + err.sqlMessage
+                        }
+                        res.json(data)
                     });
                 } else {
                     data.reason = "Mot de passe incorrect."
@@ -134,6 +136,9 @@ router.post("/login", (req, res) => {
                         console.log("Un problème est survenu dans la BDD")
                         console.log(err)
                     });
+
+                    // TODO AJOUTER TOKEN
+                    data.token="rien pour l'instant"
                 } else {
                     data.reason = "Nom d'utilisateur ou mot de passe incorrect."
                     res.json(data)
@@ -148,15 +153,6 @@ router.post("/login", (req, res) => {
         console.log("Un problème est survenu dans la BDD")
         console.log(err)
     });
-});
-
-router.post("/logout", (req, res) => {
-    let data = req.body
-
-    //TODO: Virer le token?
-
-    data.logged = false
-    res.json(data)
 });
 
 module.exports = router

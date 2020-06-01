@@ -3,24 +3,22 @@ export default {
         isConnected: false
     },
     profile: {
-        id: '',
-        email: '',
-        username: '',
-        firstName: '',
-        lastName: '',
-        birthdayDate: '',
-        registerDate: '',
-        address: '',
-        city: '',
-        country: ''
+            id: '',
+            email: '',
+            username: '',
+            firstName: '',
+            lastName: '',
+            birthdayDate: '',
+            registerDate: '',
+            address: '',
+            city: '',
+            country: ''
     },
-    isConnected: function(){ //TODO: RETOURNER LA VARIABLE SI UTILISATEUR CONNECTE
+    isConnected: function(){ //TODO: VERIFIER SI UTILISATEUR TJR CONNECTE: TOKEN VALIDE?
         return this.user.isConnected;
     },
-    onClickEditProfile: function (password) {
+    onClickEditProfile: function (data) {
         return new Promise((r) => {
-            let data = this.profile
-            data.password = password
             fetch('/api/user/updateProfile', {
                 method: 'POST',
                 headers: {
@@ -30,12 +28,15 @@ export default {
             }).then(function (res) {
                 return res.json();
             }).then(function (result) {
+                if(result.updated){ // Si données envoyées on enregistre en local
+                    this.profile = result
+                }
                 r(result)
             }.bind(this))
         });
     },
 
-    // LOG IN FUNCTION
+    // LOGIN FUNCTION
     login: function(loginData){
         return new Promise((r) => {
             fetch('/api/user/login', {
@@ -47,19 +48,12 @@ export default {
             }).then(function (res) {
                 return res.json();
             }).then(function (data) {
-                //TODO: Convertir les données reçues pour les enregistrer dans user.js
                 if(data.logged){
                     this.user.isConnected = data.logged
                     // Enregistrer les données reçues via la BDD
-                    this.profile = {
-                        id: data.id,
-                        username: data.username,
-                        email: data.email,
-                        lastName: data.lastName,
-                        firstName: data.firstName,
-                        birthdayDate: data.birthdayDate,
-                        registerDate: data.registerDate
-                    }
+                    this.profile = data
+
+                    //TODO: AJOUTER LE TOKEN AUX COOKIES (cookie.add(data.token))
                 }
 
                 r(data)
@@ -69,20 +63,8 @@ export default {
 
     // LOG OUT FUNCTION
     logout: function(logoutData){
-        return new Promise((r) => {
-            fetch('/api/user/logout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(logoutData)
-            }).then(function (res) {
-                return res.json();
-            }).then(function (data) {
-                this.user.isConnected = data.logged
-                r(data)
-            }.bind(this))
-        });
+        //TODO: Virer le token?
+        this.user.isConnected = false // temporaire
     },
 
     // SIGN IN FUNCTION
