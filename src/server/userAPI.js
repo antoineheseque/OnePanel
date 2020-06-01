@@ -155,4 +155,12 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.post("/verifyToken", (req, res) => {
+    let token = req.body.token
+
+    // VERIFIER SI TOKEN VALIDE
+    // retourner qqch? exemple de retour:
+    res.json({"isVerified":true,"id":1}) // Ou alors retourner directement toute les infos jsp
+});
+
 module.exports = router
