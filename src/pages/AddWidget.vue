@@ -1,13 +1,4 @@
 <template>
-  <div id="app">
-    <div class="container">
-  <h1 v-bind:class="affichage">Widgets</h1>
-  <div class="row">
-    <fiche-produit v-for="produit in produits" v-bind:nom="produit" v-on:validation="sélectionner" role="sélection"> </fiche-produit>
-
-  </div>
-    </div>
-  </div>
   <div class="row">
     <div class="col-md-8">
       <add-widget-list :widgetList="widgetList">
@@ -20,7 +11,6 @@
         <base-button slot="footer" type="primary" fill>Save</base-button>
       </div>
     </div>
-
   </div>
 </template>
 <script>
