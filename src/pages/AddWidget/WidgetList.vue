@@ -1,4 +1,11 @@
 <template>
+  ` <div class="col-md-4">
+  <p class="jumbotorn">{{nom}} <br>
+    <button v-on:click="valider(nom)" v-if="role=='sélection'">Sélectionner</button>
+  </p>
+</div>
+  `
+  ,
     <base-table :data="tableData"
                 thead-classes="text-primary">
       <template slot-scope="{row}">
@@ -30,6 +37,29 @@
       }
     }
   }
+  Vue.component('fiche-produit',{
+    props:['nom','role'],
+    methods:{
+      valider: function (produit) {
+        this.$emit('validation',produit)
+      }
+    }
+  })
+  var app = new Vue({
+    el: "#app",
+
+    data:  {
+      user: "sheila",
+      produits: ["horoscope","Météo","DayStreak"],
+      interfaces: [],
+      affichage:"display-1"
+    },
+    methods:{
+      sélectionner: function (produit) {
+        this.interfaces.push(produit);
+      }
+    }
+  })
 </script>
 <style>
 </style>
