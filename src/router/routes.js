@@ -6,6 +6,7 @@ const NotFound = () => import(/* webpackChunkName: "dashboard" */"@/pages/NotFou
 
 // Admin pages
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */"@/pages/Dashboard.vue");
+const Dashboard2 = () => import(/* webpackChunkName: "dashboard" */"@/pages/Dashboard-old.vue");
 const Profile = () => import(/* webpackChunkName: "common" */ "@/pages/Profile.vue");
 const AddWidget = () => import(/* webpackChunkName: "common" */ "@/pages/AddWidget.vue");
 const LogIn = () => import(/* webpackChunkName: "common" */"@/pages/Login.vue");
@@ -34,6 +35,11 @@ const routes = [
                 meta: {
                     requiresAuth: true
                 }
+            },
+            {
+                path: "dashboard2",
+                name: "dashboard2",
+                component: Dashboard2,
             },
             {
                 path: "profile",

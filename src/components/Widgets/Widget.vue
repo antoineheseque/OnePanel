@@ -1,12 +1,15 @@
 <template>
-    <div class="card" :class="[type && `card-${type}`]">
-        <div class="card-header" v-if="$slots.header || title" :class="headerClasses">
+    <div :class="'col-md-'+widget.w">
+        <div class="card" :class="[type && `card-${type}`]">
+
+            <div class="card-header" v-if="$slots.header">
             <slot name="header">
-                <p class="card-category" v-if="title">{{subTitle}}</p>
-            </slot>
-        </div>
-        <div class="card-body" v-if="$slots.default">
-            <slot></slot>
+                    <p class="card-category" v-if="widget.title">{{widget.title}}</p>
+                </slot>
+            </div>
+            <div class="card-body" v-if="$slots.default">
+                <slot></slot>
+            </div>
         </div>
     </div>
 </template>
@@ -14,10 +17,8 @@
     export default {
         name: "widget",
         props: {
-            title: {
-                type: String,
-                description: "Widget subtitle"
-            }
+            widget:"",
+            type:""
         }
     };
 </script>
