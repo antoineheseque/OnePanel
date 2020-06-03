@@ -5,12 +5,8 @@
 
         <div class="row">
             <widget v-for="(widget, idx) in widgets.widgets" :key="idx" :widget="widget">
-                <template slot="header">
-                    <h5 class="card-category">{{widget.title}}</h5>
-                </template>
-                <div>
-                    <p>Content</p>
-                </div>
+                <template slot="header"></template>
+                <template slot="content"></template>
             </widget>
             <!-- <div class="col-md-3"></div> -->
         </div>
