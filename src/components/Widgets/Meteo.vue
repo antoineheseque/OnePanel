@@ -3,7 +3,7 @@
         <p v-if="!locationState">Localisation non autorisé</p>
         <button class="btn btn-warning ml-4 mb-2" @click="goBackToLocation" v-if="!toggleResultMoreInfo && method === 'position'">⇐ Retour</button>
         <button class="btn btn-success ml-4" @click="updateToggleResultLocationDaily" v-if="toggleResultPositionToday">Géolocalisation</button>
-        <div v-else="">
+        <div v-else>
             <button class="btn btn-success ml-4" @click="updateToggleResultLocationHourly" v-if="!toggleResultMoreInfo">Sur 48 heures</button>
             <button class="btn btn-success ml-4" @click="updateToggleResultLocationDaily" v-if="!toggleResultMoreInfo">Sur 7 jours</button>
             <button class="btn btn-success ml-4" @click="updateToggleResultPositionToday" v-if="!toggleResultMoreInfo && method === 'location' ">Recherche par ville</button>
@@ -17,18 +17,18 @@
 
         <div class="m-2 horizontalScrollItems" v-if="toggleResultLocationHourly">
             <div class="bg-info p-2 m-2 horizontalScrollItem" v-for="(weatherData, i) in temps48hours" :key="i" @click="updateToggleResultMoreInfo(i)">
-                <p class="text-affichage">{{datesHourly[i].getHours()}}h - {{datesHourly[i].getDate()}}/{{datesHourly[i].getMonth()+1}}</p>
-                <img :src="getUrlImg(weatherData.weather[0].icon)" alt="Icon" class="img">
-                <p class="text-affichage">{{weatherData.temp}}°C</p>
-                <p class="text-affichage">{{toUpper(weatherData.weather[0].description)}}</p>
+                <p class="text-affichage hours">{{datesHourly[i].getHours()}}h - {{datesHourly[i].getDate()}}/{{datesHourly[i].getMonth()+1}}</p>
+                <img :src="getUrlImg(weatherData.weather[0].icon)" alt="Icon" class="zoom">
+                <p class="text-affichage">{{Math.round(weatherData.temp)}}°C</p>
+                <p class="text-affichage case">{{toUpper(weatherData.weather[0].description)}}</p>
             </div>
         </div>
         <div class="m-2 horizontalScrollItems" v-if="toggleResultLocationDaily">
             <div class="bg-info p-2 m-2 horizontalScrollItem" v-for="(weatherData, i) in temps7days" :key="i" @click="updateToggleResultMoreInfo(i)">
-                <p class="text-affichage">{{datesDay[i].getDate()}}/{{datesDay[i].getMonth()+1}}</p>
+                <p class="text-affichage hours">{{datesDay[i].getDate()}}/{{datesDay[i].getMonth()+1}}</p>
                 <img :src="getUrlImg(weatherData.weather[0].icon)" alt="Icon">
-                <p class="text-affichage">{{weatherData.temp.max}}°C, {{weatherData.temp.min}}°C</p>
-                <p class="text-affichage">{{toUpper(weatherData.weather[0].description)}}</p>
+                <p class="text-affichage">{{Math.round(weatherData.temp.max)}}°C, {{Math.round(weatherData.temp.min)}}°C</p>
+                <p class="text-affichage case">{{toUpper(weatherData.weather[0].description)}}</p>
             </div>
         </div>
         <div class="m-2" v-if="toggleResultMoreInfo && temp.toggleResultLocationDaily">
@@ -250,12 +250,54 @@
         height: auto;
         margin: auto;
     }
+    .hours {
+        font-size: 15px;
+    }
+    .case {
+        display: block;
+        margin: 2em auto;
+        position: relative;
+        table-layout: fixed;
+        width: 100px;
+        height: 20px;
+    }
     .horizontalScrollItems{
         display: flex;
         overflow-x: auto;
     }
-
-    .horizontalScrollItems::-webkit-scrollbar{
-        display: none;
+    .zoom{
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
     }
+    .zoom:hover{
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+    .horizontalScrollItems::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #29496B;
+        border-radius: 10px;
+        bottom: 0;
+    }
+
+    .horizontalScrollItems::-webkit-scrollbar
+    {
+        background-color: #1B3052;
+    }
+
+    .horizontalScrollItems::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        background-image: -webkit-gradient(linear,
+        left bottom,
+        left top,
+        color-stop(0.44, rgb(27,48,82)),
+        color-stop(0.72, rgb(20,30,70)),
+        color-stop(0.86, rgb(12,22,57)));
+    }
+
+
 </style>
