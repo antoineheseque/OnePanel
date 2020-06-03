@@ -1,6 +1,6 @@
 const express = require('express')
 const userAPI = require('./userAPI')
-const widgetsAPI = require('./widgetsAPI')
+const widgetAPI = require('./widgetAPI')
 const crypto = require('crypto')
 
 module.exports = app => {
@@ -9,5 +9,5 @@ module.exports = app => {
     app.use(express.json());
     app.use(express.urlencoded());
     app.use('/api/user', userAPI)
-    app.use('/api/widgets', widgetsAPI)
+    app.use('/api/widgets', widgetAPI)
 }

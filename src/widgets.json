@@ -1,0 +1,20 @@
+{
+  "widgets": [
+    {
+      "title": "Application Météo",
+      "id": "meteo",
+      "x": 0,
+      "y": 0,
+      "w": 6,
+      "h": 1
+    },
+    {
+      "title": "Attrapez les tous!",
+      "id": "pokemon",
+      "x": 0,
+      "y": 0,
+      "w": 4,
+      "h": 1
+    }
+  ]
+}
