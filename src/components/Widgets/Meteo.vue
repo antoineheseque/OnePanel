@@ -1,15 +1,16 @@
 <template>
     <div class="appMeteo">
         <p v-if="!locationState">Localisation non autorisé</p>
-        <button class="btn btn-warning btn-sm" @click="goBackToLocation" v-if="!toggleResultMoreInfo && method === 'position'">⇐ Retour</button>
-        <button class="btn btn-success btn-sm" @click="updateToggleResultLocationDaily" v-if="toggleResultPositionToday">Géolocalisation</button>
-        <div class="btn-group-sm" v-else>
-            <button class="btn btn-warning" @click="goBack" v-if="toggleResultMoreInfo">⇐ Retour</button>
-            <button class="btn btn-success" @click="updateToggleResultLocationHourly" v-if="!toggleResultMoreInfo">Sur 48 heures</button>
-            <button class="btn btn-success" @click="updateToggleResultLocationDaily" v-if="!toggleResultMoreInfo">Sur 7 jours</button>
-            <button class="btn btn-success" @click="updateToggleResultPositionToday" v-if="!toggleResultMoreInfo && method === 'location' ">Trouver une ville</button>
+        <div class="row m-0">
+            <button class="btn btn-warning btn-sm" @click="goBackToLocation" v-if="!toggleResultMoreInfo && method === 'position'">⇐ Retour</button>
+            <button class="btn btn-success btn-sm" @click="updateToggleResultLocationDaily" v-if="toggleResultPositionToday">Géolocalisation</button>
+            <div class="btn-group-sm" v-else>
+                <button class="btn btn-warning" @click="goBack" v-if="toggleResultMoreInfo">⇐ Retour</button>
+                <button class="btn btn-success" @click="updateToggleResultLocationHourly" v-if="!toggleResultMoreInfo">48 heures</button>
+                <button class="btn btn-success" @click="updateToggleResultLocationDaily" v-if="!toggleResultMoreInfo">7 jours</button>
+                <button class="btn btn-success" @click="updateToggleResultPositionToday" v-if="!toggleResultMoreInfo && method === 'location' ">Trouver une ville</button>
+            </div>
         </div>
-
         <div class="form-groupe m-1" v-if="toggleResultPositionToday">
             <label for="position">Entrez le nom d'une ville</label>
             <input type="text" id="position" class="form-control" v-model="requete" @keypress.enter="getCoords">
@@ -26,19 +27,10 @@
         </div>
         <div class="m-2 horizontalScrollItems " v-if="toggleResultLocationDaily">
             <div class="bg-info p-2 m-2 horizontalScrollItem" v-for="(weatherData, i) in temps7days" :key="i" @click="updateToggleResultMoreInfo(i)">
-                <div class="meteo-card">
-                    <!--
-                    <div class="block block-one"></div>
-                    <div class="block block-two"></div>
-                    <div class="block block-three"></div>
-                    <div class="block block-four"></div>
-                    -->
-
-                    <p class="text-affichage hours">{{datesDay[i].getDate()}}/{{datesDay[i].getMonth()+1}}</p>
-                    <img :src="getUrlImg(weatherData.weather[0].icon)" alt="Icon" class="zoom">
-                    <p class="text-affichage">{{Math.round(weatherData.temp.max)}}°C, {{Math.round(weatherData.temp.min)}}°C</p>
-                    <p class="text-affichage case">{{toUpper(weatherData.weather[0].description)}}</p>
-                </div>
+                <p class="text-affichage hours">{{datesDay[i].getDate()}}/{{datesDay[i].getMonth()+1}}</p>
+                <img :src="getUrlImg(weatherData.weather[0].icon)" alt="Icon" class="zoom">
+                <p class="text-affichage">{{Math.round(weatherData.temp.max)}}°C, {{Math.round(weatherData.temp.min)}}°C</p>
+                <p class="text-affichage case">{{toUpper(weatherData.weather[0].description)}}</p>
             </div>
         </div>
         <div class="m-2" v-if="toggleResultMoreInfo && temp.toggleResultLocationDaily">
@@ -62,7 +54,7 @@
             </div>
         </div>
 
-        <div class="mx-3 mb-5" v-if="toggleResultPositionToday">
+        <div class="mx-3 mb-5 citiesList" v-if="toggleResultPositionToday">
             <div class="d-flex flex-column bg-info h5 p-2 rounded " v-for="(coordCity,i) in coordsCity" :key="i" @click="getLatLon(i)">{{coordCity.formatted}}</div>
         </div>
     </div>
@@ -273,11 +265,16 @@
     .case {
         table-layout: fixed;
         width: 5em;
-        height: auto;
+        height: 4.5em;
     }
     .horizontalScrollItems{
         display: flex;
         overflow-x: auto;
+    }
+    .citiesList{
+        overflow-y: auto;
+        height: 12.5em;
+        padding-right: 5px;
     }
     .zoom{
         -webkit-transform: scale(1);
