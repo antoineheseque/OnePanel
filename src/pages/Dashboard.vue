@@ -1,7 +1,9 @@
 <template>
     <div>
+        <!--
         <base-button type="primary" v-on:click="call" fill>Test Appel LaPoste API</base-button>
         <base-button type="primary" v-on:click="test" fill>Test console log widgets</base-button>
+        -->
 
         <div class="row">
             <widget v-for="(widget, idx) in widgets.widgets" :key="idx" :widget="widget">

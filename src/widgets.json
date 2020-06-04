@@ -9,19 +9,11 @@
       "h": 1
     },
     {
-      "title": "Attrapez les tous!",
-      "id": "pokemon",
-      "x": 0,
-      "y": 0,
-      "w": 4,
-      "h": 1
-    },
-    {
       "title": "Météo",
       "id": "meteo",
       "x": 0,
       "y": 0,
-      "w": 8,
+      "w": 6,
       "h": 1
     },
     {
@@ -29,7 +21,7 @@
       "id": "gif-du-jour",
       "x": 0,
       "y": 0,
-      "w": 2,
+      "w": 4,
       "h": 1
     }
   ]

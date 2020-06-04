@@ -4,14 +4,14 @@
 
             <div class="card-header">
                 <slot name="header">
-                    <h5 class="card-category" v-if="!cityName">{{widget.title}}</h5>
-                    <h5 class="card-category" v-else="">{{widget.title + " de " + cityName}}</h5>
+                    <h5 class="card-category" v-if="weatherInformations">{{widget.title + " de " + weatherInformations}}</h5>
+                    <h5 class="card-category" v-else>{{widget.title}}</h5>
                 </slot>
             </div>
             <div class="card-body">
                 <slot name="content">
                     <news v-if="widget.id==='news'"></news>
-                    <meteo v-if="widget.id==='meteo'" v-on:setCityName="setCityName"></meteo>
+                    <meteo v-if="widget.id==='meteo'" v-on:setInformations="setInformations"></meteo>
                     <gif-du-jour v-if="widget.id==='gif-du-jour'"></gif-du-jour>
                 </slot>
             </div>
@@ -31,12 +31,12 @@
         },
         data(){
             return{
-                cityName:""
+                weatherInformations:""
             }
         },
         methods:{
-            setCityName(value){
-                this.cityName = value
+            setInformations(value){
+                this.weatherInformations = value
                 console.log(value)
             }
         }

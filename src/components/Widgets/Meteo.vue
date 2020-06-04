@@ -1,13 +1,13 @@
 <template>
     <div class="appMeteo">
         <p v-if="!locationState">Localisation non autorisé</p>
-        <button class="btn btn-warning ml-4 mb-2" @click="goBackToLocation" v-if="!toggleResultMoreInfo && method === 'position'">⇐ Retour</button>
-        <button class="btn btn-success ml-4" @click="updateToggleResultLocationDaily" v-if="toggleResultPositionToday">Géolocalisation</button>
-        <div v-else>
-            <button class="btn btn-success ml-4" @click="updateToggleResultLocationHourly" v-if="!toggleResultMoreInfo">Sur 48 heures</button>
-            <button class="btn btn-success ml-4" @click="updateToggleResultLocationDaily" v-if="!toggleResultMoreInfo">Sur 7 jours</button>
-            <button class="btn btn-success ml-4" @click="updateToggleResultPositionToday" v-if="!toggleResultMoreInfo && method === 'location' ">Recherche par ville</button>
-            <button class="btn btn-warning ml-4" @click="goBack" v-if="toggleResultMoreInfo">⇐ Retour</button>
+        <button class="btn btn-warning btn-sm" @click="goBackToLocation" v-if="!toggleResultMoreInfo && method === 'position'">⇐ Retour</button>
+        <button class="btn btn-success btn-sm" @click="updateToggleResultLocationDaily" v-if="toggleResultPositionToday">Géolocalisation</button>
+        <div class="btn-group-sm" v-else>
+            <button class="btn btn-warning" @click="goBack" v-if="toggleResultMoreInfo">⇐ Retour</button>
+            <button class="btn btn-success" @click="updateToggleResultLocationHourly" v-if="!toggleResultMoreInfo">Sur 48 heures</button>
+            <button class="btn btn-success" @click="updateToggleResultLocationDaily" v-if="!toggleResultMoreInfo">Sur 7 jours</button>
+            <button class="btn btn-success" @click="updateToggleResultPositionToday" v-if="!toggleResultMoreInfo && method === 'location' ">Trouver une ville</button>
         </div>
 
         <div class="form-groupe m-1" v-if="toggleResultPositionToday">
@@ -17,18 +17,28 @@
 
         <div class="m-2 horizontalScrollItems" v-if="toggleResultLocationHourly">
             <div class="bg-info p-2 m-2 horizontalScrollItem" v-for="(weatherData, i) in temps48hours" :key="i" @click="updateToggleResultMoreInfo(i)">
+
                 <p class="text-affichage hours">{{datesHourly[i].getHours()}}h - {{datesHourly[i].getDate()}}/{{datesHourly[i].getMonth()+1}}</p>
                 <img :src="getUrlImg(weatherData.weather[0].icon)" alt="Icon" class="zoom">
                 <p class="text-affichage">{{Math.round(weatherData.temp)}}°C</p>
                 <p class="text-affichage case">{{toUpper(weatherData.weather[0].description)}}</p>
             </div>
         </div>
-        <div class="m-2 horizontalScrollItems" v-if="toggleResultLocationDaily">
+        <div class="m-2 horizontalScrollItems " v-if="toggleResultLocationDaily">
             <div class="bg-info p-2 m-2 horizontalScrollItem" v-for="(weatherData, i) in temps7days" :key="i" @click="updateToggleResultMoreInfo(i)">
-                <p class="text-affichage hours">{{datesDay[i].getDate()}}/{{datesDay[i].getMonth()+1}}</p>
-                <img :src="getUrlImg(weatherData.weather[0].icon)" alt="Icon">
-                <p class="text-affichage">{{Math.round(weatherData.temp.max)}}°C, {{Math.round(weatherData.temp.min)}}°C</p>
-                <p class="text-affichage case">{{toUpper(weatherData.weather[0].description)}}</p>
+                <div class="meteo-card">
+                    <!--
+                    <div class="block block-one"></div>
+                    <div class="block block-two"></div>
+                    <div class="block block-three"></div>
+                    <div class="block block-four"></div>
+                    -->
+
+                    <p class="text-affichage hours">{{datesDay[i].getDate()}}/{{datesDay[i].getMonth()+1}}</p>
+                    <img :src="getUrlImg(weatherData.weather[0].icon)" alt="Icon" class="zoom">
+                    <p class="text-affichage">{{Math.round(weatherData.temp.max)}}°C, {{Math.round(weatherData.temp.min)}}°C</p>
+                    <p class="text-affichage case">{{toUpper(weatherData.weather[0].description)}}</p>
+                </div>
             </div>
         </div>
         <div class="m-2" v-if="toggleResultMoreInfo && temp.toggleResultLocationDaily">
@@ -84,6 +94,7 @@
                 toggleResultMoreInfo : false,
                 resultPosition: false,
                 temp: {},
+                daysLength:"sur 48 heures",
             }
         },
         methods:{
@@ -100,7 +111,7 @@
                     .get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&appid=${this.api_code}&units=metric&lang=fr`)
                     .then(reponse => {
                         this.cityName = reponse.data.name;
-                        this.sendCityNameToParent()
+                        this.sendInformationsToParent()
                     })
             },
             getCoords: function(){
@@ -117,7 +128,7 @@
                             temps7days: this.temps7days,
                             cityName: this.cityName,
                         }
-                        this.sendCityNameToParent()
+                        this.sendInformationsToParent()
                         console.log('API conversion OK');
                     })
             },
@@ -179,13 +190,17 @@
                 this.toggleResultLocationDaily = false;
                 this.resultPosition = false;
                 this.toggleResultMoreInfo = false;
+                this.daysLength = "sur 48 heures"
+                this.sendInformationsToParent()
             },
             updateToggleResultLocationDaily : function () {
                 this.toggleResultLocationHourly = false;
                 this.toggleResultPositionToday = false;
                 this.toggleResultLocationDaily = true;
                 this.resultPosition = false;
+                this.daysLength = "sur 7 jours"
                 this.toggleResultMoreInfo = false;
+                this.sendInformationsToParent()
             },
             updateToggleResultPositionToday : function (i) {
                 this.toggleResultLocationHourly = false;
@@ -200,6 +215,7 @@
                     toggleResultPositionToday : this.toggleResultPositionToday,
                     toggleResultLocationDaily : this.toggleResultLocationDaily
                 }
+                this.daysLength = ""
                 this.toggleResultLocationHourly = false;
                 this.toggleResultPositionToday = false;
                 this.toggleResultLocationDaily = false;
@@ -230,11 +246,12 @@
                 this.cityName = this.temp.cityName
                 this.method = 'location'
                 this.locationState = true;
-                this.sendCityNameToParent()
+                this.daysLength = "sur 48 heures"
+                this.sendInformationsToParent()
                 this.updateToggleResultLocationHourly()
             },
-            sendCityNameToParent(){
-                this.$emit('setCityName', this.cityName)
+            sendInformationsToParent(){
+                this.$emit('setInformations', this.cityName + " " + this.daysLength)
             }
         },
         mounted: function () {
@@ -247,19 +264,16 @@
 
 <style>
     .appMeteo {
-        height: auto;
+        height: 20em;
         margin: auto;
     }
     .hours {
         font-size: 15px;
     }
     .case {
-        display: block;
-        margin: 2em auto;
-        position: relative;
         table-layout: fixed;
-        width: 100px;
-        height: 20px;
+        width: 5em;
+        height: auto;
     }
     .horizontalScrollItems{
         display: flex;
@@ -272,32 +286,7 @@
         transition: .3s ease-in-out;
     }
     .zoom:hover{
-        -webkit-transform: scale(1.05);
-        transform: scale(1.05);
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
     }
-    .horizontalScrollItems::-webkit-scrollbar-track
-    {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        background-color: #29496B;
-        border-radius: 10px;
-        bottom: 0;
-    }
-
-    .horizontalScrollItems::-webkit-scrollbar
-    {
-        background-color: #1B3052;
-    }
-
-    .horizontalScrollItems::-webkit-scrollbar-thumb
-    {
-        border-radius: 10px;
-        background-image: -webkit-gradient(linear,
-        left bottom,
-        left top,
-        color-stop(0.44, rgb(27,48,82)),
-        color-stop(0.72, rgb(20,30,70)),
-        color-stop(0.86, rgb(12,22,57)));
-    }
-
-
 </style>

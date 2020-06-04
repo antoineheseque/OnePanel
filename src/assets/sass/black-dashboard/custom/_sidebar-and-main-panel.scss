@@ -19,8 +19,8 @@
 .sidebar,
 .off-canvas-sidebar{
     @include linear-gradient($primary-states, $primary);
-    height: calc(100vh - 90px);
-    width: 230px;
+    height: calc(100vh - 60px);
+    width: 200px;
     position: fixed;
     top: 0;
     left: 0;
@@ -29,7 +29,7 @@
     background-position: center center;
     display: block;
     box-shadow: 0px 0px 45px 0px rgba(0,0,0,0.6);
-    margin-top: 33px;
+    margin-top: 30px;
     margin-left: 20px;
     border-radius: 5px;
 
@@ -450,7 +450,7 @@
     float: right;
     width: $full-width;
     min-height: 100vh;
-    border-top: 2px solid $primary;
+    //border-top: 2px solid #0098f0;
     background: linear-gradient($background-first, $background-second);
 
     @include transitions (0.50s, cubic-bezier(0.685, 0.0473, 0.346, 1));
@@ -472,7 +472,7 @@
     }
 
     > .content {
-        padding: 30px 30px 30px 280px; //padding: 78px 30px 30px 280px;
+        padding: 30px 30px 30px 250px; //padding: 78px 30px 30px 280px;
         min-height: calc(100vh - 70px);
     }
 
@@ -649,7 +649,7 @@
     display: block;
     top: 0;
     height: 100%;
-    width: 260px;
+    width: 200px;
     right: auto;
     left: 0;
     margin: 0;
@@ -659,7 +659,7 @@
     overflow-y: visible;
     padding: 0;
     @include transition(0.5s cubic-bezier(0.685, 0.0473, 0.346, 1));
-    @include transform-translate-x(-260px);
+    @include transform-translate-x(-200px);
   }
 
   .wrapper{
@@ -676,7 +676,7 @@
   .nav-open{
       .main-panel{
           right: 0;
-          @include transform-translate-x(260px);
+          @include transform-translate-x(200px);
       }
 
       .sidebar{

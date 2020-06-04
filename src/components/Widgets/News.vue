@@ -56,14 +56,10 @@
 
     .news{
         margin: auto;
-        max-height: 20em;
+        height: 20em;
         overflow-y: auto;
         overflow-x: hidden;
         border-radius: 5px;
-    }
-
-    .news::-webkit-scrollbar{
-
     }
 
     .article {
@@ -77,28 +73,5 @@
     .article:hover{
         -webkit-transform: scale(1.01);
         transform: scale(1.01);
-    }
-    .news::-webkit-scrollbar-track
-    {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        background-color: #29496B;
-        border-radius: 10px;
-    }
-
-    .news::-webkit-scrollbar
-    {
-        width: 10px;
-        background-color: #1B3052;
-    }
-
-    .news::-webkit-scrollbar-thumb
-    {
-        border-radius: 10px;
-        background-image: -webkit-gradient(linear,
-        left bottom,
-        left top,
-        color-stop(0.44, rgb(27,48,82)),
-        color-stop(0.72, rgb(20,30,70)),
-        color-stop(0.86, rgb(12,22,57)));
     }
 </style>
