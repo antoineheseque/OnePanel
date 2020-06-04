@@ -171,7 +171,7 @@
                 }
             },
             getUrlImg : function (a) {
-                return 'http://openweathermap.org/img/wn/' + a + '@2x.png'
+                return 'https://openweathermap.org/img/wn/' + a + '@2x.png'
             },
             updateToggleResultLocationHourly : function () {
                 this.toggleResultLocationHourly = true;

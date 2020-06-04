@@ -1,6 +1,6 @@
 <template>
     <div class="appGif">
-        <img :src="image" alt="" class="gif">
+        <img :src="image" alt="gif" class="gif">
     </div>
 </template>
 
@@ -22,6 +22,7 @@
                         return res.json()
                     }).then(function (data) {
                         r(data)
+                        console.log("Chargement API Gif")
                     })
                 });
             },

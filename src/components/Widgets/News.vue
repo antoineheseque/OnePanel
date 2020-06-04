@@ -26,7 +26,7 @@
                     .get(`https://newsapi.org/v2/top-headlines?country=fr&apiKey=3cff78090d1240b5ae70dbbb310250c9`)
                     .then(reponse => {
                         this.allNews = reponse.data.articles;
-                        console.log(reponse.data.articles);
+                        console.log('Chargement API News');
                     })
             },
             getDateArticles: function (index) {
