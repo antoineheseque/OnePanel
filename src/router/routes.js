@@ -26,7 +26,7 @@ const routes = [
             {
                 path: "",
                 name: "login",
-                redirect: User.isConnected ? "/login" : "/dashboard"
+                redirect: !User.isConnected() ? "/login" : "/dashboard"
             },
             {
                 path: "dashboard",

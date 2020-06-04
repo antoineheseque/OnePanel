@@ -3,6 +3,7 @@ var router = express.Router()
 const sql = require('./bdd')
 const bcrypt = require('bcrypt');
 const format = require('fecha');
+const jwt = require("jsonwebtoken")
 
 // Accès à la bdd avec sql.base. ...
 // J'ai fait une fonction dans bdd.js pour simplifier tout il faut la tester aussi jsp si ca marche
@@ -131,14 +132,33 @@ router.post("/login", (req, res) => {
                     data = result[0]
                     data.logged = true
                     sql.request(`INSERT INTO \`logins\` (userID) VALUES ('${data.id}')`).then(() => { // ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
-                        res.json(data)
+
+                        // TODO AJOUTER TOKEN
+                        // AJOUTER TOKEN
+
+                        const accessToken= jwt.sign({
+                            id: data.id
+                        },
+                            process.env.SECRET_JWT,
+                            {
+                            algorithm: "HS256",
+                            expiresIn: '30s',
+                        }
+                        );
+
+                        console.log({ accessToken: accessToken })
+                        console.log(data)
+                        //res.json(data)
+                        data.message = "Auth Successful"
+                        data.token = accessToken
+                        res.json(data);
+
+
                     }).catch((err) => {
                         console.log("Un problème est survenu dans la BDD")
                         console.log(err)
                     });
 
-                    // TODO AJOUTER TOKEN
-                    data.token="rien pour l'instant"
                 } else {
                     data.reason = "Nom d'utilisateur ou mot de passe incorrect."
                     res.json(data)
@@ -155,12 +175,28 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.post("/verifyToken", (req, res) => {
-    let token = req.body.token
 
+router.post("/verifyToken", (req, res) => {
     // VERIFIER SI TOKEN VALIDE
-    // retourner qqch? exemple de retour:
-    res.json({"isVerified":true,"id":1}) // Ou alors retourner directement toute les infos jsp
+    let recup_token = req.body
+    console.log(token);
+
+    jwt.verify(recup_token, process.env.SECRET_JWT, function(err, decoded) {
+        if (err) {
+            res.json(
+                {'message': 'Auth Failed'}
+            )
+        }
+        console.log("\ndecoded data =");
+        console.log(decoded);
+
+        res.json(
+            {"isVerified":true,"id": recup_token.id }
+        )
+    });
+
 });
+
+
 
 module.exports = router
