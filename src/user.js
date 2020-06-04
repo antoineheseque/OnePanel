@@ -59,7 +59,7 @@ export default {
             })
             let result = await res.json()
 
-            if(!!result.isVerified) {
+            if(result.isVerified == "true") {
                 this.user.tempConnected = true
                 return true
             }
