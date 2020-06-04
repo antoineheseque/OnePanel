@@ -1,8 +1,35 @@
 const axios = require('axios');
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function setCookie(cname, cvalue, minutes) {
+    var d = new Date();
+    d.setTime(d.getTime() + (minutes*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires;
+}
+
+function removeCookie(cname){
+    document.cookie = cname + "=" + getCookie(cname) + ";expires=" + "18 Dec 1950 12:00:00 UTC";
+}
+
 export default {
-    user: {
-        isConnected: false
+    user:{
+        tempConnected:false
     },
     profile: {
             id: '',
@@ -16,39 +43,33 @@ export default {
             city: '',
             country: ''
     },
+    isConnected: async function(){
+        const token = getCookie('token');
 
-    isConnected: function(){
-        //récupérer le token des cookies
-
-        const recup_token = this.getCookie('cookie_token');
-        console.log("\nrecupération du token")
-        console.log(recup_token);
-
-        // exemple recup_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzgsImlhdCI6MTU5MTI3NDA4NCwiZXhwIjoxNTkxMjc0MTE0fQ.sY1vEXRldRrXFj7cFXpQqQJ9VrPyAOgI0QZTW8471So
-
-        if(recup_token === ""){
+        if(token === ""){
             return false
-        }else{
-            fetch('api/user/verifyToken', {
+        } else {
+            const res = await fetch('api/user/verifyToken', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(recup_token),
+                body: JSON.stringify({"token":token}),
                 credentials: 'include'
-            }).then(function (res) {
-                return res.json();
-            }).then(function (result) {
-                console.log("\nLE RESULT")
-                console.log(result)
-                return result.isVerified
-            });
+            })
+            let result = await res.json()
+
+            if(!!result.isVerified) {
+                this.user.tempConnected = true
+                return true
+            }
+            else{
+                this.user.tempConnected = false
+                removeCookie("token");
+                return false
+            }
         }
-
-
     },
-
-
     onClickEditProfile: function (data) {
         return new Promise((r) => {
             fetch('/api/user/updateProfile', {
@@ -81,13 +102,12 @@ export default {
                 return res.json();
             }).then(function (data) {
                 if(data.logged){
-                    this.user.isConnected = data.logged
                     // Enregistrer les données reçues via la BDD
+                    setCookie("token", data.token, 5);
+                    data.token = ""
+                    data.password = ""
                     this.profile = data
 
-                    //TODO: AJOUTER LE TOKEN AUX COOKIES (cookie.add(data.token)) CLIENT
-
-                    this.setCookie("cookie_token", data.token, 1);
                     console.log("\ncookie ajouté")
                 }
 
@@ -98,14 +118,7 @@ export default {
 
     // LOG OUT FUNCTION
     logout: function(){
-        //TODO: Virer le token des cookies ? CLIENT
-
-        function removeCookie(cname) {
-            document.cookie = cname + "=" + this.getCookie(cname) + ";" + "18 Dec 1950 12:00:00 UTC";
-        }
-        removeCookie("cookie_token");
-        this.user.isConnected = false // temporaire
-        console.log("token bien supprimé")
+        removeCookie("token");
     },
 
     // SIGN IN FUNCTION
@@ -123,27 +136,6 @@ export default {
                 r(data)
             })
         });
-    },
-    getCookie: function(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) === ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) === 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    },
-    setCookie: function(cname, cvalue, exhours) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exhours*60*60*1000));
-        var expires = "expires="+ d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires;
     }
 }
 

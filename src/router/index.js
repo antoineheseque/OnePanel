@@ -19,20 +19,25 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // Si la prochaine route nécessite un accès connecté
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (!User.isConnected()) {
-            next({path: 'login'});
-        } else {
-            next();
-        }
+        User.isConnected().then((isConnected) => {
+            if (!isConnected) {
+                next({path: 'login'});
+            } else {
+                next();
+            }
+        });
     }
     // Si la prochaine route nécessite un accès non connecté
     else if (to.matched.some(record => !record.meta.requiresNotAuth)) {
-        if (User.isConnected()) {
-            next({path: 'dashboard'});
-        } else {
-            next();
-        }
+        User.isConnected().then((isConnected) => {
+            if (isConnected) {
+                next({path: 'dashboard'});
+            } else {
+                next();
+            }
+        });
     } else {
+        console.log("Accès autre")
         next();
     }
 });

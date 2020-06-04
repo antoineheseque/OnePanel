@@ -1,5 +1,6 @@
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 import User from '@/user';
+import Login from "@/pages/Login";
 
 // GeneralViews
 const NotFound = () => import(/* webpackChunkName: "dashboard" */"@/pages/NotFoundPage.vue");

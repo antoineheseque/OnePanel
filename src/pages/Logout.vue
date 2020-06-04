@@ -1,8 +1,7 @@
 <template>
-    <base-button slot="footer" type="primary" v-on:click="onClickLogout" fill>Se déconnecter (sans bdd)</base-button>
+    <base-button slot="footer" type="primary" v-on:click="onClickLogout" fill>Se déconnecter</base-button>
 </template>
 <script>
-    //TODO: A FAIRE
     import User from "@/user";
     import router from "@/router";
     import NotificationTemplate from "@/pages/Notifications/NotificationTemplate";
@@ -11,17 +10,9 @@
         methods: {
             onClickLogout: function () {
                 //this.notify('info', 'Déconnexion en cours.')
-                User.logout().then((result) => {
-                    console.log(result)
-
-                    if(result.logged == false){ // Si l'utilisateur à pu être déconnecté
-                        this.notify('info', 'Vous êtes déconnecté.')
-                        router.push('login')
-                    }
-                    else{ // Ne devrais jamais arriver ?
-                        this.notify('danger', result.reason)
-                    }
-                });
+                User.logout()
+                this.notify('info', 'Vous êtes déconnecté.')
+                router.push('login')
             },
             notify: function(info,message){
                 this.$notify({

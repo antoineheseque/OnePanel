@@ -133,26 +133,10 @@ router.post("/login", (req, res) => {
                     data.logged = true
                     sql.request(`INSERT INTO \`logins\` (userID) VALUES ('${data.id}')`).then(() => { // ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
 
-                        // TODO AJOUTER TOKEN
-                        // AJOUTER TOKEN
+                        const token = jwt.sign({ id: data.id }, process.env.SECRET_JWT,{ algorithm: "HS256", expiresIn: '300s' });
 
-                        const accessToken= jwt.sign({
-                            id: data.id
-                        },
-                            process.env.SECRET_JWT,
-                            {
-                            algorithm: "HS256",
-                            expiresIn: '30s',
-                        }
-                        );
-
-                        console.log({ accessToken: accessToken })
-                        console.log(data)
-                        //res.json(data)
-                        data.message = "Auth Successful"
-                        data.token = accessToken
+                        data.token = token
                         res.json(data);
-
 
                     }).catch((err) => {
                         console.log("Un problème est survenu dans la BDD")
@@ -177,24 +161,13 @@ router.post("/login", (req, res) => {
 
 
 router.post("/verifyToken", (req, res) => {
-    // VERIFIER SI TOKEN VALIDE
-    let recup_token = req.body
-    console.log(token);
-
-    jwt.verify(recup_token, process.env.SECRET_JWT, function(err, decoded) {
-        if (err) {
-            res.json(
-                {'message': 'Auth Failed'}
-            )
-        }
-        console.log("\ndecoded data =");
-        console.log(decoded);
-
-        res.json(
-            {"isVerified":true,"id": recup_token.id }
-        )
+    let token = req.body.token
+    jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
+        if(decoded === undefined)
+            res.json({'isVerified':"false"})
+        else
+            res.json({'isVerified':"true"})
     });
-
 });
 
 

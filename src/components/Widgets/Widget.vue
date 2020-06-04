@@ -37,7 +37,6 @@
         methods:{
             setInformations(value){
                 this.weatherInformations = value
-                console.log(value)
             }
         }
     };

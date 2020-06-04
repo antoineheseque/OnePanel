@@ -2,22 +2,18 @@
     <div class="wrapper">
         <side-bar>
             <template slot="links">
-                <!--TODO: Optimiser avec v-if et v-else-->
                 <!-- Utilisateur connecté -->
-                <sidebar-link to="/dashboard" v-if="isConnected" name="Dashboard" icon="tim-icons icon-chart-pie-36"/>
-                <sidebar-link to="/add-widget" v-if="isConnected" name="Ajouter un widget" icon="tim-icons icon-simple-add"/>
-                <sidebar-link to="/profile" v-if="isConnected" name="Profil" icon="tim-icons icon-single-02"/>
-                <sidebar-link to="/logout" v-if="isConnected" name="Déconnexion" icon="tim-icons icon-button-power"/>
-
+                <div v-if="isConnected">
+                    <sidebar-link to="/dashboard" name="Dashboard" icon="tim-icons icon-chart-pie-36"/>
+                    <sidebar-link to="/add-widget" name="Ajouter un widget" icon="tim-icons icon-simple-add"/>
+                    <sidebar-link to="/profile" name="Profil" icon="tim-icons icon-single-02"/>
+                    <sidebar-link to="/logout" name="Déconnexion" icon="tim-icons icon-button-power"/>
+                </div>
                 <!-- Utilisateur non connecté -->
-                <sidebar-link to="/login" v-if="!isConnected" name="Connexion" icon="tim-icons icon-badge"/>
-                <sidebar-link to="/sign-in" v-if="!isConnected" name="Inscription" icon="tim-icons icon-badge"/>
-
-                <!--<sidebar-link to="/icons" :name="$t('sidebar.icons')" icon="tim-icons icon-atom"/>
-                <sidebar-link to="/maps" :name="$t('sidebar.maps')" icon="tim-icons icon-pin"/>
-                <sidebar-link to="/notifications" :name="$t('sidebar.notifications')" icon="tim-icons icon-bell-55"/>
-                <sidebar-link to="/table-list" :name="$t('sidebar.tableList')" icon="tim-icons icon-puzzle-10"/>
-                <<sidebar-link to="/typography" :name="$t('sidebar.typography')" icon="tim-icons icon-align-center"/>-->
+                <div v-else>
+                    <sidebar-link to="/login" name="Connexion" icon="tim-icons icon-badge"/>
+                    <sidebar-link to="/sign-in" name="Inscription" icon="tim-icons icon-badge"/>
+                </div>
             </template>
         </side-bar>
         <div class="main-panel">
@@ -41,6 +37,11 @@
     import User from '@/user';
 
     export default {
+        data(){
+            return{
+                isConnected:User.user.tempConnected
+            }
+        },
         components: {
             TopNavbar,
             ContentFooter,
@@ -52,12 +53,16 @@
                 if (this.$sidebar.showSidebar) {
                     this.$sidebar.displaySidebar(false);
                 }
+            },
+            checkConnected: function () {
+                User.isConnected().then((result) => {
+                    console.log(result)
+                    this.isConnected = result
+                })
             }
         },
-        computed: {
-            isConnected: function(){
-                return User.isConnected();
-            }
+        mounted(){
+            this.checkConnected()
         }
     };
 </script>
