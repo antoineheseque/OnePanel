@@ -1,34 +1,28 @@
 <template>
-    <base-table :data="tableData"
-                thead-classes="text-primary">
-      <template slot-scope="{row}">
-        <td>
-          <base-checkbox v-model="row.done">
-          </base-checkbox>
-        </td>
-        <td>
-          <p class="title">{{row.title}}</p>
-          <p class="text-muted">{{row.description}}</p>
-        </td>
-        <td class="td-actions text-right">
-          <base-button type="link" aria-label="edit button">
-            <i class="tim-icons icon-pencil"></i>
-          </base-button>
-        </td>
-      </template>
-    </base-table>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="(widget, idxx) in  widgetsList" :key="idxx">
+      <td>widget.title</td>
+      <td>widget.description</td>
+    </tr>
+
+    </tbody>
+  </table>
 </template>
 <script>
-  import {BaseTable} from '@/components'
   export default {
-    components: {
-      BaseTable
-    },
-    computed: {
-      tableData() {
-        return this.$t('dashboard.taskList');
-      }
+    name: "add-widget-list",
+
+    props: {
+      widgetList:""
     }
+
   }
 
 </script>
