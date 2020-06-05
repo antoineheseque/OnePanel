@@ -32,9 +32,6 @@
 
         },
         methods: {
-            test: function(){
-                console.log(widgets.widgets)
-            },
             call: function () {
                 fetch("/api/widgets/poste", {
                     method: "GET"

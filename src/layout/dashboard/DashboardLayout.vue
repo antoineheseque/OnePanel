@@ -56,7 +56,6 @@
             },
             checkConnected: function () {
                 User.isConnected().then((result) => {
-                    console.log(result)
                     this.isConnected = result
                 })
             }

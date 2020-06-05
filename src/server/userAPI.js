@@ -159,7 +159,6 @@ router.post("/login", (req, res) => {
     });
 });
 
-
 router.post("/verifyToken", (req, res) => {
     let token = req.body.token
     jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
@@ -169,7 +168,5 @@ router.post("/verifyToken", (req, res) => {
             res.json({'isVerified':"true"})
     });
 });
-
-
 
 module.exports = router

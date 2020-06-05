@@ -1,19 +1,16 @@
 <template>
   <div>
-  <div class="row">
-    <div class="col-md-2">
-      <add-widget-list :widgetList="widgetList">
-      </add-widget-list>
+    <div class="row">
+      <div class="col-md-2">
+        <add-widget-list :widgetList="widgetList"></add-widget-list>
+      </div>
     </div>
-
-  </div>
-
   </div>
 
 </template>
 <script>
   import WidgetList from './AddWidget/WidgetList';
-  import widgetList from '../widgetsList.json';
+  import widgetsList from '../widgetsList.json';
 
   export default {
     components: {
@@ -21,13 +18,11 @@
     },
     data() {
       return {
-        widgetList:widgetList.widgets ,
-          isLogging:false
+        widgetList:widgetsList.widgets
       }
     },
-    props: ['nom'],
     methods: {
-        onClickSupprime: function () {
+        /*onClickSupprime: function () {
             this.isLogging = true
 
             //this.notify('info', 'Connexion en cours.')
@@ -73,7 +68,7 @@
                 }
                 this.isLogging = false
             });
-        }
+        }*/
     }
   }
 </script>
