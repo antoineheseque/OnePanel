@@ -133,7 +133,7 @@ router.post("/login", (req, res) => {
                     data.logged = true
                     sql.request(`INSERT INTO \`logins\` (userID) VALUES ('${data.id}')`).then(() => { // ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
 
-                        const token = jwt.sign({ id: data.id }, process.env.SECRET_JWT,{ algorithm: "HS256", expiresIn: '300s' });
+                        const token = jwt.sign({ id: data.id }, process.env.SECRET_JWT,{ algorithm: "HS256", expiresIn: '7200s' });
 
                         data.token = token
                         res.json(data);

@@ -103,7 +103,7 @@ export default {
             }).then(function (data) {
                 if(data.logged){
                     // Enregistrer les données reçues via la BDD
-                    setCookie("token", data.token, 5);
+                    setCookie("token", data.token, 120);
                     data.token = ""
                     data.password = ""
                     this.profile = data

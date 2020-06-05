@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-2">
-        <add-widget-list :widgetList="widgetList"></add-widget-list>
+      <div class="col-md-8">
+        <widget-list :widgetList="widgetList"></widget-list>
       </div>
     </div>
   </div>
 
 </template>
 <script>
-  import WidgetList from './AddWidget/WidgetList';
   import widgetsList from '../widgetsList.json';
+  import WidgetList from './AddWidget/WidgetList';
 
   export default {
     components: {
