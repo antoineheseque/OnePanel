@@ -20,7 +20,7 @@ function setCookie(cname, cvalue, minutes) {
     var d = new Date();
     d.setTime(d.getTime() + (minutes*60*1000));
     var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires;
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";secure";
 }
 
 function removeCookie(cname){
@@ -29,7 +29,7 @@ function removeCookie(cname){
 
 export default {
     user:{
-        tempConnected:false
+        tempConnected:false // Sert à ne pas rafraichir les menus a chaque fois et afficher le bon "temporairement" avant de faire une requete
     },
     profile: {
             id: '',
@@ -44,7 +44,10 @@ export default {
             country: ''
     },
     isConnected: async function(){
-        const token = getCookie('token');
+        const token = getCookie('token')
+        let needProfile = "false"
+        if(this.profile.id == "")
+            needProfile = "true"
 
         if(token === ""){
             return false
@@ -54,13 +57,19 @@ export default {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({"token":token}),
+                body: JSON.stringify({"token":token, "needProfile":needProfile}),
                 credentials: 'include'
             })
             let result = await res.json()
 
-            if(result.isVerified == "true") {
+            if(result.isVerified === "true") {
                 this.user.tempConnected = true
+
+                console.log("DETECTED ISVERIFIED")
+                if(needProfile==="true") {
+                    this.profile = result.profile
+                }
+
                 return true
             }
             else{
@@ -107,8 +116,6 @@ export default {
                     data.token = ""
                     data.password = ""
                     this.profile = data
-
-                    console.log("\ncookie ajouté")
                 }
 
                 r(data)

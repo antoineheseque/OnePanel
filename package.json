@@ -6,7 +6,7 @@
   "author": "Teateam Et Grominet",
   "scripts": {
     "start": "node src/server/server.js",
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --https",
     "build": "vue-cli-service build"
   },
   "dependencies": {

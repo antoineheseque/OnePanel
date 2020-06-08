@@ -160,12 +160,28 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/verifyToken", (req, res) => {
-    let token = req.body.token
-    jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
+    let data = req.body
+
+    jwt.verify(data.token, process.env.SECRET_JWT, function(err, decoded) {
         if(decoded === undefined)
             res.json({'isVerified':"false"})
-        else
-            res.json({'isVerified':"true"})
+        else {
+            // Token valide, si l'utilisateur n'a pas entre ses données on lui renvoi
+            console.log(data)
+            if(data.needProfile == false)
+                res.json({'isVerified':"true"})
+            else{
+                sql.request(`SELECT * FROM \`users\` WHERE id='${decoded.id}' LIMIT 1`).then((result) => {
+                    if (result.length > 0) { // SI UN UTILISATEUR CORRESPONDS ON COMPARE LES MDP
+                        let profile = result[0];
+                        result.password = ""; // Aucune utilité d'envoyer le password
+                        res.json({'isVerified':'true', 'profile':profile})
+                    }
+                    else
+                        res.json({'isVerified':"false"})
+                })
+            }
+        }
     });
 });
 
