@@ -27,7 +27,7 @@
                     .then(reponse => {
                         this.newsBDD['data'] = reponse.data.articles;
                         this.allNews = this.newsBDD['data']
-                        console.log('Chargement API News');
+                        console.log('API News OK');
                         console.log(this.allNews)
                     })
             },

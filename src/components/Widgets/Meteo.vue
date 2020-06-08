@@ -91,7 +91,6 @@
         },
         methods:{
             goMeteoLocation7Days: function(){
-                console.log('Chargement API par géolocalisation ...');
                 axios //Appel à l'API pour avoir toutes les infos sur les 7 prochains jours et les 48 prochaines heures
                     .get(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.lat}&lon=${this.lon}&exclude=current,minutely&appid=${this.api_code}&units=metric&lang=fr`)
                     .then(reponse => {
@@ -107,7 +106,6 @@
                     })
             },
             getCoords: function(){
-                console.log('Chargement API conversion ville -> coord ...');
                 axios
                     .get(`https://api.opencagedata.com/geocode/v1/json?q=${this.requete}&key=8683c1d8657d40069fd08852599feaef`)
                     .then(reponse => {
@@ -121,7 +119,7 @@
                             cityName: this.cityName,
                         }
                         this.sendInformationsToParent()
-                        console.log('API conversion OK');
+                        console.log('API conversion Géo OK');
                     })
             },
             getLatLon: function(i){

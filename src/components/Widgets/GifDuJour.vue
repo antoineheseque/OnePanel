@@ -22,7 +22,7 @@
                         return res.json()
                     }).then(function (data) {
                         r(data)
-                        console.log("Chargement API Gif")
+                        console.log("API Gif OK")
                     })
                 });
             },
