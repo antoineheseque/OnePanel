@@ -5,7 +5,7 @@
                 <a :href="news.url" target="_blank" ><h6>{{news.title}}</h6></a>
                 <p>{{getDateArticles(i)}}</p>
             </div>
-            <img :src="news.urlToImage" class="ml-auto" alt="error" @error="imageLoadError(i)" v-if="news.urlToImage">
+            <img :src="getImg(news.urlToImage)" class="ml-auto" alt="error" @error="imageLoadError(i)" v-if="news.urlToImage">
         </div>
     </div>
 </template>
@@ -42,6 +42,9 @@
             imageLoadError : function(index) {
                 console.log('Image failed to load')
                 this.allNews[index].urlToImage = 'https://resize-rfm.lanmedia.fr/f/webp/r/665,444,forcex,center-middle/img/var/rfm/storage/images/news/la-nuit-avec-moi-un-inedit-de-johnny-hallyday-dans-le-coffret-celebrant-l-annee-1969-19596/281155-1-fre-FR/La-Nuit-avec-Moi-un-inedit-de-Johnny-Hallyday-dans-le-coffret-celebrant-l-annee-1969.jpg'
+            },
+            getImg: function (img) {
+                return img.replace(/http:/, 'https:');
             }
         },
         mounted() {
