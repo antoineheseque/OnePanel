@@ -17,7 +17,7 @@
         data(){
             return {
                 allNews : [],
-                dateArticles : []
+                newsBDD:  {} //News BDD
             }
         },
         methods:{
@@ -25,8 +25,10 @@
                 axios //Appel à l'API pour avoir le nom de la ville selon la position
                     .get(`https://newsapi.org/v2/top-headlines?country=fr&apiKey=3cff78090d1240b5ae70dbbb310250c9`)
                     .then(reponse => {
-                        this.allNews = reponse.data.articles;
+                        this.newsBDD['data'] = reponse.data.articles;
+                        this.allNews = this.newsBDD['data']
                         console.log('Chargement API News');
+                        console.log(this.allNews)
                     })
             },
             getDateArticles: function (index) {
