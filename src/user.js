@@ -52,7 +52,7 @@ export default {
         if(token === ""){
             return false
         } else {
-            const res = await fetch('api/user/verifyToken', {
+            const res = await fetch('/api/user/verifyToken', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

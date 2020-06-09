@@ -1,6 +1,5 @@
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 import User from '@/user';
-import Login from "@/pages/Login";
 
 // GeneralViews
 const NotFound = () => import(/* webpackChunkName: "dashboard" */"@/pages/NotFoundPage.vue");
@@ -18,6 +17,7 @@ const Icons = () => import(/* webpackChunkName: "common" */ "@/pages/Icons.vue")
 const Maps = () => import(/* webpackChunkName: "common" */ "@/pages/Maps.vue");
 const Typography = () => import(/* webpackChunkName: "common" */ "@/pages/Typography.vue");
 const TableList = () => import(/* webpackChunkName: "common" */ "@/pages/TableList.vue");
+const WidgetTest = () => import(/* webpackChunkName: "common" */ "@/pages/WidgetTest.vue");
 
 const routes = [
     {
@@ -86,6 +86,11 @@ const routes = [
                 path: "notifications",
                 name: "notifications",
                 component: Notifications
+            },
+            {
+                path: "widgettest",
+                name: "widgettest",
+                component: WidgetTest
             },
             {
                 path: "icons",

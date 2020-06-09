@@ -20,7 +20,4 @@ app.get(/.*/, function (req, res) {
     res.sendFile(publicPath + "/index.html");
 });
 
-
-
-
 app.listen(port, () => console.log(`Serveur démarré sur le port ${port}!`));
