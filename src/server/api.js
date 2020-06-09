@@ -1,6 +1,6 @@
 const express = require('express')
 const userAPI = require('./userAPI')
-const widgetAPI = require('./widgetAPI')
+const laposteAPI = require('./Widgets/laposteAPI')
 const dayGifAPI = require('./Widgets/dayGifAPI')
 const crypto = require('crypto')
 
@@ -10,6 +10,6 @@ module.exports = app => {
     app.use(express.json());
     app.use(express.urlencoded());
     app.use('/api/user', userAPI)
-    app.use('/api/widgets', widgetAPI)
+    app.use('/api/widget/laposte', laposteAPI)
     app.use('/api/widget/dayGif', dayGifAPI)
 }
