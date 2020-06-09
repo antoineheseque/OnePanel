@@ -42,7 +42,7 @@
 
                 //this.notify('info', 'Connexion en cours.')
                 User.login(this.login).then((result) => {
-                    console.log(result)
+                    //console.log(result)
 
                     if(result.logged === true){ // Si l'utilisateur à pu être connecté
                         this.notify('info', `Heureux de vous voir, ${result.username}.`)

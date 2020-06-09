@@ -9,14 +9,20 @@ const axios = require('axios');
 
 router.post("/getImage", (req, res) => {
     //TODO: APPEL BASE DE DONNEE ET RETOURNER L'URL DE L'IMG EN .JSON
-    res.json({'image':"MESSAGE"})// res.json({"image":url})
-
+    res.json({'image':"MESSAGE"})
 });
 
 router.get("/testIMAGE", (req, res) => {
-    //TODO: APPEL BASE DE DONNEE ET RETOURNER L'URL DE L'IMG EN .JSON
-    // res.json({"image":url})
-    res.json({'image':"MESSAGE"})
+
+    fetch('https://api.tenor.com/v1/trending?key=EW6KT86NL2K6&limit=1', {
+        method: 'GET'
+    }).then(function (res) {
+        return res.json()
+    }).then(function (data) {
+        // LIEN IMAGE: data[0]["media"][0]["gif"]["url"]}
+        //TODO: A STOCKER DANS LA BDD
+        res.json({'image':"MESSAGE"})
+    })
 });
 
 ///////////////////////////////////////////////////

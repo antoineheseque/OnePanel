@@ -166,9 +166,7 @@ router.post("/verifyToken", (req, res) => {
         if(decoded === undefined)
             res.json({'isVerified':"false"})
         else {
-            // Token valide, si l'utilisateur n'a pas entre ses données on lui renvoi
-            console.log(data)
-            if(data.needProfile == false)
+            if(data.needProfile === "false")
                 res.json({'isVerified':"true"})
             else{
                 sql.request(`SELECT * FROM \`users\` WHERE id='${decoded.id}' LIMIT 1`).then((result) => {

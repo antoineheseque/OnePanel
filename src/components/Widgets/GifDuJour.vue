@@ -10,30 +10,22 @@
         name: "gif-du-jour",
         data(){
             return {
-                image:'' //A stocké dans BDD
+                image:''
             }
         },
         methods:{
             call: function(){
-                return new Promise((r) => {
-                    fetch('https://api.tenor.com/v1/trending?key=EW6KT86NL2K6&limit=1', {
-                        method: 'GET'
-                    }).then(function (res) {
-                        return res.json()
-                    }).then(function (data) {
-                        r(data)
-                        console.log("API Gif OK")
-                    })
-                });
-            },
-            getGif : function () {
-                this.call().then((res) => {
-                    this.image=res.results[0]["media"][0]["gif"]["url"];
-                })
+                fetch('/api/widget/daygif/getImage', {
+                    method: 'POST'
+                }).then(function (res) {
+                    return res.json()
+                }).then(function (data) {
+                    this.image = data.image
+                }.bind(this))
             }
         },
         mounted() {
-            this.getGif()
+            this.call()
         }
     }
 </script>
