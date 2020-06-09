@@ -7,7 +7,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="(widget, idxx) in  widgetList" :key="idxx">
+    <tr v-for="(widget, idxx) in widgetList" :key="idxx">
       <td>{{widget.title}}</td>
       <td>{{widget.description}}</td>
     </tr>

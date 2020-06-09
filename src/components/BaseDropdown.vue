@@ -1,6 +1,6 @@
 <template>
   <component :is="tag"
-             class="dropdown"
+             class="dropdown d-inline float-md-right"
              :class="{show:isOpen}"
              @click="toggleDropDown"
              v-click-outside="closeDropDown">
@@ -18,7 +18,7 @@
         </slot>
       </component>
     </slot>
-    <ul class="dropdown-menu" :class="[{show:isOpen}, {'dropdown-menu-right': menuOnRight}, menuClasses]">
+    <ul class="dropdown-menu dropdown-black" :class="[{show:isOpen}, {'dropdown-menu-right': menuOnRight}, menuClasses]">
       <slot></slot>
     </ul>
   </component>

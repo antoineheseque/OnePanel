@@ -65,7 +65,6 @@ export default {
             if(result.isVerified === "true") {
                 this.user.tempConnected = true
 
-                console.log("DETECTED ISVERIFIED")
                 if(needProfile==="true") {
                     this.profile = result.profile
                 }

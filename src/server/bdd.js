@@ -17,7 +17,6 @@ exports.request = function (request) {
                 console.log(err)
                 error(err)
             }else{
-                console.log(result)
                 r(result)
             }
         });

@@ -17,10 +17,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log("Vérif route")
     // Si la prochaine route nécessite un accès connecté
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        console.log("Match RequireAuth")
         User.isConnected().then((isConnected) => {
             if (!isConnected) {
                 next({path: 'login'});
@@ -31,7 +29,6 @@ router.beforeEach((to, from, next) => {
     }
     // Si la prochaine route nécessite un accès non connecté
     else if (to.matched.some(record => record.meta.requiresNotAuth)) {
-        console.log("Match RequireNotAuth")
         User.isConnected().then((isConnected) => {
             if (isConnected) {
                 next({path: 'dashboard'});
@@ -40,7 +37,6 @@ router.beforeEach((to, from, next) => {
             }
         });
     } else {
-        console.log("Match None")
         next();
     }
 });

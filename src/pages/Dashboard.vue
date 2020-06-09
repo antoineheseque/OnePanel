@@ -7,16 +7,17 @@
 
         <div class="row">
             <widget v-for="(widget, idx) in widgets.widgets" :key="idx" :widget="widget">
-                <template slot="header"></template>
-                <template slot="content"></template>
+                <template slot="button">
+                    <a class="dropdown-item" v-on:click="onClick(widget.id)">Supprimer le widget</a>
+                </template>
             </widget>
-            <!-- <div class="col-md-3"></div> -->
         </div>
     </div>
 </template>
 <script>
     import Widget from '@/components/Widgets/Widget';
     import widgets from '../widgets.json';
+    import router from "@/router";
 
     export default {
         components: {
@@ -28,9 +29,6 @@
                 widgets
             }
         },
-        computed: {
-
-        },
         methods: {
             call: function () {
                 fetch("/api/widgets/poste", {
@@ -40,6 +38,14 @@
                 }).then(function (data) {
                     console.log(data)
                 })
+            },
+            onClick(widgetID){
+                var index = widgets.widgets.findIndex(element => element.id === widgetID)
+
+                console.log(widgets.widgets)
+                var deleted = widgets.widgets.splice(index,1);
+                console.log(widgets.widgets)
+                //router.go()
             }
         }
     };
