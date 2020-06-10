@@ -15,7 +15,7 @@
                     </base-dropdown>
                 </slot>
             </div>
-            <div class="card-body">
+            <div class="card-body" >
                 <div class="content">
                     <news v-if="widget.id==='news'"></news>
                     <meteo v-if="widget.id==='meteo'" v-on:setInformations="setInformations"></meteo>
@@ -43,7 +43,7 @@
             }
         },
         methods:{
-            setInformations(value){
+            setInformations(value) {
                 this.weatherInformations = value
             }
         }

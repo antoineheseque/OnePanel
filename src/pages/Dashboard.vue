@@ -17,6 +17,8 @@
 <script>
     import Widget from '@/components/Widgets/Widget';
     import widgets from '../widgets.json';
+    import NotificationTemplate from "@/pages/Notifications/NotificationTemplate";
+
     import router from "@/router";
 
     export default {
@@ -30,7 +32,7 @@
             }
         },
         methods: {
-            call: function () {
+            call: function() {
                 fetch("/api/widgets/poste", {
                     method: "GET"
                 }).then(function (res) {
@@ -39,13 +41,27 @@
                     console.log(data)
                 })
             },
-            onClick(widgetID){
+            onClick: function(widgetID){
                 var index = widgets.widgets.findIndex(element => element.id === widgetID)
 
                 console.log(widgets.widgets)
                 var deleted = widgets.widgets.splice(index,1);
                 console.log(widgets.widgets)
                 //router.go()
+            },
+            sendJSON: function(){
+
+            },
+            notify: function(info,message){
+                this.$notify({
+                    component: NotificationTemplate,
+                    icon: "tim-icons icon-bell-55",
+                    horizontalAlign: "right",
+                    verticalAlign: "top",
+                    type: info,
+                    timeout: 2000,
+                    message: message
+                })
             }
         }
     };
