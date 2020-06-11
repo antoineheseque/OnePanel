@@ -1,8 +1,8 @@
 const express = require('express')
 const userAPI = require('./userAPI')
-const laposteAPI = require('./Widgets/laposteAPI')
-const dayGifAPI = require('./Widgets/dayGifAPI')
-const newsAPI = require('./Widgets/NewsAPI')
+const laposteAPI = require('../router/Widgets/laposteAPI')
+const dayGifAPI = require('../router/Widgets/dayGifAPI')
+const newsAPI = require('../router/Widgets/newsAPI')
 const crypto = require('crypto')
 
 module.exports = app => {
@@ -14,4 +14,6 @@ module.exports = app => {
     app.use('/api/widget/laposte', laposteAPI)
     app.use('/api/widget/dayGif', dayGifAPI)
     app.use('/api/widget/news', newsAPI)
+
+    //require('./dataRefresh');
 }
