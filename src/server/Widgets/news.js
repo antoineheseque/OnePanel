@@ -7,7 +7,7 @@
 // La fonction getNews nous donne les news depuis l'API
 
 
-export function getNewsAPI(){
+function getNewsAPI(){
     axios.get("https://api.tenor.com/v1/trending?key=EW6KT86NL2K6&limit=1").then(function(r){
         const news = r.data;
 
@@ -19,6 +19,13 @@ export function getNewsAPI(){
     }).catch(function(result){
         return false
     })
+}
+
+
+module.exports = {
+    getNewsAPI: () => {
+        return getNewsAPI()
+    }
 }
 
 
