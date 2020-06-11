@@ -19,6 +19,8 @@ function refreshAPI(){
                     case "news":
                         news.getNewsAPI()
                         break;
+                    case "horoscope":
+                        horoscope.update_horoscope()
                 }
 
                 // On update la date d'actualisation
