@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+
     export default {
         name: "News",
         data(){
@@ -21,15 +21,17 @@
             }
         },
         methods:{
-            getNews : function () {
-                axios //Appel à l'API pour avoir le nom de la ville selon la position
-                    .get(`https://newsapi.org/v2/top-headlines?country=fr&apiKey=3cff78090d1240b5ae70dbbb310250c9`)
-                    .then(reponse => {
-                        this.newsBDD['data'] = reponse.data.articles;
-                        this.allNews = this.newsBDD['data']
-                        console.log('API News OK');
-                        console.log(this.allNews)
-                    })
+            call_news: function(){
+                fetch('/api/widget/news/getNews', {
+                    method: 'POST'
+                }).then(function (res) {
+                    return res.json()
+                }).then(function (data) {
+                    this.newsBDD['data'] = data.news.articles
+                    this.allNews = this.newsBDD['data'];
+                    console.log('\nnewsBDD=');
+                    console.log(this.newsBDD['data'])
+                }.bind(this))
             },
             getDateArticles: function (index) {
                 var article = this.allNews[index].publishedAt.toString();
@@ -46,11 +48,14 @@
             getImg: function (img) {
                 return img.replace(/http:/, 'https:');
             }
+
         },
         mounted() {
-            this.getNews();
+            this.call_news();
         }
     }
+
+
 </script>
 
 <style scoped>
