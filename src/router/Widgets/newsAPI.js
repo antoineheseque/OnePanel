@@ -13,11 +13,11 @@ router.post("/getNews", (req, res) => {
 
     //fonction qui demande les news dans la BDD
 
-    sql.request(`SELECT News from \`Day_News\` WHERE id ='1' LIMIT 1`).then(function (result) {
+    sql.request(`SELECT News from \`Day_News\` WHERE id ='1'`).then(function (result) {
         console.log("\nreponse_getNews=")
         console.log(result[0].News)
 
-        let data = JSON.parse( result[0].News)
+        let data = JSON.parse(result[0].News)
 
         console.log("\ndata=")
         console.log(data)

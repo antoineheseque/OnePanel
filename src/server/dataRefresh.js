@@ -1,5 +1,7 @@
 const sql = require('./bdd')
+var mysql = require('mysql');
 const dayGif = require('./Widgets/dayGif')
+const news = require('./Widgets/news')
 const fetcha = require('fecha')
 
 function refreshAPI(){
@@ -15,6 +17,7 @@ function refreshAPI(){
                         dayGif.createImage()
                         break;
                     case "news":
+                        news.getNewsAPI()
                         break;
                 }
 
@@ -40,9 +43,10 @@ function getWidgets(){
 
 function refreshWidget(id){
     let date2 = fetcha.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-    sql.request(`UPDATE \`widgets\` SET lastUpdate='${date2}' WHERE id='${id}'`).then((result) => {
-        r(result)
-    })
+    //sql.request(`UPDATE \`widgets\` SET lastUpdate='${date2}' WHERE id='${id}'`);
+    var request = "UPDATE \`widgets\` SET lastUpdate=? WHERE id=?"
+    var completeRequest = mysql.format(request, [date2,id]);
+    sql.request(completeRequest);
 }
 
 function needRefresh(previousRefresh, time){

@@ -27,7 +27,7 @@
                 }).then(function (res) {
                     return res.json()
                 }).then(function (data) {
-                    this.newsBDD['data'] = data.news.articles
+                    this.newsBDD['data'] = data.news
                     this.allNews = this.newsBDD['data'];
                     console.log('\nnewsBDD=');
                     console.log(this.newsBDD['data'])

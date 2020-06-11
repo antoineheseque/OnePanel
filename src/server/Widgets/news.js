@@ -1,3 +1,7 @@
+const axios = require('axios');
+var mysql = require('mysql');
+const sql = require('../bdd')
+
 ///////////////////////////////////////////////////
 // SERVER -> API
 ///////////////////////////////////////////////////
@@ -8,18 +12,23 @@
 
 
 function getNewsAPI(){
-    axios.get("https://api.tenor.com/v1/trending?key=EW6KT86NL2K6&limit=1").then(function(r){
-        const news = r.data;
+    axios.get("https://newsapi.org/v2/top-headlines?country=fr&apiKey=3cff78090d1240b5ae70dbbb310250c9").then(function(r){
+        const news = JSON.stringify(r.data.articles);
+        console.log("\nnewsAPI=")
+        console.log(news)
 
-        sql.request(`UPDATE \`Day_News\` SET (News) VALUE('${news}') WHERE id=1 LIMIT 1`).then(function (result){
-            return true // TOUT EST BIEN QUI FINIT BIEN
-        }).catch(function (r){
-            return false
-        });
+        //sql.request(`UPDATE \`Day_News\` SET News='${news}' WHERE id=1`)
+
+        var request = "UPDATE \`Day_News\` SET News=? WHERE id=1"
+        var completeRequest = mysql.format(request, [news]);
+        sql.request(completeRequest);
+
+
     }).catch(function(result){
-        return false
+        console.log(result);
     })
 }
+
 
 
 module.exports = {
