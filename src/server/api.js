@@ -15,5 +15,5 @@ module.exports = app => {
     app.use('/api/widget/dayGif', dayGifAPI)
     app.use('/api/widget/news', newsAPI)
 
-    //require('./dataRefresh');
+    require('./dataRefresh');
 }

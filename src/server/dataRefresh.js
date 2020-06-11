@@ -1,6 +1,6 @@
-const axios = require('axios');
 const sql = require('./bdd')
-const dayGifAPI = require('./Widgets/dayGif')
+const dayGif = require('./Widgets/dayGif')
+const fetcha = require('fecha')
 
 function refreshAPI(){
     // On Récupère tout les widgets
@@ -12,14 +12,19 @@ function refreshAPI(){
             if(needRefresh(widget.lastUpdate, widget.syncTime)){
                 switch (widget.id) {
                     case "dayGif":
-                        dayGifAPI.createImage()
+                        dayGif.createImage()
+                        break;
+                    case "news":
                         break;
                 }
+
+                // On update la date d'actualisation
+                refreshWidget(widget.id)
             }
         }
     })
 
-    //setTimeout(refreshAPI, 10000); // 600000 -> 10min soit minimum d'actualisation
+    setTimeout(refreshAPI, 600000); // 600000 -> 10min soit minimum d'actualisation
 }
 
 // Démarre le refresh
@@ -33,9 +38,15 @@ function getWidgets(){
     });
 }
 
+function refreshWidget(id){
+    let date2 = fetcha.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    sql.request(`UPDATE \`widgets\` SET lastUpdate='${date2}' WHERE id='${id}'`).then((result) => {
+        r(result)
+    })
+}
+
 function needRefresh(previousRefresh, time){
     let date2 = new Date()
-
     let diffMinutes = dateDiffInHours(previousRefresh, date2)
     let data = time <= diffMinutes
 
