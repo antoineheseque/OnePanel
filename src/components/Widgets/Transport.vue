@@ -5,28 +5,28 @@
             <div v-if="toggleVLille">
                 <l-marker v-for="(station, index) in vlille" :key="index" :lat-lng="getMarker(station.geometry.coordinates[1],station.geometry.coordinates[0])" >
                     <l-popup>
-                        <h6>Station {{station.fields.nom}}</h6>
-                        <p>{{station.fields.adresse}} - {{station.fields.commune}}</p>
-                        <p>Vélo disponible : {{station.fields.nbvelosdispo}}/{{station.fields.nbplacesdispo+station.fields.nbvelosdispo}}</p>
-                        <p class="alert-info text-center" v-if="station.fields.etatconnexion === 'CONNECTED' && station.fields.etat != 'EN MAINTENANCE'">{{station.fields.etat}}</p>
-                        <p class="alert-warning text-center" v-else-if="station.fields.etat === 'EN MAINTENANCE'">{{station.fields.etat}}</p>
-                        <p class="alert-danger text-center" v-else>{{station.fields.etat}}</p>
+                        <h6 class="color">Station {{station.fields.nom}}</h6>
+                        <p class="color">{{station.fields.adresse}} - {{station.fields.commune}}</p>
+                        <p class="color">Vélo disponible : {{station.fields.nbvelosdispo}}/{{station.fields.nbplacesdispo+station.fields.nbvelosdispo}}</p>
+                        <p class="alert-info text-center color" v-if="station.fields.etatconnexion === 'CONNECTED' && station.fields.etat != 'EN MAINTENANCE'">{{station.fields.etat}}</p>
+                        <p class="alert-warning text-center color" v-else-if="station.fields.etat === 'EN MAINTENANCE'">{{station.fields.etat}}</p>
+                        <p class="alert-danger text-center color" v-else>{{station.fields.etat}}</p>
                     </l-popup>
                 </l-marker>
             </div>
             <div v-if="toggleBusTram">
                 <l-marker v-for="(station, index) in dataIlevia" :key="index" :lat-lng="getMarker(station.location[0],station.location[1])" class="bg-danger">
                     <l-popup class="bustrams-popup">
-                        <h6>Arrêt {{station.name}}</h6>
-                        <div  v-for="(element, index) in station.data" :key="index" class="stopInfo zoom">
-                            <p class="ml-2"><b>{{element.codeligne}}</b> → {{element.sensligne}}</p>
-                            <p class="ml-2"> Prochain depart : {{convertDate(element.heureestimeedepart)}}</p>
+                        <h6 class="color">Arrêt {{station.name}}</h6>
+                        <div  v-for="(element, index) in station.data" :key="index" class="stopInfo zoom color">
+                            <p class="ml-2 color"><b>{{element.codeligne}}</b> → {{element.sensligne}}</p>
+                            <p class="ml-2 color"> Prochain depart : {{convertDate(element.heureestimeedepart)}}</p>
                         </div>
                     </l-popup>
                 </l-marker>
             </div>
         </l-map>
-        <button class="btn btn-success" @click="updateToggleBusTram">Bus</button> <button class="btn btn-success" @click="updateToggleVlille">Vlille</button>
+        <button class="btn btn-success flexButton" @click="updateToggleBusTram">Bus</button> <button class="btn btn-success flexButton" @click="updateToggleVlille">Vlille</button>
     </div>
 </template>
 
@@ -34,6 +34,7 @@
     import L from 'leaflet';
     import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet';
     import { Icon } from 'leaflet';
+    import "leaflet/dist/leaflet.css"
     import jsonArret from "../../assets/json/ilevia-physicalstop.json";
     import axios from 'axios'
     delete Icon.Default.prototype._getIconUrl;
@@ -72,13 +73,13 @@
                     .get(`https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=vlille-realtime&q=&rows=40&facet=libelle&facet=nom&facet=commune&facet=etat&facet=type&facet=etatconnexion`)
                     .then(reponse => {
                         this.vlille = reponse.data.records;
-                        console.log("API vLille OK")
+                        console.log("API vLille")
                     })
                 axios //Appel à l'API pour avoir les prochains passage de bus
                     .get(`https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=ilevia-prochainspassages&q=&rows=10000`)
                     .then(reponse => {
                         this.busTrams = reponse.data.records;
-                        console.log("API passage Bus OK")
+                        console.log("API passage Bus")
                         this.setDataAndName()
                     })
 
@@ -157,9 +158,16 @@
 
 <style scoped>
     .map{
-        height: 50vh;
-        width: 50vh;
+        height: 40vh;
+        width: 40vh;
         margin: auto;
+        color: blue;
+    }
+    .color {
+        color: black;
+    }
+    .flexButton{
+        float: right;
     }
     .bustrams-popup {
         display: block;
