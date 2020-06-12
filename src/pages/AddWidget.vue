@@ -13,6 +13,7 @@
   import WidgetList from './AddWidget/WidgetList';
 
   export default {
+
     components: {
       WidgetList,
     },
