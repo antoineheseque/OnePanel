@@ -21,6 +21,7 @@
 
 <script>
     import json from "../../assets/json/Horoscope.json";
+    import User from '@/user';
 
     export default {
         name: "Horoscope",
@@ -33,7 +34,7 @@
                     Santé : 'Vous <verbeS> <complementSanté>',
                 },
                 dateOfToday: new Date(),
-                dateOfBirth : new Date(1999,11,4),
+                dateOfBirth : User.profile.birthdayDate,//new Date(1999,11,4), //requete bdd user pour la date de naissance
                 astrologicalSign: '',
                 astrologicalHoro:{
                     date: '',
@@ -53,47 +54,6 @@
             }
         },
         methods : {
-            getAstrologicalSign : function () {
-                var month = (this.dateOfBirth.getMonth());
-                var day = this.dateOfBirth.getDate();
-                if((month == 1 && day >=21) || (month == 2 && day <=19)){ //30
-                    this.astrologicalSign = 'Verseau'
-                }
-                else if((month == 2 && day >=20) || (month == 3 && day <=20)){ //30
-                    this.astrologicalSign = 'Poissons'
-                }
-                else if((month == 3 && day >=21) || (month == 4 && day <=20)){ //31
-                    this.astrologicalSign = 'Bélier'
-                }
-                else if((month == 4 && day >=21) || (month == 5 && day <=21)){ //
-                    this.astrologicalSign = 'Taureau'
-                }
-                else if((month == 5 && day >=22) || (month == 6 && day <=21)){
-                    this.astrologicalSign = 'Gémeaux'
-                }
-                else if((month == 6 && day >=22) || (month == 7 && day <=22)){
-                    this.astrologicalSign = 'Cancer'
-                }
-                else if((month == 7 && day >=23) || (month == 8 && day <=22)){
-                    this.astrologicalSign = 'Lion'
-                }
-                else if((month == 8 && day >=23) || (month == 9 && day <=22)){
-                    this.astrologicalSign = 'Vierge'
-                }
-                else if((month == 9 && day >=23) || (month == 10 && day <=22)){
-                    this.astrologicalSign = 'Balance'
-                }
-                else if((month == 10 && day >=23) || (month == 11 && day <=22)){
-                    this.astrologicalSign = 'Scorpion'
-                }
-                else if((month == 11 && day >=23) || (month == 12 && day <=21)){
-                    this.astrologicalSign = 'Sagittaire'
-                }
-                else if((month == 11 && day >=22) || (month == 1 && day <=20)){
-                    this.astrologicalSign = 'Capricorne'
-                }
-
-            },
             getRandom: function (max) {
                 return parseInt(Math.random() * (max))
             },
@@ -111,14 +71,28 @@
                 }
                 return txt
             },
-            setHoro: function(){
-                return {
-                    Amour : this.randomizeTxt(this.base.Amour),
-                    Travail : this.randomizeTxt(this.base.Travail),
-                    Santé : this.randomizeTxt(this.base.Santé)
-                }
+            call_horoscope: function(){
+                fetch('/api/widget/horoscope/getHoroscope', {
+                    method: 'POST'
+                }).then(function (res) {
+                    return res.json()
+                }).then(function (data) {
+                    this.astrologicalHoro.date = this.dateOfToday
+                    this.astrologicalHoro.verseau = data.horoscope,
+                    this.astrologicalHoro.poissons = data.horoscope,
+                    this.astrologicalHoro.belier =  data.horoscope,
+                    this.astrologicalHoro.taureau = data.horoscope,
+                    this.astrologicalHoro.gemeaux = data.horoscope,
+                    this.astrologicalHoro.cancer = data.horoscope,
+                    this.astrologicalHoro.lion = data.horoscope,
+                    this.astrologicalHoro.vierge = data.horoscope,
+                    this.astrologicalHoro.balance = data.horoscope,
+                    this.astrologicalHoro.scorpion = data.horoscope,
+                    this.astrologicalHoro.sagittaire = data.horoscope,
+                    this.astrologicalHoro.capricorne = data.horoscope
+                }.bind(this))
             },
-            setAstrologicalHoro: function () {
+            /*setAstrologicalHoro: function () {
                     this.astrologicalHoro.date = this.dateOfToday
                     this.astrologicalHoro.verseau = this.setHoro(),
                     this.astrologicalHoro.poissons = this.setHoro(),
@@ -132,14 +106,54 @@
                     this.astrologicalHoro.scorpion = this.setHoro(),
                     this.astrologicalHoro.sagittaire = this.setHoro(),
                     this.astrologicalHoro.capricorne = this.setHoro()
-            }
+            }*/
         },
         mounted() {
-            this.getAstrologicalSign();
-            this.setAstrologicalHoro();
+            this.call_horoscope();
+            //this.setAstrologicalHoro();
             console.log(this.astrologicalHoro)
         }
     }
+
+
+    export function getAstrologicalSign() {
+        var month = (this.dateOfBirth.getMonth());
+        var day = this.dateOfBirth.getDate();
+        if ((month == 1 && day >= 21) || (month == 2 && day <= 19)) { //30
+            this.astrologicalSign = 'Verseau'
+        } else if ((month == 2 && day >= 20) || (month == 3 && day <= 20)) { //30
+            this.astrologicalSign = 'Poissons'
+        } else if ((month == 3 && day >= 21) || (month == 4 && day <= 20)) { //31
+            this.astrologicalSign = 'Bélier'
+        } else if ((month == 4 && day >= 21) || (month == 5 && day <= 21)) { //
+            this.astrologicalSign = 'Taureau'
+        } else if ((month == 5 && day >= 22) || (month == 6 && day <= 21)) {
+            this.astrologicalSign = 'Gémeaux'
+        } else if ((month == 6 && day >= 22) || (month == 7 && day <= 22)) {
+            this.astrologicalSign = 'Cancer'
+        } else if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) {
+            this.astrologicalSign = 'Lion'
+        } else if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) {
+            this.astrologicalSign = 'Vierge'
+        } else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) {
+            this.astrologicalSign = 'Balance'
+        } else if ((month == 10 && day >= 23) || (month == 11 && day <= 22)) {
+            this.astrologicalSign = 'Scorpion'
+        } else if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) {
+            this.astrologicalSign = 'Sagittaire'
+        } else if ((month == 11 && day >= 22) || (month == 1 && day <= 20)) {
+            this.astrologicalSign = 'Capricorne'
+        }
+    }
+
+    export function setHoro() {
+        return {
+            Amour: this.randomizeTxt(this.base.Amour),
+            Travail: this.randomizeTxt(this.base.Travail),
+            Santé: this.randomizeTxt(this.base.Santé)
+        }
+    }
+
 </script>
 
 <style scoped>

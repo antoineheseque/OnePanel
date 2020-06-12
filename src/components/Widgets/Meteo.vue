@@ -25,7 +25,7 @@
                 <p class="text-affichage case">{{toUpper(weatherData.weather[0].description)}}</p>
             </div>
         </div>
-        <div class="m-2 horizontalScrollItems " v-if="toggleResultLocationDaily">
+        <div class="m-2 horizontalScrollItems" v-if="toggleResultLocationDaily">
             <div class="bg-info p-2 m-2 horizontalScrollItem" v-for="(weatherData, i) in temps7days" :key="i" @click="updateToggleResultMoreInfo(i)">
                 <p class="text-affichage hours">{{datesDay[i].getDate()}}/{{datesDay[i].getMonth()+1}}</p>
                 <img :src="getUrlImg(weatherData.weather[0].icon)" alt="Icon" class="zoom">
@@ -263,7 +263,8 @@
     .case {
         table-layout: fixed;
         width: 5em;
-        height: 4.5em;
+        max-height: 4.5em;
+        border-radius: 5px;
     }
     .horizontalScrollItems{
         display: flex;

@@ -1,7 +1,9 @@
 <template>
     <div>
-        <h5 class="text-center mt-5">{{quote.quote}}</h5>
-        <p class="text-center">{{quote.author}} - {{quote.date}}</p>
+        <blockquote class="blockquote mb-0 ">
+            <p class="mt-0">{{quote.quote}}</p>
+            <footer class="centerblockquote-footer">{{quote.author}} - <cite title="Source Title">{{quote.date}}</cite></footer>
+        </blockquote>
     </div>
 </template>
 
@@ -20,7 +22,7 @@
                     .get(`https://quotes.rest/qod?language=en`)
                     .then(reponse => {
                         this.quote = reponse.data.contents.quotes[0];
-                        console.log("API Citation OK")
+                        console.log(reponse.data.contents.quotes[0])
                     })
             }
         },

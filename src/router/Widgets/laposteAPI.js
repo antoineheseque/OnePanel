@@ -1,9 +1,18 @@
 var express = require('express')
 var router = express.Router()
-const sql = require('./bdd')
+const sql = require('../../server/bdd')
 const axios = require('axios');
 
-//TODO: AJOUTER ICI LES ROUTES POUR LES API WIDGETS
+///////////////////////////////////////////////////
+// CLIENT -> SERVEUR
+///////////////////////////////////////////////////
+
+
+
+///////////////////////////////////////////////////
+// CLIENT -> API
+///////////////////////////////////////////////////
+
 router.get("/poste", (req, res) => {
     axios.get("https://api.laposte.fr/suivi/v2/idships/EP111111110FR?lang=fr_FR",{
         headers:{

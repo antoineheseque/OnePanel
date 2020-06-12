@@ -13,7 +13,8 @@
 
     &.dropdown-black {
       background: linear-gradient(to bottom, $black 0%, $black-states 100%);
-      border: 1px solid $default;
+      border: 2px solid $default;
+      border-radius: 5px;
       .dropdown-item {
         color: rgba(255, 255, 255, 0.7);
       }
@@ -96,7 +97,7 @@
     .dropdown-item {
         &.active,
         &:active{
-            color: inherit;
+            //color: inherit;
         }
     }
 
@@ -166,7 +167,7 @@
 
       &:hover,
       &:focus {
-        background-color: $opacity-gray-3;
+        background: #29496B;
       }
 
       &.disabled,
@@ -175,7 +176,6 @@
 
         &:hover,
         &:focus {
-          background-color: transparent;
           box-shadow: none;
         }
       }
@@ -183,7 +183,7 @@
 
 
     .dropdown-divider {
-        background-color: $opacity-gray-5;
+        background-color: #29496B;
     }
 
     .dropdown-header:not([href]):not([tabindex]) {
@@ -349,11 +349,4 @@
     border-left: .3em solid transparent;
   }
 
-}
-
-
-@media screen and (min-width: 992px){
-  .dropdown-menu .dropdown-item{
-      color: $dark-gray;
-  }
 }
