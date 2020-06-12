@@ -20,6 +20,7 @@
                     <news v-if="widget.id==='news'"></news>
                     <meteo v-if="widget.id==='meteo'" v-on:setInformations="setInformations"></meteo>
                     <gif-du-jour v-if="widget.id==='gif-du-jour'"></gif-du-jour>
+                    <horoscope v-if="widget.id==='horoscope'"></horoscope>
                 </div>
             </div>
         </div>
@@ -29,10 +30,11 @@
     import News from "@/components/Widgets/News";
     import Meteo from "@/components/Widgets/Meteo";
     import GifDuJour from "@/components/Widgets/GifDuJour";
+    import Horoscope from "@/components/Widgets/Horoscope";
 
     export default {
         name: "widget",
-        components: {GifDuJour, Meteo, News},
+        components: {GifDuJour, Meteo, News, Horoscope},
         props: {
             widget:"",
             type:""

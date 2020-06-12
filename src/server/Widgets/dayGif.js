@@ -1,6 +1,6 @@
 const axios = require('axios');
 var mysql = require('mysql');
-const sql = require('../bdd')
+const sql = require('../bdd');
 
 ///////////////////////////////////////////////////
 // SERVER -> API

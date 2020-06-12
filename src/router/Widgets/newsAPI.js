@@ -14,41 +14,9 @@ router.post("/getNews", (req, res) => {
     //fonction qui demande les news dans la BDD
 
     sql.request(`SELECT News from \`Day_News\` WHERE id ='1'`).then(function (result) {
-        console.log("\nreponse_getNews=")
-        console.log(result[0].News)
-
         let data = JSON.parse(result[0].News)
-
-        console.log("\ndata=")
-        console.log(data)
         res.json({"news": data})
     })
 });
-
-///////////////////////////////////////////////////
-// SERVER -> API
-///////////////////////////////////////////////////
-
-/*router.get("/createNews", (req, res) => {
-    //TODO: APPELER L'API ET L'UPDATE DANS LA BDD
-    // La fonction getNews nous donne les news depuis l'API
-
-    axios.get("https://newsapi.org/v2/top-headlines?country=fr&apiKey=3cff78090d1240b5ae70dbbb310250c9").then(function (r) {
-        const newsBDD = r.data.articles; // CONTIENT LES NEWS
-
-        //fonction qui update la bdd à chaque actualisation
-
-        sql.request(`UPDATE \`Day_News\` SET (News) VALUE('${newsBDD}') WHERE id=1 LIMIT 1`).then(function (result) {
-            res.json({"success": "true"})
-        });
-
-    }).catch(function(result) {
-            console.log(result)
-    })
-});
-
-*/
-
-
 
 module.exports = router

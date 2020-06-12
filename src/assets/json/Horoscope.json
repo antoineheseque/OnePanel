@@ -1,14 +1,25 @@
 {
-    "<verbeA>" : ["allez <verbesA>"],
-    "<verbeT>" : ["allez <verbesT"],
-    "<verbeS>" : ["allez <verbesS"],
-    "<verbesA>" : ["aimer", "agacer", "déranger", "emmener", "féliciter"],
-    "<verbesS>" : ["déranger", "financer", "négliger", "prendre soin de", "retrouver"],
-    "<verbesT>" : ["abandonner", "agacer", "analyser", "blâmer", "choyer", "couvrir", "déranger", "financer"],
+    "<verbeA>" : ["allez <verbesA> <complementAmour>", "devriez <verbesA> <complementAmour> aujourd'hui"],
+    "<verbeT>" : ["allez <verbesT>", "devrez <verbesT>", "ferez face à"],
+    "<verbeS>" : ["allez <verbesS>", "devrez <verbesS>"],
+    "<verbesA>" : ["aimer", "agacer", "déranger", "emmener <lieu>", "féliciter", "comprendre <comprehension>", "respecter", "réunir  <lieu>"],
+    "<verbesS>" : ["négliger", "prendre soin de", "vous retrouver avec", "respecter"],
+    "<verbesT>" : ["blâmer", "choyer", "couvrir", "déranger"],
 
-    "<complementTravail>" : ["votre entreprise", "votre employeur", "vos collègues", "un dossier", "une erreur", "un problème épineux"],
-    "<complementSanté>" : ["votre médecin", "votre santé", "un problème bénin"],
-    "<complementAmour>" : ["votre partenaire", "vos enfants", "votre famille"]
+    "<complementTravail>" : ["votre entreprise <justificationTravail>", "votre employeur <liaisonLieuTravail>", "vos collègues <liaisonLieuTravail>", "un dossier des plus sensible dans la journée", "une erreur <justificationErreur>", "un problème <probleme>"],
+    "<complementSante>" : ["votre médecin car <justificationSante>", "votre santé", "un problème de santé <probleme>"],
+    "<complementAmour>" : ["votre partenaire", "vos enfants", "votre famille", "votre foyer"],
+    "<probleme>" : ["épineux car <justificationSante>", "bénin", "sérieux"],
+    "<justificationSante>": ["vous êtes atteint d'une <maladie>", "c'est un problème bénin", " c'est un problème sérieux"],
+    "<maladie>" : ["coronavirus", "leucemie", "diarrhée", "sérieuse pousser d'acnée", "de dépendance à <dependance>"],
+    "<dependance>" : ["à l'alcool", "au sexe", "à la masturbation", "au chocolat", "au café", "à la poésie", "au livre"],
+    "<lieu>": ["à la plage", "au bazar de Lille", "au cinéma", "au marché au puce"],
+    "<justificationTravail>": ["augmentation", "pour avoir été viré", "pour faire l'amour à sa secrétaire"],
+    "<justificationErreur>": ["de procèdure lié <dependance>"],
+    "<liaisonLieuTravail>": ["autour <lieuTravailPersonnel>", "derrière <lieuTravailDefini>"],
+    "<lieuTravailPersonnel>": ["de la machine à café", "des toilettes", "du bureau"],
+    "<lieuTravailDefini>": ["la machine à café", "les toilettes", "le bureau"],
+    "<comprehension>": ["que près de 80 % des femmes accouchent avec une anesthésie péridurale. Or cette médicalisation massive du soulagement des douleurs de l’accouchement ne fait pas l’unanimité. Bref, vous allez vous faire engueuler",
+        "que le sexisme est dangereux. Il engendre des sentiments de dévalorisation, d’auto-censure, l’adoption de stratégies d’évitement, des changements de comportement et une détérioration de la santé. Le sexisme est à la base des inégalités entre les femmes et les hommes. Il affecte les femmes et les filles de manière disproportionnée. Bref, vous allez vous faire engueuler"
+    ]
 }
-
-

@@ -1,8 +1,11 @@
 const sql = require('./bdd')
 var mysql = require('mysql');
+const fetcha = require('fecha')
+
+// Importer les Widgets
 const dayGif = require('./Widgets/dayGif')
 const news = require('./Widgets/news')
-const fetcha = require('fecha')
+const horoscope = require('./Widgets/horoscope')
 
 function refreshAPI(){
     // On Récupère tout les widgets
