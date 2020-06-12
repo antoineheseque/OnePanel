@@ -25,7 +25,7 @@
                     <biorythme v-if="widget.id==='biorythme'"></biorythme>
                     <citation v-if="widget.id==='citation'"></citation>
                     <day-streak v-if="widget.id==='dayStreak'"></day-streak>
-
+                    <agenda v-if="widget.id==='agenda'"></agenda>
                 </div>
             </div>
         </div>
@@ -39,10 +39,11 @@
     import Biorythme from "@/components/Widgets/Biorythme";
     import Citation from "@/components/Widgets/Citation";
     import DayStreak from "@/components/Widgets/DayStreak";
+    import Agenda from "@/components/Widgets/Agenda";
 
     export default {
         name: "widget",
-        components: {GifDuJour, Meteo, News, Horoscope, Biorythme, Citation, DayStreak},
+        components: {GifDuJour, Meteo, News, Horoscope, Biorythme, Citation, DayStreak, Agenda},
         props: {
             widget:"",
             type:""
@@ -63,5 +64,3 @@
         }
     };
 </script>
-<style>
-</style>

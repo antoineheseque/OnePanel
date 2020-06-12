@@ -15,7 +15,7 @@
                     <vue-timepicker v-model="fromTime" class="timepicker"></vue-timepicker>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-1">
                 <div class="col-sm-1">
                     <label>Au</label>
                 </div>
@@ -54,7 +54,7 @@
             <div>
                 <h5>Titre : {{event.title}}</h5>
                 <p><b>Du :</b> {{event.fromDate.toLocaleString('fr-FR', { timeZone: 'UTC' })}} → {{event.toDate.toLocaleString('fr-FR', { timeZone: 'UTC' })}} à {{event.address}}</p>
-                <p> <b>Description :</b> {{event.description}}</p>
+                <p><b>Description :</b> {{event.description}}</p>
                 <div v-if="toggleMoreInfo">
                     <div v-if="event.itinerary" class="itinerary">
                         <p><b>Temps de trajet (en voiture):</b> {{(event.itinerary.total_time/3600).toFixed(0)}}h{{(((event.itinerary.total_time/3600)%1)*60).toFixed(0)}}m</p>
@@ -313,24 +313,18 @@
 
 <style scoped>
     .agenda {
-        width: 650px;
-        height: 700px;
         margin: auto;
         overflow-y: auto;
     }
 
     .modify{
         border-radius: 10px;
+        cursor: pointer;
     }
     .modify button {
         display: none;
     }
 
-    .horizontalScrollItem{
-        display: flex;
-        overflow-x: auto;
-
-    }
     .modify:hover button{
         display: block;
     }
@@ -348,12 +342,7 @@
     .danger{
         color: #f3a4b5;
     }
-
-    .timepicker{
-        background-color: red;
-    }
     textarea {
-        border: 1px dashed grey;
         border-radius: 10px;
     }
 </style>

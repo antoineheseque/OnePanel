@@ -55,7 +55,7 @@
         </div>
 
         <div class="mx-3 mb-5 citiesList" v-if="toggleResultPositionToday">
-            <div class="d-flex flex-column bg-info h5 p-2 rounded " v-for="(coordCity,i) in coordsCity" :key="i" @click="getLatLon(i)">{{coordCity.formatted}}</div>
+            <div class="d-flex flex-column bg-info h5 p-2 rounded city" v-for="(coordCity,i) in coordsCity" :key="i" @click="getLatLon(i)">{{coordCity.formatted}}</div>
         </div>
     </div>
 </template>
@@ -265,10 +265,12 @@
         width: 5em;
         max-height: 4.5em;
         border-radius: 5px;
+
     }
     .horizontalScrollItems{
         display: flex;
         overflow-x: auto;
+        cursor: pointer;
     }
     .citiesList{
         overflow-y: auto;
@@ -284,5 +286,8 @@
     .zoom:hover{
         -webkit-transform: scale(1.2);
         transform: scale(1.2);
+    }
+    .city{
+        cursor: pointer;
     }
 </style>
