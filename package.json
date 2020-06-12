@@ -25,6 +25,7 @@
     "vue-router": "^3.2.0",
     "vue-router-prefetch": "^1.6.0",
     "vue2-leaflet": "^2.5.2",
+    "vue2-timepicker": "^1.1.2",
     "vue2-transitions": "^0.3.0",
     "vuejs-datepicker": "^1.6.2",
     "workbox-routing": "^5.1.3"
