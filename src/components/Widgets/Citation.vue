@@ -1,6 +1,6 @@
 <template>
     <div>
-        <blockquote class="blockquote mb-0 ">
+        <blockquote class="blockquote">
             <p class="mt-0">{{quote.quote}}</p>
             <footer class="centerblockquote-footer">{{quote.author}} - <cite title="Source Title">{{quote.date}}</cite></footer>
         </blockquote>
@@ -31,7 +31,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

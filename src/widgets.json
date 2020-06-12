@@ -41,6 +41,22 @@
       "y": 0,
       "w": 6,
       "h": 1
+    },
+    {
+      "title": "Citation du jour",
+      "id": "citation",
+      "x": 0,
+      "y": 0,
+      "w": 4,
+      "h": 1
+    },
+    {
+      "title": "Day Streak!",
+      "id": "dayStreak",
+      "x": 0,
+      "y": 0,
+      "w": 4,
+      "h": 1
     }
   ]
 }

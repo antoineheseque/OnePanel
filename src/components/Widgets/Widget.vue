@@ -23,6 +23,9 @@
                     <gif-du-jour v-if="widget.id==='gif-du-jour'"></gif-du-jour>
                     <horoscope v-if="widget.id==='horoscope'" v-on:setHoroscope="setHoroscope"></horoscope>
                     <biorythme v-if="widget.id==='biorythme'"></biorythme>
+                    <citation v-if="widget.id==='citation'"></citation>
+                    <day-streak v-if="widget.id==='dayStreak'"></day-streak>
+
                 </div>
             </div>
         </div>
@@ -34,10 +37,12 @@
     import GifDuJour from "@/components/Widgets/GifDuJour";
     import Horoscope from "@/components/Widgets/Horoscope";
     import Biorythme from "@/components/Widgets/Biorythme";
+    import Citation from "@/components/Widgets/Citation";
+    import DayStreak from "@/components/Widgets/DayStreak";
 
     export default {
         name: "widget",
-        components: {GifDuJour, Meteo, News, Horoscope, Biorythme},
+        components: {GifDuJour, Meteo, News, Horoscope, Biorythme, Citation, DayStreak},
         props: {
             widget:"",
             type:""

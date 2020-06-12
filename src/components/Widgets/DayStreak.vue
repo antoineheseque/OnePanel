@@ -1,7 +1,6 @@
 <template>
     <div class="daystreak">
-        <h3 class="text-center">Day Streak</h3>
-        <p class="text-center"> {{counter}}</p>
+        <h4 class="text-center">Vous vous êtes connectés {{counter}} jour(s) d'affilé</h4>
     </div>
 </template>
 
@@ -34,16 +33,3 @@
         }
     }
 </script>
-
-<style scoped>
-    body{
-        background-color: #ffcea9;
-    }
-    .daystreak {
-        margin: auto;
-        margin-top: 100px;
-        background-color: indianred;
-        width: 200px;
-        height: 100px;
-    }
-</style>
