@@ -1,32 +1,32 @@
 <template>
-    <div>
+    <div class="classement">
         <h1>ClassementLigue1</h1>
         <table class="table">
             <thead>
-                <th scope="col">#</th>
-                <th scope="col">Club</th>
-                <th scope="col">MJ</th>
-                <th scope="col">G</th>
-                <th scope="col">N</th>
-                <th scope="col">P</th>
-                <th scope="col">BP</th>
-                <th scope="col">BC</th>
-                <th scope="col">DB</th>
-                <th scope="col">Pts</th>
+            <th scope="col">#</th>
+            <th scope="col">Club</th>
+            <th scope="col">MJ</th>
+            <th scope="col">G</th>
+            <th scope="col">N</th>
+            <th scope="col">P</th>
+            <th scope="col">BP</th>
+            <th scope="col">BC</th>
+            <th scope="col">DB</th>
+            <th scope="col">Pts</th>
             </thead>
             <tbody>
-                    <tr v-for="(team,i) in tableLigue1" :key="i">
-                        <th scope="row">{{team.position}}</th>
-                        <td><img :src="team.team.crestUrl" alt="teamLogo" class="img mr-4"> {{team.team.name}}</td>
-                        <td>{{team.playedGames}}</td>
-                        <td>{{team.won}}</td>
-                        <td>{{team.draw}}</td>
-                        <td>{{team.lost}}</td>
-                        <td>{{team.goalsFor}}</td>
-                        <td>{{team.goalsAgainst}}</td>
-                        <td>{{team.goalDifference}}</td>
-                        <td>{{team.points}}</td>
-                    </tr>
+            <tr v-for="(team,i) in tableLigue1" :key="i">
+                <th scope="row">{{team.position}}</th>
+                <td><img :src="team.team.crestUrl" alt="teamLogo" class="img mr-4"> {{team.team.name}}</td>
+                <td>{{team.playedGames}}</td>
+                <td>{{team.won}}</td>
+                <td>{{team.draw}}</td>
+                <td>{{team.lost}}</td>
+                <td>{{team.goalsFor}}</td>
+                <td>{{team.goalsAgainst}}</td>
+                <td>{{team.goalDifference}}</td>
+                <td>{{team.points}}</td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -73,6 +73,10 @@
         display: flex;
         float: left;
         width: 25px;
-        height: auto;
+    }
+    .classement{
+        overflow-y: auto;
+        height: 300px;
+        width: 800px; /* a modifié j'imagine*/
     }
 </style>
