@@ -1,19 +1,17 @@
 <template>
-    <div class="horoscope mt-5">
-        <h3>Horoscope de {{data.astrologicalSign}}</h3>
+    <div class="horoscope">
         <div v-if="!haveBirthdayDate">
             <p>Vous devez entrer votre date de naissance dans la page Profil.</p>
         </div>
         <div v-else>
-            <p>du {{dateOfToday.toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</p>
             <p class="m-2 text-justify">
-                <b>Amour :</b>  {{data.message.love}}
+                <i class="tim-icons icon-heart-2"></i><b class="font-weight-bold"> Amour :</b> {{data.message.love}}
             </p>
             <p class="m-2 text-justify">
-                <b>Santé :</b>  {{data.message.work}}
+                <i class="tim-icons icon-sound-wave"></i><b class="font-weight-bold"> Santé :</b> {{data.message.work}}
             </p>
             <p class="m-2 text-justify">
-                <b>Travail :</b>  {{data.message.health}}
+                <i class="tim-icons icon-wallet-43"></i><b class="font-weight-bold"> Travail :</b> {{data.message.health}}
             </p>
         </div>
     </div>
@@ -45,6 +43,7 @@
             getSentences(this.data.astrologicalSign).then((res) => {
                 console.log(res)
                 this.data.message = JSON.parse(res)
+                this.$emit('setHoroscope', this.data.astrologicalSign + " du " + this.dateOfToday.toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}) )
             })
         }
     }
@@ -54,7 +53,6 @@
             axios.post('/api/widget/horoscope/getHoroscope',{
                 data:sign
             }).then(function(res) {
-                console.log(res.data.horoscope)
                 r(res.data.horoscope)
             })
         });
