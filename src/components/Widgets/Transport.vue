@@ -1,6 +1,6 @@
 <template>
     <div class="map">
-        <l-map :zoom="zoom" :center="center">
+        <l-map :zoom="zoom" :center="getMarker(ourLocation.lat, ourLocation.lon)">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <div v-if="toggleVLille">
                 <l-marker v-for="(station, index) in vlille" :key="index" :lat-lng="getMarker(station.geometry.coordinates[1],station.geometry.coordinates[0])" >
@@ -53,7 +53,7 @@
         },
         data: function(){
             return{
-                zoom:11.5,
+                zoom:14.5,
                 center: L.latLng(50.646885, 3.070242),
                 url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
                 attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -142,7 +142,6 @@
                 else {
                     return date.getHours() + 'h' + date.getMinutes() + ' le ' + date.getDate() + '/' + (date.getMonth()+1)
                 }
-
             },
             updateToggleVlille : function () {
                 this.toggleVLille = true
@@ -176,6 +175,7 @@
             },
         },
         mounted() {
+            this.getLocation()
             this.getData()
 
         }
