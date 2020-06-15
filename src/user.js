@@ -1,4 +1,3 @@
-const axios = require('axios');
 
 function getCookie(cname) {
     var name = cname + "=";
@@ -142,6 +141,9 @@ export default {
                 r(data)
             })
         });
+    },
+    getToken: function () {
+        return getCookie("token")
     }
 }
 

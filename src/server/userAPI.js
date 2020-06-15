@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const sql = require('./bdd')
+var mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const format = require('fecha');
 const jwt = require("jsonwebtoken")
@@ -183,4 +184,40 @@ router.post("/verifyToken", (req, res) => {
     });
 });
 
+router.post("/addWidget", (req, res) => {
+    let widgetID = req.body.id
+    let token = req.body.token
+
+    // Vérification de l'utilisateur
+    jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
+            if (decoded === undefined) // Utilisateur valide
+            {
+                console.log("Y'A UN PROBLEME")
+            } else {
+                var request = "SELECT widgets FROM \`users\` WHERE id=? LIMIT 1"
+                var completeRequest = mysql.format(request, [decoded.id]);
+                sql.request(completeRequest).then((result) => {
+                // On récupère la liste des widgets de l'utilisateur
+
+                // On stocke dans la BDD
+                let widgetList = result
+                console.log(widgetList)
+
+                // On renvoi un JSON pour le widget pret à afficher
+
+                // Return result
+                //res.json(data)
+            }).catch((err) => {
+                console.log(err)
+            });
+        }
+    });
+});
+
 module.exports = router
+
+function addWidgetToList(widgetList, widgetID){
+    return new Promise((r) => {
+
+    });
+}

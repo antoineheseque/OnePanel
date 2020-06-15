@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <widget-list :widgetList="widgetList"></widget-list>
+            <widget-list :widgetList="widgetList" v-on:addWidget="onClickWidget"></widget-list>
         </div>
     </div>
 
@@ -9,6 +9,7 @@
 <script>
     import widgetsList from '../widgetsList.json';
     import WidgetList from './AddWidget/WidgetList';
+    import User from '../user'
 
     export default {
 
@@ -21,53 +22,20 @@
             }
         },
         methods: {
-            /*onClickSupprime: function () {
-                this.isLogging = true
-
-                //this.notify('info', 'Connexion en cours.')
-                User.login(this.login).then((result) => {
-                    console.log(result)
-
-                    if(result.logged === true){ // Si l'utilisateur à pu être connecté
-                        this.notify('info', `Widget ajouté avec succès.`)
-                        router.push('dashboard')
-                    }
-                    else{
-                        this.login.password = ""
-                        this.notify('danger', result.reason)
-                    }
-                    this.isLogging = false
-                });
-            },
-            notify: function(info,message){
-                this.$notify({
-                    component: NotificationTemplate,
-                    icon: "tim-icons icon-bell-55",
-                    horizontalAlign: "right",
-                    verticalAlign: "top",
-                    type: info,
-                    timeout: 2000,
-                    message: message
+            onClickWidget: function(id){
+                fetch('/api/user/addWidget', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({"id":id,"token":User.getToken()})
+                }).then(function (res) {
+                    return res.json()
+                }).then(function (data) {
+                    // RECUPERE LE JSON DU WIDGET
+                    console.log(data)
                 })
-            },
-            onClickAjout: function () {
-                this.isLogging = true
-
-                //this.notify('info', 'Connexion en cours.')
-                User.login(this.login).then((result) => {
-                    console.log(result)
-
-                    if(result.logged === true){ // Si l'utilisateur à pu être connecté
-                        this.notify('info', `Widget ajouté avec succès.`)
-                        router.push('dashboard')
-                    }
-                    else{
-                        this.login.password = ""
-                        this.notify('danger', result.reason)
-                    }
-                    this.isLogging = false
-                });
-            }*/
+            }
         }
     }
 </script>

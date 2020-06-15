@@ -16,7 +16,7 @@ function refreshAPI(){
 
             if(needRefresh(widget.lastUpdate, widget.syncTime)){
                 switch (widget.id) {
-                    case "dayGif":
+                    case "day-gif":
                         dayGif.createImage()
                         break;
                     case "news":
