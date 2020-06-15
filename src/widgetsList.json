@@ -4,7 +4,7 @@
       "title": "News",
       "id": "news",
       "description":"Toutes les infos de par le monde en temps réel ",
-      "image":"/widgets/horoscope.jpg"
+      "image":"/widgets/minute_Martinique.Image-fixe235-350x250.jpg"
     },
     {
       "title": "Météo",
@@ -16,61 +16,61 @@
       "title": "Horoscope",
       "id": "Horoscope",
       "description":"Affichage du signe astrologique ainsi que les 3 phrases associée à la santé, l’amour, et le travail. ",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/horoscope.jpg"
     },
     {
       "title": "Transport",
       "id": "Transport",
       "description":"Afficher la carte, ainsi que les icones des stations pour y récupérer les informations.",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/collecte-elements-transport_1268-1339.jpg"
     },
     {
       "title": "Bitcoin",
       "id": "Bitcoin",
       "description":"Récupérer la valeur du bitcoin chaque jour.Graphique avec plusieurs options (1 jour, 1mois (une semaine, un mois, un an, depuis le début, …).",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/bic_Bitcoin_Recession-Free_Decade-350x250-1.jpg.optimal.jpg"
     },
     {
       "title": "Suivi de colis",
       "id": "Suivi de colis",
       "description":"Input de suivi de colis et en retour les différentes étapes de l’historique de colis.",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/Capture-d’écran-2020-03-24-à-15.50.58-350x250.png"
     },
     {
       "title": "Classement de foot",
       "id": "Classement de foot",
       "description":"Classement des équipes, buts marqués /encaissés et le ratio, ainsi que le nombre de carton jaune/rouge",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/ballon8-350x250.jpg"
     },
     {
       "title": "Génération et collection pokémon",
       "id": "Génération et collection pokémon",
       "description":"Affiche un pokemon au hasard chaque jour.",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/1508797752443.png"
     },
     {
       "title": "Horloge Mondiale",
       "id": "Horloge Mondiale",
       "description":"Permet grâce à une liste savoir quelle heure il est dans les principales grandes villes du fuseau horaire en l’ajoutant à la page.",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/DSC_2067-350x250.jpg"
     },
     {
       "title": "Day streak",
       "id": "Day streak",
       "description":"Affichage du nombre de jours de connexion consécutifs de l’utilisateur.",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/analytics5cff3bc1b3ff2-350x250.jpg"
     },
     {
       "title": "Gif du jour",
       "id": "Gif du jour",
       "description":"Affichage d'un GIF personnalisé.",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/unnamed.gif"
     },
     {
       "title": "Citation du jour",
       "id": "Citation du jour",
       "description":"Affichage d'une citation personnalisée, de son auteur et de sa date.",
-      "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
+      "image":"/widgets/citation_Marcel-Proust-350x250.jpg"
     }
   ]
 }
