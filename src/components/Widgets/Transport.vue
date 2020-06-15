@@ -64,7 +64,11 @@
                 arret: {},
                 dataIlevia:[], //a stocker dans BDD
                 toggleVLille: true,
-                toggleBusTram: false
+                toggleBusTram: false,
+                ourLocation : {
+                    lat:'',
+                    lon:''
+                }
             }
         },
         methods:{
@@ -147,7 +151,29 @@
             updateToggleBusTram : function () {
                 this.toggleVLille = false
                 this.toggleBusTram = true
-            }
+            },
+            getLocation : function(){
+                var coord = this;
+                var options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+
+                function success(pos) {
+                    var crd = pos.coords;
+                    console.log('Localisation activé');
+                    coord.ourLocation.lat = crd.latitude;
+                    coord.ourLocation.lon = crd.longitude;
+                    coord.locationState = true;
+                }
+
+                function error(err) {
+                    console.warn(`ERREUR (${err.code}): ${err.message}`);
+                }
+
+                navigator.geolocation.getCurrentPosition(success, error, options);
+            },
         },
         mounted() {
             this.getData()
@@ -158,8 +184,8 @@
 
 <style scoped>
     .map{
-        height: 40vh;
-        width: 40vh;
+        height: 45vh;
+        width: 45vh;
         margin: auto;
         color: blue;
     }

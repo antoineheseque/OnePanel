@@ -71,6 +71,33 @@
       "w": 3,
       "h": 1,
       "min-w": 3
+    },
+    {
+      "title": "Transport",
+      "id": "transport",
+      "x": 0,
+      "y": 0,
+      "w": 4,
+      "h": 1,
+      "min-w": 3.1
+    },
+    {
+      "title": "Classement Ligue 1",
+      "id": "classement",
+      "x": 0,
+      "y": 0,
+      "w": 5,
+      "h": 1,
+      "min-w": 5
+    },
+    {
+      "title": "Pokemon",
+      "id": "pokemon",
+      "x": 0,
+      "y": 0,
+      "w": 3,
+      "h": 1,
+      "min-w": 3
     }
   ]
 }

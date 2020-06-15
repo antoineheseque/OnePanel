@@ -112,7 +112,6 @@
                     this.pokemonCatch.push(this.pokemonOfTheDay)
                     this.toggleNewPokemon = false
                 }
-
             }
         },
         mounted(){

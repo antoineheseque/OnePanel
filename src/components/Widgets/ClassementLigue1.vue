@@ -1,6 +1,5 @@
 <template>
     <div class="classement">
-        <h1>ClassementLigue1</h1>
         <table class="table">
             <thead>
             <th scope="col">#</th>
@@ -76,7 +75,6 @@
     }
     .classement{
         overflow-y: auto;
-        height: 300px;
-        width: 800px; /* a modifié j'imagine*/
+        height: 500px;
     }
 </style>
