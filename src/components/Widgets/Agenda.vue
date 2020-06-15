@@ -144,7 +144,7 @@
             getItinerary : function () {
                 if(this.locationState){
                     axios
-                        .get(`https://maps.open-street.com/api/route/?origin=${this.ourLocation.lat},${this.ourLocation.lon}&destination=${this.coords.lat},${this.coords.lng}&mode=driving&key=1b83806fc9844c5ab47c094a3b8007e0`)
+                        .get(`https://maps.open-street.com/api/route/?origin=${this.ourLocation.lat.toFixed(10)},${this.ourLocation.lon.toFixed(10)}&destination=${this.coords.lat},${this.coords.lng}&mode=driving&key=1b83806fc9844c5ab47c094a3b8007e0`)
                         .then(reponse => {
                             this.event.itinerary = reponse.data
                             this.departure = new Date(this.event.fromDate.getTime()-this.event.itinerary.total_time*1000)
