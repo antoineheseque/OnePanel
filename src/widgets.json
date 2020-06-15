@@ -11,7 +11,7 @@
     },
     {
       "title": "Météo",
-      "id": "meteo",
+      "id": "weather",
       "x": 0,
       "y": 0,
       "w": 6,
@@ -20,7 +20,7 @@
     },
     {
       "title": "Gif du jour!",
-      "id": "gif-du-jour",
+      "id": "day-gif",
       "x": 0,
       "y": 0,
       "w": 2,
@@ -65,7 +65,7 @@
     },
     {
       "title": "Day Streak!",
-      "id": "dayStreak",
+      "id": "day-streak",
       "x": 0,
       "y": 0,
       "w": 3,

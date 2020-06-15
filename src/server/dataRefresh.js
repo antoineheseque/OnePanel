@@ -47,10 +47,8 @@ function getWidgets(){
 }
 
 function refreshWidget(id){
-    let date2 = fetcha.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-    //sql.request(`UPDATE \`widgets\` SET lastUpdate='${date2}' WHERE id='${id}'`);
-    var request = "UPDATE \`widgets\` SET lastUpdate=? WHERE id=?"
-    var completeRequest = mysql.format(request, [date2,id]);
+    var request = "UPDATE \`widgets\` SET lastUpdate=CURRENT_TIMESTAMP WHERE id=?"
+    var completeRequest = mysql.format(request, [id]);
     sql.request(completeRequest);
 }
 

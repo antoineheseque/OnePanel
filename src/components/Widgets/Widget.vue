@@ -19,12 +19,12 @@
             <div class="card-body" >
                 <div class="content">
                     <news v-if="widget.id==='news'"></news>
-                    <meteo v-if="widget.id==='meteo'" v-on:setInformations="setInformations"></meteo>
-                    <gif-du-jour v-if="widget.id==='gif-du-jour'"></gif-du-jour>
+                    <meteo v-if="widget.id==='weather'" v-on:setInformations="setInformations"></meteo>
+                    <gif-du-jour v-if="widget.id==='day-gif'"></gif-du-jour>
                     <horoscope v-if="widget.id==='horoscope'" v-on:setHoroscope="setHoroscope"></horoscope>
                     <biorythme v-if="widget.id==='biorythme'"></biorythme>
                     <citation v-if="widget.id==='citation'"></citation>
-                    <day-streak v-if="widget.id==='dayStreak'"></day-streak>
+                    <day-streak v-if="widget.id==='day-streak'"></day-streak>
                     <agenda v-if="widget.id==='agenda'"></agenda>
                 </div>
             </div>

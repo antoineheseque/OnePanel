@@ -8,31 +8,31 @@
     },
     {
       "title": "Météo",
-      "id": "meteo",
+      "id": "weather",
       "description":"Affiche des prévisions des 48 prochaines heures et des 7 prochains jours , avec le nom de la ville et la date + bouton de switch entre les différente fonctionnalité (48h, 7j ou par ville)",
       "image":"/widgets/la-meteo-en-francais-francais-precoce.jpg"
     },
     {
       "title": "Horoscope",
-      "id": "Horoscope",
+      "id": "horoscope",
       "description":"Affichage du signe astrologique ainsi que les 3 phrases associée à la santé, l’amour, et le travail. ",
       "image":"/widgets/horoscope.jpg"
     },
     {
       "title": "Transport",
-      "id": "Transport",
+      "id": "transport",
       "description":"Afficher la carte, ainsi que les icones des stations pour y récupérer les informations.",
       "image":"/widgets/collecte-elements-transport_1268-1339.jpg"
     },
     {
       "title": "Bitcoin",
-      "id": "Bitcoin",
+      "id": "bitcoin",
       "description":"Récupérer la valeur du bitcoin chaque jour.Graphique avec plusieurs options (1 jour, 1mois (une semaine, un mois, un an, depuis le début, …).",
       "image":"/widgets/bic_Bitcoin_Recession-Free_Decade-350x250-1.jpg.optimal.jpg"
     },
     {
       "title": "Suivi de colis",
-      "id": "Suivi de colis",
+      "id": "suivi-colis",
       "description":"Input de suivi de colis et en retour les différentes étapes de l’historique de colis.",
       "image":"/widgets/Capture-d’écran-2020-03-24-à-15.50.58-350x250.png"
     },
