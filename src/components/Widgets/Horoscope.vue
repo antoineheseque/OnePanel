@@ -39,12 +39,22 @@
             }
         },
         mounted() {
-            this.data.astrologicalSign = getAstrologicalSign()
-            getSentences(this.data.astrologicalSign).then((res) => {
-                console.log(res)
-                this.data.message = JSON.parse(res)
-                this.$emit('setHoroscope', this.data.astrologicalSign + " du " + this.dateOfToday.toLocaleDateString('fr-FR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}) )
-            })
+            console.log(User.profile.birthdayDate)
+            this.haveBirthdayDate = !(User.profile.birthdayDate == null || User.profile.birthdayDate == undefined)
+
+            if (this.haveBirthdayDate) {
+                this.data.astrologicalSign = getAstrologicalSign()
+                getSentences(this.data.astrologicalSign).then((res) => {
+                    console.log(res)
+                    this.data.message = JSON.parse(res)
+                    this.$emit('setHoroscope', this.data.astrologicalSign + " du " + this.dateOfToday.toLocaleDateString('fr-FR', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    }))
+                })
+            }
         }
     }
 
@@ -61,7 +71,7 @@
     function getAstrologicalSign() {
         let birthDate = new Date(User.profile.birthdayDate)
         var month = birthDate.getMonth()+1;
-        var day = birthDate.getDate();
+        var day = birthDate.getDate()+1;
 
         let sign = ''
 

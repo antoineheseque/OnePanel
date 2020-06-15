@@ -63,7 +63,7 @@
                         <p v-if="this.departure.getTime()-(new Date()).getTime() < 0" class="danger">Vous ne pourrais jamais y être à l'heure</p>
                         <a :href="getURLItinerary()" target="_blank" class="btn btn-success m-2">Voir l'itineraire</a>
                     </div>
-                    <h5 v-if="event.meteo">Météo</h5>
+                    <h5 v-if="event.meteo" class="mb-1">Météo</h5>
                     <div v-if="event.meteo" class="horizontalScrollItem">
                         <div v-for="(index, i) in meteoIndex" :key="i" class="bg-info p-2 m-2">
                             <p class="text-affichage">{{datesDay[index].getDate()}}/{{datesDay[index].getMonth()+1}}</p>
@@ -266,7 +266,7 @@
                 }
             },
             getUrlImg : function (a) {
-                return 'http://openweathermap.org/img/wn/' + a + '@2x.png'
+                return 'https://openweathermap.org/img/wn/' + a + '@2x.png'
             },
             toUpper : function (a) {
                 return a.substring(0,1).toUpperCase() + a.substring(1)
@@ -323,6 +323,11 @@
     }
     .modify button {
         display: none;
+    }
+
+    .horizontalScrollItem{
+        display: flex;
+        overflow-x: auto;
     }
 
     .modify:hover button{
