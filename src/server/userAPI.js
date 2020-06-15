@@ -186,22 +186,52 @@ router.post("/verifyToken", (req, res) => {
 
 router.post("/addWidget", (req, res) => {
     let widgetID = req.body.id
+    console.log("--------------------------\nWIDGET ID: " + widgetID + "\n")
     let token = req.body.token
 
     // Vérification de l'utilisateur
     jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
-            if (decoded === undefined) // Utilisateur valide
-            {
-                console.log("Y'A UN PROBLEME")
-            } else {
-                var request = "SELECT widgets FROM \`users\` WHERE id=? LIMIT 1"
-                var completeRequest = mysql.format(request, [decoded.id]);
-                sql.request(completeRequest).then((result) => {
-                // On récupère la liste des widgets de l'utilisateur
+        if (decoded === undefined) // Utilisateur valide
+        {
+            console.log("Y'A UN PROBLEME")
+        } else {
+            var request = "SELECT widgets FROM \`users\` WHERE id=? LIMIT 1"
+            var completeRequest = mysql.format(request, [decoded.id]);
+            sql.request(completeRequest).then((result) => {
+                let widgetList = JSON.parse(result[0].widgets); // Contient le JSON des données perso utilisateur
+                let widgetData = "" // Contient JSON associé au widget à ajouter
 
-                // On stocke dans la BDD
-                let widgetList = result
-                console.log(widgetList)
+                var request = "SELECT * FROM \`widgets\` WHERE id=? LIMIT 1"
+                var completeRequest = mysql.format(request, [widgetID]);
+                sql.request(completeRequest).then((SQLwidgetData) => {
+                    // Récupération des données sur le widget voulu
+                    widgetData = SQLwidgetData[0]
+
+                    console.log("\nWIDGET LIST")
+                    console.log(widgetList)
+
+                    console.log("\nWIDGET DATA")
+                    console.log(widgetData)
+
+                    // Ajout du widget dans la liste des widgets de l'utilisateur
+                    let data = {
+                        "id":widgetID,
+                        "x":Object.keys(widgetList.widgets).length,
+                        "w":widgetData.w
+                    }
+                    widgetList.widgets.push(data)
+
+                    var request = "UPDATE \`users\` SET widgets=? WHERE id=?"
+                    var completeRequest = mysql.format(request, [JSON.stringify(widgetList), decoded.id]);
+                    sql.request(completeRequest).then((SQLupdatedData) => {
+                        // Données mises a jours sur le site, on renvoi les infos du widget au client
+                        res.json({"widgetData":widgetData})
+                    }).catch((res) => {
+                        console.log(res)
+                    })
+                }).catch((res) =>{
+                    console.log(res)
+                })
 
                 // On renvoi un JSON pour le widget pret à afficher
 
