@@ -11,7 +11,7 @@ const Profile = () => import(/* webpackChunkName: "common" */ "@/pages/Profile.v
 const AddWidget = () => import(/* webpackChunkName: "common" */ "@/pages/AddWidget.vue");
 const LogIn = () => import(/* webpackChunkName: "common" */"@/pages/Login.vue");
 const LogOut = () => import(/* webpackChunkName: "common" */"@/pages/Logout.vue");
-const SignIn = () => import(/* webpackChunkName: "common" */"@/pages/SignIn.vue");
+const Register = () => import(/* webpackChunkName: "common" */"@/pages/Register.vue");
 const Notifications = () => import(/* webpackChunkName: "common" */"@/pages/Notifications.vue");
 const Icons = () => import(/* webpackChunkName: "common" */ "@/pages/Icons.vue");
 const Maps = () => import(/* webpackChunkName: "common" */ "@/pages/Maps.vue");
@@ -67,9 +67,9 @@ const routes = [
                 }
             },
             {
-                path: "sign-in",
-                name: "sign-in",
-                component: SignIn,
+                path: "register",
+                name: "register",
+                component: Register,
                 meta: {
                     requiresNotAuth: true
                 }

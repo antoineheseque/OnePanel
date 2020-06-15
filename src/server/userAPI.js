@@ -73,7 +73,7 @@ router.post("/updateProfile", (req, res) => {
     });
 });
 
-router.post("/signIn", (req, res) => {
+router.post("/register", (req, res) => {
     let data = req.body
     data.registered = false
 

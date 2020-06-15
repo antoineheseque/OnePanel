@@ -12,7 +12,7 @@
                 <!-- Utilisateur non connecté -->
                 <div v-else>
                     <sidebar-link to="/login" name="Connexion" icon="tim-icons icon-badge"/>
-                    <sidebar-link to="/sign-in" name="Inscription" icon="tim-icons icon-badge"/>
+                    <sidebar-link to="/register" name="Inscription" icon="tim-icons icon-badge"/>
                 </div>
             </template>
         </side-bar>

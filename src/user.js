@@ -128,14 +128,14 @@ export default {
     },
 
     // SIGN IN FUNCTION
-    signIn: function(signInData){
+    register: function(registerData){
         return new Promise((r) => {
-            fetch('/api/user/signIn', {
+            fetch('/api/user/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(signInData)
+                body: JSON.stringify(registerData)
             }).then(function (res) {
                 return res.json()
             }).then(function (data) {
