@@ -1,18 +1,24 @@
 <template>
     <div>
-        <line-chart
+        <div v-if="haveBirthdayDate">
+            <line-chart
                     :chart-data="purpleLineChart.chartData"
                     :gradient-color="purpleLineChart.gradientColors"
                     :gradient-stops="purpleLineChart.gradientStops"
                     :extra-options="purpleLineChart.extraOptions"
                     :height="150">
-        </line-chart>
-        <p class="text-center"> Vous vivez depuis {{getYearsInDays()}} jours</p>
+            </line-chart>
+            <p class="text-center"> Vous vivez depuis {{getYearsInDays()}} jours</p>
+        </div>
+        <p v-else>Vous devez entrer votre date de naissance dans la page Profil.</p>
+
     </div>
 </template>
 
 <script>
-    import LineChart from '../Charts/LineChart.js' //On laisse ?
+    import LineChart from '../Charts/LineChart.js'
+    import User from '@/user';
+
     export default {
         name: "Biorythme",
         components: {
@@ -20,7 +26,8 @@
         },
         data(){
             return {
-                dateOfBirth: new Date(1999, 11, 4),
+                birthdayDate: new Date(User.profile.birthdayDate),
+                haveBirthdayDate:true,
                 dateArray:[],
                 physicalDataArray:[],
                 emotionalDataArray:[],
@@ -100,66 +107,70 @@
         },
         methods:{
             getData(){
-                var date = new Date()
-                for(var i = -15; i <= 15;i++){
-                    this.physicalDataArray.push((this.getPhysicalState((this.getYearsInDays()+i))*100).toFixed(2))
-                    this.emotionalDataArray.push((this.getEmotionalState((this.getYearsInDays()+i))*100).toFixed(2))
-                    this.intellectualDataArray.push((this.getIntellectualState((this.getYearsInDays()+i))*100).toFixed(2))
-                    this.dateArray.push(this.getDateWithDays(date.getTime()+i*86400000))
-                }
-                this.purpleLineChart.chartData = {
-                    labels: this.dateArray,
-                    datasets: [{
-                        label: "Forme physique",
-                        fill: true,
-                        borderColor: '#d048b6',
-                        borderWidth: 2,
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        pointBackgroundColor: '#d048b6',
-                        pointBorderColor: 'rgba(255,255,255,0)',
-                        pointHoverBackgroundColor: '#d048b6',
-                        pointBorderWidth: 20,
-                        pointHoverRadius: 4,
-                        pointHoverBorderWidth: 15,
-                        pointRadius: 4,
-                        data: this.physicalDataArray,
-                    },
-                        {
-                            label: "Forme émotionnelle",
+                this.haveBirthdayDate = !(User.profile.birthdayDate == null || User.profile.birthdayDate == undefined)
+
+                if (this.haveBirthdayDate) {
+                    var date = new Date()
+                    for(var i = -15; i <= 15;i++){
+                        this.physicalDataArray.push((this.getPhysicalState((this.getYearsInDays()+i))*100).toFixed(2))
+                        this.emotionalDataArray.push((this.getEmotionalState((this.getYearsInDays()+i))*100).toFixed(2))
+                        this.intellectualDataArray.push((this.getIntellectualState((this.getYearsInDays()+i))*100).toFixed(2))
+                        this.dateArray.push(this.getDateWithDays(date.getTime()+i*86400000))
+                    }
+                    this.purpleLineChart.chartData = {
+                        labels: this.dateArray,
+                        datasets: [{
+                            label: "Forme physique",
                             fill: true,
-                            borderColor: '#f8ec15',
+                            borderColor: '#d048b6',
                             borderWidth: 2,
                             borderDash: [],
                             borderDashOffset: 0.0,
-                            pointBackgroundColor: '#f8ec15',
+                            pointBackgroundColor: '#d048b6',
                             pointBorderColor: 'rgba(255,255,255,0)',
-                            pointHoverBackgroundColor: '#f8ec15',
+                            pointHoverBackgroundColor: '#d048b6',
                             pointBorderWidth: 20,
                             pointHoverRadius: 4,
                             pointHoverBorderWidth: 15,
                             pointRadius: 4,
-                            data: this.emotionalDataArray,
+                            data: this.physicalDataArray,
                         },
-                        {
-                            label: "Forme intellectuelle",
-                            fill: true,
-                            borderColor: '#26c151',
-                            borderWidth: 2,
-                            borderDash: [],
-                            borderDashOffset: 0.0,
-                            pointBackgroundColor: '#26c151',
-                            pointBorderColor: 'rgba(57,177,31,0)',
-                            pointHoverBackgroundColor: '#26c151',
-                            pointBorderWidth: 20,
-                            pointHoverRadius: 4,
-                            pointHoverBorderWidth: 15,
-                            pointRadius: 4,
-                            data: this.intellectualDataArray,
-                        }]
+                            {
+                                label: "Forme émotionnelle",
+                                fill: true,
+                                borderColor: '#f8ec15',
+                                borderWidth: 2,
+                                borderDash: [],
+                                borderDashOffset: 0.0,
+                                pointBackgroundColor: '#f8ec15',
+                                pointBorderColor: 'rgba(255,255,255,0)',
+                                pointHoverBackgroundColor: '#f8ec15',
+                                pointBorderWidth: 20,
+                                pointHoverRadius: 4,
+                                pointHoverBorderWidth: 15,
+                                pointRadius: 4,
+                                data: this.emotionalDataArray,
+                            },
+                            {
+                                label: "Forme intellectuelle",
+                                fill: true,
+                                borderColor: '#26c151',
+                                borderWidth: 2,
+                                borderDash: [],
+                                borderDashOffset: 0.0,
+                                pointBackgroundColor: '#26c151',
+                                pointBorderColor: 'rgba(57,177,31,0)',
+                                pointHoverBackgroundColor: '#26c151',
+                                pointBorderWidth: 20,
+                                pointHoverRadius: 4,
+                                pointHoverBorderWidth: 15,
+                                pointRadius: 4,
+                                data: this.intellectualDataArray,
+                            }]
+                    }
+                    console.log(this.physicalDataArray)
+                    console.log(this.dateArray)
                 }
-                console.log(this.physicalDataArray)
-                console.log(this.dateArray)
             },
             getDateWithDays: function(time){
                 var date = new Date()
@@ -168,7 +179,7 @@
             },
             getYearsInDays: function () {
                 var date = new Date()
-                return Math.round((date.getTime()-this.dateOfBirth.getTime())/86400000)
+                return Math.round((date.getTime()-this.birthdayDate.getTime())/86400000)
             },
             getPhysicalState: function (t) {
                 //console.log(Math.sin((2*Math.PI*parseInt(t, 10))/23))
