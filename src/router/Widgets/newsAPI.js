@@ -9,8 +9,6 @@ const axios = require('axios');
 
 router.post("/getNews", (req, res) => {
 
-    //TODO: SELECTIONNE LES NEWS DEPUIS LA BDD ET RENVOIE LE FICHIER JSON
-
     //fonction qui demande les news dans la BDD
 
     sql.request(`SELECT News from \`dayNews\` WHERE id ='1'`).then(function (result) {

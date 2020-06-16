@@ -7,6 +7,7 @@ const dayGif = require('./Widgets/dayGif')
 const news = require('./Widgets/news')
 const horoscope = require('./Widgets/horoscope')
 const citations = require('./Widgets/citations')
+const classementLigue1 = require('./Widgets/classementLigue1')
 
 function refreshAPI(){
     // On Récupère tout les widgets
@@ -29,6 +30,10 @@ function refreshAPI(){
                     case "day-citation":
                         citations.createCitation()
                         break;
+                    case "classement":
+                        classementLigue1.updateFoot()
+                        break;
+
                 }
 
                 // On update la date d'actualisation
