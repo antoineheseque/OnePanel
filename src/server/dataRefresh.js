@@ -6,6 +6,7 @@ const fetcha = require('fecha')
 const dayGif = require('./Widgets/dayGif')
 const news = require('./Widgets/news')
 const horoscope = require('./Widgets/horoscope')
+const citations = require('./Widgets/citations')
 
 function refreshAPI(){
     // On Récupère tout les widgets
@@ -24,6 +25,10 @@ function refreshAPI(){
                         break;
                     case "horoscope":
                         horoscope.update_horoscope()
+                        break;
+                    case "day-citation":
+                        citations.createCitation()
+                        break;
                 }
 
                 // On update la date d'actualisation
