@@ -32,7 +32,7 @@
                     astrologicalSign:'',
                     message:{
                         love:'',
-                        work:'vgsersrvse',
+                        work:'',
                         health:''
                     }
                 }
@@ -72,7 +72,7 @@
         let birthDate = new Date(User.profile.birthdayDate)
         var month = birthDate.getMonth()+1;
         var day = birthDate.getDate()+1;
-
+        console.log(birthDate)
         let sign = ''
 
         if ((month == 1 && day >= 21) || (month == 2 && day <= 19)) { //30
@@ -97,7 +97,7 @@
             sign = 'Scorpion'
         } else if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) {
             sign = 'Sagittaire'
-        } else if ((month == 11 && day >= 22) || (month == 1 && day <= 20)) {
+        } else if ((month == 12 && day >= 22) || (month == 1 && day <= 20)) {
             sign = 'Capricorne'
         }
 
