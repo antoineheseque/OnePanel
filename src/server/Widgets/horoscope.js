@@ -24,7 +24,7 @@ function randomizeTxt(sentence) {
 }
 
 function update_horoscope(){
-    let request = "UPDATE \`Horoscope\` SET Verseau= ? , Poisson= ? , Bélier=?, Taureau=?, Gémeaux=?, Cancer=?, Lion=?, Vierge=?, Balance=?, Scorpion=?, Sagittaire=?, Capricorne=? WHERE id=1"
+    let request = "UPDATE \`horoscope\` SET Verseau= ? , Poisson= ? , Bélier=?, Taureau=?, Gémeaux=?, Cancer=?, Lion=?, Vierge=?, Balance=?, Scorpion=?, Sagittaire=?, Capricorne=? WHERE id=1"
     let data = []
     for(let i = 0; i < 12; i++){
         data[i] = JSON.stringify(generateSentences())

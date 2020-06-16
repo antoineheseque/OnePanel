@@ -15,7 +15,7 @@ function getNewsAPI(){
     axios.get("https://newsapi.org/v2/top-headlines?country=fr&apiKey=3cff78090d1240b5ae70dbbb310250c9").then(function(r){
         const news = JSON.stringify(r.data.articles);
 
-        var request = "UPDATE \`Day_News\` SET News=? WHERE id=1"
+        var request = "UPDATE \`dayNews\` SET News=? WHERE id=1"
         var completeRequest = mysql.format(request, [news]);
         sql.request(completeRequest);
     }).catch(function(result){

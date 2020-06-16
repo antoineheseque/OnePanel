@@ -10,7 +10,7 @@ const sql = require('../../server/bdd');
 router.post("/getHoroscope", (req, res) => {
     var sign = req.body.data
 
-    var request = "SELECT ?? from \`Horoscope\`"
+    var request = "SELECT ?? from \`horoscope\`"
     var completeRequest = mysql.format(request, [sign]);
     sql.request(completeRequest).then(function (result) {
         res.json({"horoscope": Object.values(result[0])[0]})
