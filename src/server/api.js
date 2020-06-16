@@ -5,6 +5,7 @@ const dayGifAPI = require('../router/Widgets/dayGifAPI')
 const newsAPI = require('../router/Widgets/newsAPI')
 const horoscopeAPI = require('../router/Widgets/horoscopeAPI')
 const dayStreakAPI = require('../router/Widgets/dayStreakAPI')
+const citationAPI = require('../router/Widgets/citationAPI')
 const crypto = require('crypto')
 
 module.exports = app => {
@@ -18,6 +19,7 @@ module.exports = app => {
     app.use('/api/widget/news', newsAPI)
     app.use('/api/widget/horoscope', horoscopeAPI)
     app.use('/api/widget/dayStreak', dayStreakAPI)
+    app.use('/api/widget/citations', citationAPI)
 
 
     require('./dataRefresh');

@@ -1,30 +1,43 @@
 <template>
     <div>
         <blockquote class="blockquote">
-            <p class="mt-0">{{quote.quote}}</p>
-            <footer class="centerblockquote-footer">{{quote.author}} - <cite title="Source Title">{{quote.date}}</cite></footer>
+            <p class="mt-0">{{quote}}</p>
+            <footer class="centerblockquote-footer">{{author}} - <cite title="Source Title">{{date}}</cite></footer>
         </blockquote>
     </div>
 </template>
 
 <script>
-    import axios from 'axios'
     export default {
         name: "Citation",
         data(){
             return{
-                quote: ''
+                quote: '',
+                author: '',
+                date: ''
             }
         },
         methods:{
-            getQuotes: function () {
-                axios
-                    .get(`https://quotes.rest/qod?language=en`)
-                    .then(reponse => {
-                        this.quote = reponse.data.contents.quotes[0];
-                        console.log(reponse.data.contents.quotes[0])
-                    })
-            }
+            getQuotes: function(){
+                fetch('/api/widget/citations/getCitation', {
+                    method: 'POST'
+                }).then(function (res) {
+                    return res.json()
+                }).then(function (data) {
+                    this.quote= data.citations.Citation_jour;
+                    console.log("\ndata.citations.Citation_jour=")
+                    console.log(data.citations.Citation_jour)
+
+                    this.author = data.citations.Auteur;
+                    console.log("\ndata.citations.Auteur=")
+                    console.log(data.citations.Auteur)
+
+                    this.date= data.citations.date_citation;
+                    console.log("\ndata.citations.date_citation=")
+                    console.log(data.citations.date_citation)
+
+                }.bind(this))
+            },
         },
         mounted() {
             this.getQuotes()
