@@ -94,6 +94,7 @@
             return {
                 fr:fr_datepicker,
                 calendar: [],
+                calendarInBDD: {id : 'calendar'},
                 fromTime: ((new Date()).getHours() < 10 ? '0' : '')+(new Date()).getHours()+':'+ ((new Date()).getMinutes() < 10 ? '0' : '') + (new Date()).getMinutes(),
                 toTime: ((new Date()).getHours() < 10 ? '0' : '')+(new Date()).getHours()+':'+ ((new Date()).getMinutes() < 10 ? '0' : '') + (new Date()).getMinutes(),
                 toggleAddEvent: false,
@@ -124,8 +125,7 @@
             }
         },
         methods:{
-            getMeteoAndItenerary : function(eventDateBegin, eventDateEnd) {
-                this.getMeteoIndex(eventDateBegin, eventDateEnd)
+            getMeteoAndItenerary : function(eventDateBegin, eventDateEnd) { //Récup position de l'évent + appel météo et itineraire si OK
                 if(this.event.address != undefined){
                     this.getDaysDaily()
                     axios
@@ -135,13 +135,14 @@
                                 console.log("API Coords OK")
                                 this.event.address = reponse.data.results[0].formatted
                                 this.coords = reponse.data.results[0].geometry
+                                this.getMeteoIndex(eventDateBegin, eventDateEnd)
                                 this.getMeteo()
                                 this.getItinerary()
                             }
                         })
                 }
             },
-            getItinerary : function () {
+            getItinerary : function () { //Récup Temps de trajet + distance
                 if(this.locationState){
                     axios
                         .get(`https://maps.open-street.com/api/route/?origin=${this.ourLocation.lat.toFixed(10)},${this.ourLocation.lon.toFixed(10)}&destination=${this.coords.lat},${this.coords.lng}&mode=driving&key=1b83806fc9844c5ab47c094a3b8007e0`)
@@ -152,7 +153,7 @@
                         })
                 }
             },
-            getMeteo : function () {
+            getMeteo : function () { //Récup Météo
                 if(this.meteoIndex.length != 0) {
                     axios //Appel à l'API pour avoir toutes les infos sur les 7 prochains jours
                         .get(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.coords.lat}&lon=${this.coords.lng}&exclude=current,minutely,hourly&appid=e77b050b2d9e74f5008e2cc553cf92b9&units=metric&lang=fr`)
@@ -163,10 +164,16 @@
                 }
             },
 
-            getMeteoIndex: function(eventDateBegin, eventDateEnd) {
+            getMeteoIndex: function(eventDateBegin, eventDateEnd) { //Regarde sur quel date on à la météo et qui est compatible avec l'évenement
                 var date = new Date()
                 date.setHours(23)
                 date.setMinutes(59)
+                console.log("------------------")
+                //console.log(date.getTime())
+                console.log(eventDateBegin)
+                console.log(eventDateEnd)
+                //console.log(eventDateBegin.getTime())
+                console.log("------------------")
                 for(var i = 0; i < 7; i++){
                     if(date.getTime()-eventDateBegin.getTime() >= 0 && date.getTime()-eventDateEnd.getTime() <= 0){
                         this.meteoIndex.push(i)
@@ -175,7 +182,7 @@
                 }
             },
 
-            addData: function(){
+            addData: function(){ //Affiche le menu d'éditage de l'evenement
                 this.toggleAddEvent = true
                 this.toggleAllEvent = false
                 this.toggleAllEvent = false
@@ -190,7 +197,7 @@
                     itinerary:''
                 }
             },
-            getData: function(){
+            getData: function(){ //Récupere l'éditage de l'evenement, analyse les données, et push les événements si tout est OK dans calendar
                 this.toggleSeeEvent = false
                 if(this.event.fromDate != undefined && this.fromTime != undefined){
                     this.event.fromDate.setHours(parseInt(this.fromTime.slice(0,2),10)+2)
@@ -230,9 +237,12 @@
                     this.error = ''
                     this.modifying= false
                     this.getMeteoAndItenerary(this.event.fromDate,this.event.toDate)
+                    this.calendarInBDD['data'] = this.calendar
+                    console.log("this.calendarInBDD ->")
+                    console.log(this.calendarInBDD)
                 }
             },
-            modifyEvent : function (i) {
+            modifyEvent : function (i) { //Affiche le menu d'éditage de l'evenement en mon "Modify"
                 this.toggleAddEvent = true;
                 this.toggleSeeEvent = false;
                 this.index = i
@@ -240,7 +250,7 @@
                 this.meteoIndex = []
                 this.event = this.calendar[i]
             },
-            seeEvent: function (i) {
+            seeEvent: function (i) { //Affiche les infos de l'evenement
                 this.toggleMoreInfo = false
                 this.toggleSeeEvent = true
                 this.toggleAllEvent = false
@@ -251,7 +261,7 @@
                     this.getMeteoAndItenerary(this.event.fromDate, this.event.toDate)
                 this.index = i
             },
-            goBack: function () {
+            goBack: function () { //Juste un retour en arrière
                 if(this.modifying){
                     this.toggleSeeEvent = true
                     this.toggleAllEvent = false
@@ -265,13 +275,13 @@
                     this.modifying = false
                 }
             },
-            getUrlImg : function (a) {
+            getUrlImg : function (a) { //recupère url img météo
                 return 'https://openweathermap.org/img/wn/' + a + '@2x.png'
             },
-            toUpper : function (a) {
+            toUpper : function (a) { //Met la première lettre en majuscule
                 return a.substring(0,1).toUpperCase() + a.substring(1)
             },
-            getDaysDaily : function () {
+            getDaysDaily : function () { //recupère les jours pour la météo
                 this.datesDay = [];
                 for(var i = 0; i < 8; i++){
                     var date = new Date()
@@ -279,7 +289,7 @@
                     this.datesDay.push(date)
                 }
             },
-            getLocation : function(){
+            getLocation : function(){ //recupère la position
                 var coord = this;
                 var options = {
                     enableHighAccuracy: true,
@@ -301,7 +311,7 @@
 
                 navigator.geolocation.getCurrentPosition(success, error, options);
             },
-            getURLItinerary: function () {
+            getURLItinerary: function () { //renvoie à l'itineraire Google Map
                 return `https://www.google.fr/maps/dir/${this.ourLocation.lat},${this.ourLocation.lon}/${this.coords.lat},${this.coords.lng}/`
             },
         },

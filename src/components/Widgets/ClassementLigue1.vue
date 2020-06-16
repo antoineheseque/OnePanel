@@ -16,7 +16,7 @@
             <tbody>
             <tr v-for="(team,i) in tableLigue1" :key="i">
                 <th scope="row">{{team.position}}</th>
-                <td><img :src="team.team.crestUrl" alt="teamLogo" class="img mr-4"> {{team.team.name}}</td>
+                <td><img :src="getImg(team.team.crestUrl)" alt="teamLogo" class="img mr-4"> {{team.team.name}}</td>
                 <td>{{team.playedGames}}</td>
                 <td>{{team.won}}</td>
                 <td>{{team.draw}}</td>
@@ -52,6 +52,7 @@
                     }).then(function (data) {
                         r(data)
                         console.log("API Ligue1 OK")
+                        console.log(data)
                     })
                 });
             },
@@ -59,6 +60,9 @@
                 this.call().then((res) => {
                     this.tableLigue1=res.standings[0].table
                 })
+            },
+            getImg: function (img) {
+                return img.replace(/http:/, 'https:');
             }
         },
         mounted() {

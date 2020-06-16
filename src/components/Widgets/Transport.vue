@@ -55,7 +55,7 @@
             return{
                 zoom:14.5,
                 center: L.latLng(50.646885, 3.070242),
-                url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                url:'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
                 attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
                 marker: L.latLng(50.629480, 3.057119),
                 vlille:[],
@@ -184,8 +184,6 @@
 
 <style scoped>
     .map{
-        height: 45vh;
-        width: 45vh;
         margin: auto;
         color: blue;
     }

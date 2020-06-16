@@ -29,7 +29,7 @@
                     <classement-ligue1 v-if="widget.id==='classement'"></classement-ligue1>
                     <transport v-if="widget.id==='transport'"></transport>
                     <poke v-if="widget.id==='pokemon'"></poke>
-
+                    <horloge v-if="widget.id==='horloge'"></horloge>
                 </div>
             </div>
         </div>
@@ -47,13 +47,14 @@
     import ClassementLigue1 from "@/components/Widgets/ClassementLigue1";
     import Transport from "@/components/Widgets/Transport";
     import Poke from "@/components/Widgets/Pokemon";
+    import Horloge from "@/components/Widgets/Horloge";
 
     export default {
         name: "widget",
         components: {
             Poke,
             Transport,
-            ClassementLigue1, GifDuJour, Meteo, News, Horoscope, Biorythme, Citation, DayStreak, Agenda},
+            ClassementLigue1, GifDuJour, Meteo, News, Horoscope, Biorythme, Citation, DayStreak, Agenda,Horloge},
         props: {
             widget:"",
             type:""
