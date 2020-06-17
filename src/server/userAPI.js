@@ -50,8 +50,6 @@ router.post("/updateProfile", (req, res) => {
 
                     // FORMAT DATE
                     let date = format.format(new Date(data.birthdayDate), 'isoDate')
-                    console.log(date)
-
 
                     // ON MET A JOUR LA TABLE
                     var request = "UPDATE \`users\` SET username=?, email=?, firstName=?, lastName=?, birthdayDate=? WHERE id=?"

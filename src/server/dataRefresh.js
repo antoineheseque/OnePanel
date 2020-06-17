@@ -8,6 +8,7 @@ const news = require('./Widgets/news')
 const horoscope = require('./Widgets/horoscope')
 const citations = require('./Widgets/citations')
 const classementLigue1 = require('./Widgets/classementLigue1')
+const bitcoin = require('./Widgets/bitcoin')
 
 function refreshAPI(){
     // On Récupère tout les widgets
@@ -20,6 +21,9 @@ function refreshAPI(){
                 switch (widget.id) {
                     case "day-gif":
                         dayGif.createImage()
+                        break;
+                    case "bitcoin":
+                        bitcoin.addBitcoinDay()
                         break;
                     case "news":
                         news.getNewsAPI()

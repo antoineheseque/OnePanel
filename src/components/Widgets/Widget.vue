@@ -16,11 +16,11 @@
                     </base-dropdown>
                 </slot>
             </div>
-            <div class="card-body" >
+            <div class="card-body">
                 <div class="content">
                     <agenda v-if="widget.id==='agenda'"></agenda>
                     <biorythme v-if="widget.id==='biorythme'"></biorythme>
-                    <bitcoin v-if="widget.id==='bitcoin'"></bitcoin>
+                    <bitcoin v-if="widget.id==='bitcoin'" type="chart" class="chart"></bitcoin>
                     <classement-ligue1 v-if="widget.id==='classement'"></classement-ligue1>
                     <citation v-if="widget.id==='day-citation'"></citation>
                     <gif-du-jour v-if="widget.id==='day-gif'"></gif-du-jour>

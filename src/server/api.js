@@ -7,6 +7,7 @@ const horoscopeAPI = require('../router/Widgets/horoscopeAPI')
 const dayStreakAPI = require('../router/Widgets/dayStreakAPI')
 const citationAPI = require('../router/Widgets/citationAPI')
 const classementLigue1API = require('../router/Widgets/classementLigue1API')
+const bitcoinAPI = require('../router/Widgets/bitcoinAPI')
 const crypto = require('crypto')
 
 module.exports = app => {
@@ -22,7 +23,7 @@ module.exports = app => {
     app.use('/api/widget/dayStreak', dayStreakAPI)
     app.use('/api/widget/citations', citationAPI)
     app.use('/api/widget/foot', classementLigue1API)
-
+    app.use('/api/widget/bitcoin', bitcoinAPI)
 
     require('./dataRefresh');
 }

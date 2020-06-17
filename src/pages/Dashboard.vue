@@ -86,7 +86,6 @@
             }).then(function (data) {
                 if(data.success == "true") {
                     widgets.widgets = JSON.parse(data.widgets)
-                    console.log(widgets.widgets)
                     if(Widgets.widgets.some(item => item.visible === true))
                         this.widgetsVisible = true
                 }else{
