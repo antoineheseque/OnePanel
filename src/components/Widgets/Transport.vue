@@ -77,7 +77,7 @@
         methods:{
             getData: function () {
                 axios //Appel à l'API pour avoir la position et la disponibilité des vLilles
-                    .get(`https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=vlille-realtime&q=&rows=40&facet=libelle&facet=nom&facet=commune&facet=etat&facet=type&facet=etatconnexion`)
+                    .get(`https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=vlille-realtime&q=&rows=150&facet=libelle&facet=nom&facet=commune&facet=etat&facet=type&facet=etatconnexion`)
                     .then(reponse => {
                         this.vlille = reponse.data.records;
                         console.log("API vLille")
