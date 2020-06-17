@@ -56,6 +56,9 @@
                         var index = widgets.widgets.findIndex(element => element.id === widgetID)
                         widgets.widgets[index].visible = false
                         this.notify('success', `Le widget "${widgets.widgets[index].name}" a bien été supprimé.`)
+
+                        if(!Widgets.widgets.some(item => item.visible === true))
+                            this.widgetsVisible = false
                     }else{
                         this.notify('error', data.reason)
                     }
