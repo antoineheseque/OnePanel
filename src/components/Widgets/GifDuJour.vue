@@ -21,6 +21,7 @@
                     return res.json()
                 }).then(function (data) {
                     this.image = data.image
+                    this.$redrawVueMasonry('containerId')
                 }.bind(this))
             }
         },

@@ -190,6 +190,7 @@
                     meteo:'',
                     itinerary:''
                 }
+                this.$redrawVueMasonry()
             },
             getData: function(){ //Récupere l'éditage de l'evenement, analyse les données, et push les événements si tout est OK dans calendar
                 this.toggleSeeEvent = false
@@ -235,6 +236,7 @@
                     //console.log("this.calendarInBDD ->")
                     //console.log(this.calendarInBDD)
                 }
+                this.$redrawVueMasonry()
             },
             modifyEvent : function (i) { //Affiche le menu d'éditage de l'evenement en mon "Modify"
                 this.toggleAddEvent = true;
@@ -243,6 +245,8 @@
                 this.modifying = true;
                 this.meteoIndex = []
                 this.event = this.calendar[i]
+                this.$redrawVueMasonry()
+
             },
             seeEvent: function (i) { //Affiche les infos de l'evenement
                 this.toggleMoreInfo = false
@@ -254,6 +258,7 @@
                 if(!this.event.itinerary)
                     this.getMeteoAndItenerary(this.event.fromDate, this.event.toDate)
                 this.index = i
+                this.$redrawVueMasonry()
             },
             goBack: function () { //Juste un retour en arrière
                 if(this.modifying){
@@ -268,6 +273,7 @@
                     this.toggleAddEvent = false
                     this.modifying = false
                 }
+                this.$redrawVueMasonry()
             },
             getUrlImg : function (a) { //recupère url img météo
                 return 'https://openweathermap.org/img/wn/' + a + '@2x.png'
@@ -311,6 +317,7 @@
         },
         mounted() {
             this.getLocation()
+            this.$redrawVueMasonry()
         }
     }
 </script>

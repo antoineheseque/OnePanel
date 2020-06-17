@@ -238,7 +238,8 @@ router.post("/addWidget", (req, res) => {
                     let data = {
                         "id":widgetID,
                         "x":(widgetList.widgets !== undefined) ? Object.keys(widgetList.widgets).length : 0,
-                        "w":widgetData.w
+                        "w":widgetData.w,
+                        "h":widgetData.h
                     }
                     widgetList.widgets.push(data)
 
@@ -304,6 +305,7 @@ router.post("/loadWidgets", (req, res) => {
                             "image":widgetData.image,
                             "x":"0",
                             "w":widgetData.w,
+                            "h":widgetData.h,
                             "visible":false
                         }
 
@@ -314,6 +316,7 @@ router.post("/loadWidgets", (req, res) => {
                                 let personnalized = list.filter(item => item.id == widgetData.id)
                                 data.x = personnalized[0].x
                                 data.w = personnalized[0].w
+                                data.h = personnalized[0].h
                                 data.visible = true
                             }
                         }

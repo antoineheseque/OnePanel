@@ -191,6 +191,7 @@
         mounted() {
             this.getLocation()
             this.getData()
+            this.$redrawVueMasonry('containerId')
         }
     }
 </script>

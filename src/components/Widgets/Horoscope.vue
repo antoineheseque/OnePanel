@@ -51,6 +51,7 @@
                         month: 'long',
                         day: 'numeric'
                     }))
+                    this.$redrawVueMasonry('containerId')
                 })
             }
         }

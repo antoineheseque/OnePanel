@@ -31,6 +31,7 @@
                     return res.json()
                 }).then(function (data) {
                     this.counter = data.daystreak;
+                    this.$redrawVueMasonry('containerId')
                 }.bind(this))
             }
         },

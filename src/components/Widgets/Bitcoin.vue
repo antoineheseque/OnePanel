@@ -90,6 +90,7 @@
                 return res.json()
             }).then(function (data) {
                 bitcoin.content = JSON.parse(data.values)
+                this.$redrawVueMasonry('containerId')
                 this.initData(0);
             }.bind(this))
         },

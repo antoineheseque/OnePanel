@@ -5,7 +5,7 @@
         <base-button type="primary" v-on:click="test" fill>Test console log widgets</base-button>
         -->
         <h3 v-if="!widgetsVisible">C'est bien vide ici... Allez ajouter un widget!</h3>
-        <div v-else v-masonry transition-duration="0.3s" item-selector=".mansoryItem" column-width="30">
+        <div v-else v-masonry transition-duration="0.2s" item-selector=".mansoryItem" column-width="10">
             <widget v-masonry-tile v-for="(widget, idx) in widgets.widgets" :key="idx" :widget="widget" v-if="widget.visible" class="mansoryItem">
                 <template slot="button">
                     <a class="dropdown-item" v-on:click="onClickRemove(widget.id)">Supprimer le widget</a>
@@ -19,7 +19,6 @@
     import widgets from '../widgets.json';
     import NotificationTemplate from "@/pages/Notifications/NotificationTemplate";
 
-    import router from "@/router";
     import User from "@/user";
     import Widgets from "@/widgets.json";
 
@@ -31,8 +30,7 @@
             //TODO: BDD DONNEES A AFFICHER DANS LES BLOCS (refaire le système pour séparer par blocs
             return {
                 widgets,
-                widgetsVisible:false,
-                containerID: 'containerID'
+                widgetsVisible:false
             }
         },
         methods: {
@@ -63,6 +61,8 @@
                     }else{
                         this.notify('error', data.reason)
                     }
+                    this.$redrawVueMasonry()
+
                 }.bind(this))
             },
             notify: function(info,message){
@@ -92,6 +92,7 @@
                 }else{
                     this.notify('danger', data.reason)
                 }
+                this.$redrawVueMasonry()
             }.bind(this))
         }
     };
