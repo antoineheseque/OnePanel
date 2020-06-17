@@ -191,6 +191,9 @@
         },
         mounted() {
             this.getData()
+        },
+        updated() {
+            this.$redrawVueMasonry()
         }
     }
 </script>

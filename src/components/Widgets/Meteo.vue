@@ -246,6 +246,9 @@
             this.$nextTick(function () {
                 this.getLocation();
             })
+        },
+        updated() {
+            this.$redrawVueMasonry()
         }
     }
 </script>

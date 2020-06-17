@@ -116,6 +116,9 @@
         },
         mounted(){
             this.getPokemon()
+        },
+        updated() {
+            this.$redrawVueMasonry()
         }
     }
 </script>

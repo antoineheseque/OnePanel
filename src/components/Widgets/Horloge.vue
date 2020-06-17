@@ -78,6 +78,9 @@
                 this.time.splice(i,1)
                 this.toggleDelete = false
             }
+        },
+        updated() {
+            this.$redrawVueMasonry()
         }
     }
 </script>

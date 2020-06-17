@@ -56,6 +56,9 @@
         },
         mounted() {
             this.call_classement()
+        },
+        updated() {
+            this.$redrawVueMasonry()
         }
 
     }

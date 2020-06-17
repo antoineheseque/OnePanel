@@ -27,12 +27,14 @@
                     this.quote= data.citations.Citation_jour;
                     this.author = data.citations.Auteur;
                     this.date= data.citations.date_citation.toLocaleString('fr-FR', { timeZone: 'UTC' }).slice(0,10);
-                    this.$redrawVueMasonry('containerId')
                 }.bind(this))
             },
         },
         mounted() {
             this.getQuotes()
+        },
+        updated() {
+            this.$redrawVueMasonry()
         }
     }
 </script>

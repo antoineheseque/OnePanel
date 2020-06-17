@@ -51,6 +51,9 @@
         },
         mounted() {
             this.call_news();
+        },
+        updated() {
+            this.$redrawVueMasonry()
         }
     }
 

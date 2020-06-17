@@ -61,8 +61,6 @@
                     }else{
                         this.notify('error', data.reason)
                     }
-                    this.$redrawVueMasonry()
-
                 }.bind(this))
             },
             notify: function(info,message){
@@ -92,7 +90,6 @@
                 }else{
                     this.notify('danger', data.reason)
                 }
-                this.$redrawVueMasonry()
             }.bind(this))
         }
     };
