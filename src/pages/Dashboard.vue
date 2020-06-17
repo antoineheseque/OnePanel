@@ -95,10 +95,5 @@
     };
 </script>
 <style>
-    .item {
-        border: 1px solid #ac0;
-    }
-    .mansoryItem {
-        margin: 0 auto;
-    }
+
 </style>
