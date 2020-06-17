@@ -56,15 +56,13 @@
         data: function(){
             return{
                 zoom:14.5,
-                center: L.latLng(50.646885, 3.070242),
                 url:'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
-                attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                marker: L.latLng(50.629480, 3.057119),
+                attribution:'&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
                 vlille:[],
                 busTrams: '',
                 ileviaStop: jsonArret,
                 arret: {},
-                dataIlevia:[], //a stocker dans BDD
+                dataIlevia:[],
                 toggleVLille: true,
                 toggleBusTram: false,
                 toggleAllBusTram: false,
@@ -105,7 +103,6 @@
                 }
                 this.setLocation()
                 this.sortData()
-                console.log(this.dataIlevia)
             },
             setLocation: function(){
                 for(var index in this.ileviaStop){
@@ -187,7 +184,7 @@
                     this.ourLocation.lat = 50.629480
                     this.ourLocation.lon = 3.057119
                     this.zoom = 13
-                    console.log('Localisation changé');
+                    console.log('Localisation transport changé');
                 }
             }
         },
