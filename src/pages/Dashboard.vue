@@ -5,8 +5,8 @@
         <base-button type="primary" v-on:click="test" fill>Test console log widgets</base-button>
         -->
         <h3 v-if="!widgetsVisible">C'est bien vide ici... Allez ajouter un widget!</h3>
-        <div v-else class="row">
-            <widget v-for="(widget, idx) in widgets.widgets" :key="idx" :widget="widget" v-if="widget.visible">
+        <div v-else v-masonry transition-duration="0.3s" item-selector=".mansoryItem" column-width="30">
+            <widget v-masonry-tile v-for="(widget, idx) in widgets.widgets" :key="idx" :widget="widget" v-if="widget.visible" class="mansoryItem">
                 <template slot="button">
                     <a class="dropdown-item" v-on:click="onClickRemove(widget.id)">Supprimer le widget</a>
                 </template>
@@ -25,13 +25,14 @@
 
     export default {
         components: {
-            Widget
+            Widget,
         },
         data() {
             //TODO: BDD DONNEES A AFFICHER DANS LES BLOCS (refaire le système pour séparer par blocs
             return {
                 widgets,
-                widgetsVisible:false
+                widgetsVisible:false,
+                containerID: 'containerID'
             }
         },
         methods: {
@@ -96,4 +97,10 @@
     };
 </script>
 <style>
+    .item {
+        border: 1px solid #ac0;
+    }
+    .mansoryItem {
+        margin: 0 auto;
+    }
 </style>
