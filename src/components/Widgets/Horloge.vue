@@ -8,7 +8,7 @@
                     <label for="position"> Nom de la ville</label>
                     <input type="text" id="position" class="form-control" v-model="city">
                 </div>
-                <button class="btn btn-primary delete" @click="getTimezone">Enregistré</button>
+                <button class="btn btn-primary delete" @click="getTimezone">Enregistrer</button>
             </div>
 
             <p class="m-1 none">{{today}}</p>
@@ -51,6 +51,7 @@
                         this.time = new Array(this.time.length+1)
                         this.newHours=false
                         this.getTime()
+                        this.city = ''
                     })
                 },
             getTime: function(){
