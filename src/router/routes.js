@@ -12,7 +12,6 @@ const AddWidget = () => import(/* webpackChunkName: "common" */ "@/pages/AddWidg
 const LogIn = () => import(/* webpackChunkName: "common" */"@/pages/Login.vue");
 const LogOut = () => import(/* webpackChunkName: "common" */"@/pages/Logout.vue");
 const Register = () => import(/* webpackChunkName: "common" */"@/pages/Register.vue");
-const Notifications = () => import(/* webpackChunkName: "common" */"@/pages/Notifications.vue");
 const Icons = () => import(/* webpackChunkName: "common" */ "@/pages/Icons.vue");
 const Maps = () => import(/* webpackChunkName: "common" */ "@/pages/Maps.vue");
 const Typography = () => import(/* webpackChunkName: "common" */ "@/pages/Typography.vue");
@@ -81,11 +80,6 @@ const routes = [
                 meta: {
                     requiresAuth: true
                 }
-            },
-            {
-                path: "notifications",
-                name: "notifications",
-                component: Notifications
             },
             {
                 path: "widgettest",

@@ -3,9 +3,9 @@
         <div class="card" :class="[type && `card-${type}`]">
             <div class="card-header">
                 <slot name="title" class="header">
-                    <h5 class="title d-inline" v-if="weatherInformations && widget.id==='meteo'">{{widget.title + " de " + weatherInformations}}</h5>
-                    <h5 class="title d-inline" v-else-if="horoscopeInformations && widget.id==='horoscope'">{{widget.title + " " + horoscopeInformations}}</h5>
-                    <h5 class="title d-inline" v-else>{{widget.title}}</h5>
+                    <h5 class="title d-inline" v-if="weatherInformations && widget.id==='meteo'">{{widget.name + " de " + weatherInformations}}</h5>
+                    <h5 class="title d-inline" v-else-if="horoscopeInformations && widget.id==='horoscope'">{{widget.name + " " + horoscopeInformations}}</h5>
+                    <h5 class="title d-inline" v-else>{{widget.name}}</h5>
 
                     <base-dropdown menu-on-right=""
                                    tag="div"
@@ -23,7 +23,7 @@
                     <gif-du-jour v-if="widget.id==='day-gif'"></gif-du-jour>
                     <horoscope v-if="widget.id==='horoscope'" v-on:setHoroscope="setHoroscope"></horoscope>
                     <biorythme v-if="widget.id==='biorythme'"></biorythme>
-                    <citation v-if="widget.id==='citation'"></citation>
+                    <citation v-if="widget.id==='day-citation'"></citation>
                     <day-streak v-if="widget.id==='day-streak'"></day-streak>
                     <agenda v-if="widget.id==='agenda'"></agenda>
                     <classement-ligue1 v-if="widget.id==='classement'"></classement-ligue1>

@@ -96,7 +96,6 @@
                     .then(reponse => {
                         this.temps7days = reponse.data.daily;
                         this.temps48hours = reponse.data.hourly;
-                        console.log('API par géolocalisation OK');
                     })
                 axios //Appel à l'API pour avoir le nom de la ville selon la position
                     .get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&appid=${this.api_code}&units=metric&lang=fr`)
@@ -139,7 +138,6 @@
 
                 function success(pos) {
                     var crd = pos.coords;
-                    console.log('Localisation activé');
                     coord.lat = crd.latitude;
                     coord.lon = crd.longitude;
                     coord.locationState = true;

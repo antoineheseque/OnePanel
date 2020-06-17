@@ -34,10 +34,6 @@ router.post("/getDayStreak", (req, res) => {
                     let futureDate = new Date(utc1.getTime());
                     futureDate.setDate(futureDate.getDate()+1)
 
-                    console.log(utc1)
-                    console.log(utc2)
-                    console.log(futureDate)
-
                     if(futureDate.getDate() === utc2.getDate() && futureDate.getMonth() === utc2.getMonth() && futureDate.getFullYear() === utc2.getFullYear()){ // Si on est bien le jours suivant
                         request = "UPDATE \`dayStreak\` SET lastDate=CURRENT_TIMESTAMP, counter=? WHERE userID=?"
                         query = mysql.format(request, [userData.counter+1 , decoded.id]);

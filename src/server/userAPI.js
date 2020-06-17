@@ -186,19 +186,19 @@ router.post("/verifyToken", (req, res) => {
 
 router.post("/addWidget", (req, res) => {
     let widgetID = req.body.id
-    console.log("--------------------------\nWIDGET ID: " + widgetID + "\n")
     let token = req.body.token
 
     // Vérification de l'utilisateur
     jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
         if (decoded === undefined) // Utilisateur valide
         {
-            console.log("Y'A UN PROBLEME")
+            res.json({"success":"false", "reason":"Token non valide, veuillez vous reconnecter"})
         } else {
             var request = "SELECT widgets FROM \`users\` WHERE id=? LIMIT 1"
             var completeRequest = mysql.format(request, [decoded.id]);
             sql.request(completeRequest).then((result) => {
-                let widgetList = JSON.parse(result[0].widgets); // Contient le JSON des données perso utilisateur
+                let widgetList = {}
+                widgetList = JSON.parse(result[0].widgets); // Contient le JSON des données perso utilisateur
                 let widgetData = "" // Contient JSON associé au widget à ajouter
 
                 var request = "SELECT * FROM \`widgets\` WHERE id=? LIMIT 1"
@@ -207,30 +207,30 @@ router.post("/addWidget", (req, res) => {
                     // Récupération des données sur le widget voulu
                     widgetData = SQLwidgetData[0]
 
-                    console.log("\nWIDGET LIST")
-                    console.log(widgetList)
-
-                    console.log("\nWIDGET DATA")
-                    console.log(widgetData)
-
+                    console.log("Widget to add: " + widgetID)
+                    console.log(widgetList.widgets)
                     // Ajout du widget dans la liste des widgets de l'utilisateur
                     let data = {
                         "id":widgetID,
-                        "x":Object.keys(widgetList.widgets).length,
+                        "x":(widgetList.widgets !== undefined) ? Object.keys(widgetList.widgets).length : 0,
                         "w":widgetData.w
                     }
                     widgetList.widgets.push(data)
+
+                    console.log(widgetList.widgets)
 
                     var request = "UPDATE \`users\` SET widgets=? WHERE id=?"
                     var completeRequest = mysql.format(request, [JSON.stringify(widgetList), decoded.id]);
                     sql.request(completeRequest).then((SQLupdatedData) => {
                         // Données mises a jours sur le site, on renvoi les infos du widget au client
-                        res.json({"widgetData":widgetData})
+                        res.json({"success":"true"})
                     }).catch((res) => {
                         console.log(res)
+                        res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
                     })
                 }).catch((res) =>{
                     console.log(res)
+                    res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
                 })
 
                 // On renvoi un JSON pour le widget pret à afficher
@@ -239,15 +239,107 @@ router.post("/addWidget", (req, res) => {
                 //res.json(data)
             }).catch((err) => {
                 console.log(err)
+                res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
+            });
+        }
+    });
+});
+
+router.post("/loadWidgets", (req, res) => {
+    let token = req.body.token
+
+    // Vérification de l'utilisateur
+    jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
+        if (decoded === undefined) // Utilisateur valide
+        {
+            console.log("Token non valide")
+            res.json({"success":"false","reason":"Token non valide, veuillez vous reconnecter"})
+        } else {
+            // Token VALIDE
+
+            // ON RECUPERE LES DONNES DES WIDGETS DE L'UTILISATEUR
+            var request = "SELECT widgets FROM \`users\` WHERE id=? LIMIT 1"
+            var query = mysql.format(request, [decoded.id]);
+            sql.request(query).then((result) => {
+                let list = JSON.parse(result[0].widgets).widgets // Stocké dans "list" // TABLEAU
+
+                var request = "SELECT * FROM \`widgets\`"
+                var query = mysql.format(request);
+                sql.request(query).then((result) => {
+                    let widgetList = result // ON RECUPERE LA LISTE DE TOUT LES WIDGETS ET ON LES ENTRE DANS LE JSON UN PAR UN
+                    let widgets = [] // Résultat final
+
+                    for(let widgetID in widgetList){ // ON PARCOURS TOUT LES WIDGETS QU'IL Y A
+                        let widgetData = widgetList[widgetID]
+
+                        let data = {
+                            "id":widgetData.id,
+                            "name":widgetData.name,
+                            "description":widgetData.description,
+                            "image":widgetData.image,
+                            "x":"0",
+                            "w":widgetData.w,
+                            "visible":false
+                        }
+
+                        // ON REGARDE SI LE WIDGET EST AUSSI DANS LA LISTE DE L'UTILISATEUR
+
+                        if(list != "null" && list !== undefined){
+                            if(list.some(item => item.id == widgetData.id)){
+                                let personnalized = list.filter(item => item.id == widgetData.id)
+                                data.x = personnalized[0].x
+                                data.w = personnalized[0].w
+                                data.visible = true
+                            }
+                        }
+
+                        widgets.push(data)
+                    }
+                    //console.log(widgets)
+                    res.json({"success":"true","widgets":JSON.stringify(widgets)})
+                }).catch((err) => {
+                    console.log(err)
+                    res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
+                })
+            }).catch((err) => {
+                console.log(err)
+                res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
+            });
+        }
+    });
+});
+
+router.post("/removeWidget", (req, res) => {
+    let widgetID = req.body.id
+    let token = req.body.token
+
+    // Vérification de l'utilisateur
+    jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
+        if (decoded === undefined) // Utilisateur valide
+        {
+            res.json({"success":"false", "reason":"Token non valide, veuillez vous reconnecter"})
+        } else {
+            var request = "SELECT widgets FROM \`users\` WHERE id=? LIMIT 1"
+            var completeRequest = mysql.format(request, [decoded.id]);
+            sql.request(completeRequest).then((result) => {
+                let userWidgets = JSON.parse(result[0].widgets)
+                console.log("Widget to remove: " + widgetID)
+                console.log(userWidgets)
+                var index = userWidgets.widgets.findIndex(element => element.id === widgetID)
+                console.log(index)
+                userWidgets.widgets.splice(index,1)
+                console.log(userWidgets)
+                var request = "UPDATE `users` SET widgets=? WHERE id=?"
+                var completeRequest = mysql.format(request, [JSON.stringify(userWidgets), decoded.id]);
+                sql.request(completeRequest).then((result) => {
+                    res.json({"success":"true"})
+                })
+            }).catch((err) => {
+                console.log(err)
+                res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
             });
         }
     });
 });
 
 module.exports = router
-
-function addWidgetToList(widgetList, widgetID){
-    return new Promise((r) => {
-
-    });
-}
