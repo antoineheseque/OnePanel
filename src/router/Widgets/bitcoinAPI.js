@@ -8,8 +8,8 @@ const sql = require('../../server/bdd')
 
 router.post("/getData", (req, res)=>{
     let values = []
-    sql.request(`SELECT * from \`bitcoin\` ORDER BY date DESC LIMIT 90`).then(function(result){
-        let data = result.reverse()
+    sql.request(`SELECT * from \`bitcoin\` ORDER BY date ASC LIMIT 90`).then(function(result){
+        let data = result
         console.log(data)
 
         let numbers = []
