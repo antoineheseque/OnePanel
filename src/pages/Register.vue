@@ -48,7 +48,7 @@
                 //this.notify('info', 'Inscription en cours.');
                 this.isRegistering = true
                 User.register(this.register).then((result) => {
-                    console.log(result)
+                    //console.log(result)
                     if(result.registered == true){ // Si l'utilisateur à pu être enregistré
                         this.notify('info', 'Vous êtes inscrit.')
                         router.push('login')

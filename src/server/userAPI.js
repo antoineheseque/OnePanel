@@ -34,7 +34,15 @@ router.post("/updateProfile", (req, res) => {
         return;
     }
 
-    sql.request(`SELECT * FROM \`users\` WHERE id='${data.id}' LIMIT 1`).then((result) => {
+    /*sql.request(`SELECT * FROM \`users\` WHERE id='${data.id}' LIMIT 1`).then((result) => {*/
+
+    /*sql.request(`UPDATE \`users\` SET username='${data.username}', email='${data.email}', firstName='${data.firstName}', lastName='${data.lastName}', birthdayDate='${date}' WHERE id='${data.id}'`).then((result) => {*/
+
+
+
+    var request = "SELECT * FROM \`users\` WHERE id=?"
+    var completeRequest = mysql.format(request, [data.id]);
+    sql.request(completeRequest).then(function (result){
         if(result.length > 0){ // SI UN UTILISATEUR CORRESPONDS ON COMPARE LES MDP
             bcrypt.compare(data.password, result[0].password, function(err, comparePassword){ // COMPARAISON AVEC LE MOT DE PASSE STOCKE EN BASE DE DONNEE
                 if(err) console.log(err)
@@ -46,7 +54,9 @@ router.post("/updateProfile", (req, res) => {
 
 
                     // ON MET A JOUR LA TABLE
-                    sql.request(`UPDATE \`users\` SET username='${data.username}', email='${data.email}', firstName='${data.firstName}', lastName='${data.lastName}', birthdayDate='${date}' WHERE id='${data.id}'`).then((result) => {
+                    var request = "UPDATE \`users\` SET username=?, email=?, firstName=?, lastName=?, birthdayDate=? WHERE id=?"
+                    var completeRequest = mysql.format(request, [data.username,data.email,data.firstName,data.lastName,date,data.id]);
+                    sql.request(completeRequest).then(function (result){
                         data.updated = true
                         data.password = ""
                         res.json(data)
@@ -62,6 +72,7 @@ router.post("/updateProfile", (req, res) => {
                     data.reason = "Mot de passe incorrect."
                     res.json(data)
                 }
+
             });
         }
         else {
@@ -98,14 +109,18 @@ router.post("/register", (req, res) => {
     // ON INSCRIT L'UTILISATEUR (ON SAURA SI L'UTILISATEUR EXISTE DEJA AVEC LA REPONSE DE LA REQUETE
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(data.password, salt, function(err, hash) {
-            sql.request(`INSERT INTO \`users\` (username, password) VALUES ('${data.username}', '${hash}')`).then((result) => { // ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
-                if(result.affectedRows === 1)
+            /*sql.request(`INSERT INTO \`users\` (username, password) VALUES ('${data.username}', '${hash}')`).then((result) => { */// ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
+
+            var request = "INSERT INTO \`users\` (username,password) VALUES (?,?)"
+            var completeRequest = mysql.format(request, [[data.username],[hash]]);
+            sql.request(completeRequest).then(function (result) {// ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
+                if (result.affectedRows === 1)
                     data.registered = true
                 else
                     data.reason = "Un problème est survenu."
                 res.json(data)
             }).catch((err) => {
-                if(err.code === 'ER_DUP_ENTRY')
+                if (err.code === 'ER_DUP_ENTRY')
                     data.reason = "Ce nom d'utilisateur existe déjà."
                 else
                     data.reason = "Un problème est survenu."
@@ -125,14 +140,22 @@ router.post("/login", (req, res) => {
         return;
     }
 
-    sql.request(`SELECT * FROM \`users\` WHERE username='${data.username}' LIMIT 1`).then((result) => {
+    /*sql.request(`SELECT * FROM \`users\` WHERE username='${data.username}' LIMIT 1`).then((result) => */
+                    /*sql.request(`INSERT INTO \`logins\` (userID) VALUES ('${data.id}')`).then(() => {*/ // ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
+
+
+    var request = "SELECT * FROM \`users\` WHERE username=? LIMIT 1"
+    var completeRequest = mysql.format(request, [data.username]);
+    sql.request(completeRequest).then(function (result){
         if(result.length > 0){ // SI UN UTILISATEUR CORRESPONDS ON COMPARE LES MDP
             bcrypt.compare(data.password, result[0].password, function(err, comparePassword){ // COMPARAISON AVEC LE MOT DE PASSE STOCKE EN BASE DE DONNEE
                 if(err) console.log(err)
                 else if (comparePassword) { // LES MOTS DE PASSE SONT BON
                     data = result[0]
                     data.logged = true
-                    sql.request(`INSERT INTO \`logins\` (userID) VALUES ('${data.id}')`).then(() => { // ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
+                    var request = "INSERT INTO \`logins\` (userID) VALUES (?)"
+                    var completeRequest = mysql.format(request, [data.id]);
+                    sql.request(completeRequest).then(function (result){// ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
 
                         const token = jwt.sign({ id: data.id }, process.env.SECRET_JWT,{ algorithm: "HS256", expiresIn: '7200s' });
 
@@ -170,7 +193,11 @@ router.post("/verifyToken", (req, res) => {
             if(data.needProfile === "false")
                 res.json({'isVerified':"true"})
             else{
-                sql.request(`SELECT * FROM \`users\` WHERE id='${decoded.id}' LIMIT 1`).then((result) => {
+                /*sql.request(`SELECT * FROM \`users\` WHERE id='${decoded.id}' LIMIT 1`).then((result) => */
+
+                var request = "SELECT * FROM \`users\` WHERE id=? LIMIT 1"
+                var completeRequest = mysql.format(request, [decoded.id]);
+                sql.request(completeRequest).then(function (result){
                     if (result.length > 0) { // SI UN UTILISATEUR CORRESPONDS ON COMPARE LES MDP
                         let profile = result[0];
                         result.password = ""; // Aucune utilité d'envoyer le password

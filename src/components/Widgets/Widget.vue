@@ -18,17 +18,19 @@
             </div>
             <div class="card-body" >
                 <div class="content">
-                    <news v-if="widget.id==='news'"></news>
-                    <meteo v-if="widget.id==='weather'" v-on:setInformations="setInformations"></meteo>
-                    <gif-du-jour v-if="widget.id==='day-gif'"></gif-du-jour>
-                    <horoscope v-if="widget.id==='horoscope'" v-on:setHoroscope="setHoroscope"></horoscope>
-                    <biorythme v-if="widget.id==='biorythme'"></biorythme>
-                    <citation v-if="widget.id==='day-citation'"></citation>
-                    <day-streak v-if="widget.id==='day-streak'"></day-streak>
                     <agenda v-if="widget.id==='agenda'"></agenda>
+                    <biorythme v-if="widget.id==='biorythme'"></biorythme>
+                    <bitcoin v-if="widget.id==='bitcoin'"></bitcoin>
                     <classement-ligue1 v-if="widget.id==='classement'"></classement-ligue1>
-                    <transport v-if="widget.id==='transport'"></transport>
+                    <citation v-if="widget.id==='day-citation'"></citation>
+                    <gif-du-jour v-if="widget.id==='day-gif'"></gif-du-jour>
+                    <day-streak v-if="widget.id==='day-streak'"></day-streak>
+                    <horoscope v-if="widget.id==='horoscope'" v-on:setHoroscope="setHoroscope"></horoscope>
+                    <news v-if="widget.id==='news'"></news>
                     <poke v-if="widget.id==='pokemon'"></poke>
+                    <transport v-if="widget.id==='transport'"></transport>
+                    <meteo v-if="widget.id==='weather'" v-on:setInformations="setInformations"></meteo>
+
                     <horloge v-if="widget.id==='horloge'"></horloge>
                 </div>
             </div>
@@ -48,13 +50,25 @@
     import Transport from "@/components/Widgets/Transport";
     import Poke from "@/components/Widgets/Pokemon";
     import Horloge from "@/components/Widgets/Horloge";
+    import Bitcoin from "@/components/Widgets/Bitcoin";
 
     export default {
         name: "widget",
         components: {
             Poke,
             Transport,
-            ClassementLigue1, GifDuJour, Meteo, News, Horoscope, Biorythme, Citation, DayStreak, Agenda,Horloge},
+            ClassementLigue1,
+            GifDuJour,
+            Meteo,
+            News,
+            Horoscope,
+            Biorythme,
+            Citation,
+            DayStreak,
+            Agenda,
+            Horloge,
+            Bitcoin
+        },
         props: {
             widget:"",
             type:""
