@@ -15,7 +15,7 @@
                 </l-marker>
             </div>
             <div v-if="toggleBusTram">
-                <l-marker v-for="(station, index) in dataIlevia" :key="index" :lat-lng="getMarker(station.location[0],station.location[1])" class="bg-danger">
+                <l-marker v-for="(station, index) in dataIlevia" :key="index" :lat-lng="getMarker(station.location[0],station.location[1])" class="bg-danger" v-if="getDistance(50.629480, 3.057119, station.location[0], station.location[1]) < 3000 || toggleAllBusTram">
                     <l-popup class="bustrams-popup">
                         <h6 class="color">Arrêt {{station.name}}</h6>
                         <div  v-for="(element, index) in station.data" :key="index" class="stopInfo zoom color">
@@ -26,7 +26,9 @@
                 </l-marker>
             </div>
         </l-map>
-        <button class="btn btn-success flexButton" @click="updateToggleBusTram">Bus</button> <button class="btn btn-success flexButton" @click="updateToggleVlille">Vlille</button>
+        <button class="btn btn-success flexButton" @click="updateToggleBusTram" v-if="!toggleBusTram">Bus</button> <button class="btn btn-success flexButton" @click="updateToggleVlille" v-if="!toggleVLille">Vlille</button>
+        <button class="btn btn-primary btn-sm" @click="toggleAllBusTram = !toggleAllBusTram" v-if="!toggleAllBusTram && toggleBusTram">Tous les arrêts</button>
+        <button class="btn btn-secondary btn-sm" @click="toggleAllBusTram = !toggleAllBusTram" v-if="toggleAllBusTram && toggleBusTram">Moins d'arrêts</button>
     </div>
 </template>
 
@@ -65,6 +67,7 @@
                 dataIlevia:[], //a stocker dans BDD
                 toggleVLille: true,
                 toggleBusTram: false,
+                toggleAllBusTram: false,
                 ourLocation : {
                     lat:'',
                     lon:''
@@ -78,6 +81,7 @@
                     .then(reponse => {
                         this.vlille = reponse.data.records;
                         console.log("API vLille")
+                        this.changeLocation()
                     })
                 axios //Appel à l'API pour avoir les prochains passage de bus
                     .get(`https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=ilevia-prochainspassages&q=&rows=10000`)
@@ -101,6 +105,7 @@
                 }
                 this.setLocation()
                 this.sortData()
+                console.log(this.dataIlevia)
             },
             setLocation: function(){
                 for(var index in this.ileviaStop){
@@ -173,11 +178,22 @@
 
                 navigator.geolocation.getCurrentPosition(success, error, options);
             },
+            getDistance : function (lat1, lon1, lat2, lon2) {
+                const a1 = lat1 * Math.PI/180, a2 = lat2 * Math.PI/180, delta = (lon2-lon1) * Math.PI/180, R = 6371e3;
+                return Math.acos( Math.sin(a1)*Math.sin(a2) + Math.cos(a1)*Math.cos(a2) * Math.cos(delta) ) * R;
+            },
+            changeLocation : function () {
+                if(this.getDistance(this.ourLocation.lat, this.ourLocation.lon, 50.629480, 3.057119) > 10000  || !this.locationState){
+                    this.ourLocation.lat = 50.629480
+                    this.ourLocation.lon = 3.057119
+                    this.zoom = 13
+                    console.log('Localisation changé');
+                }
+            }
         },
         mounted() {
             this.getLocation()
             this.getData()
-
         }
     }
 </script>
