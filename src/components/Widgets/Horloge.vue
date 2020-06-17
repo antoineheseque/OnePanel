@@ -54,7 +54,6 @@
                     })
                 },
             getTime: function(){
-                //console.log(this.timeData)
                 for(var id in this.timeData){
                     var date = new Date()
                     this.today = date.toLocaleString('fr-FR')

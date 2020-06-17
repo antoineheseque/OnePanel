@@ -132,7 +132,7 @@
                         .get(`https://api.opencagedata.com/geocode/v1/json?q=${this.event.address}&key=8683c1d8657d40069fd08852599feaef`)
                         .then(reponse => {
                             if(reponse.data.total_results != 0){
-                                console.log("API Coords OK")
+                                console.log("API Coords agenda OK")
                                 this.event.address = reponse.data.results[0].formatted
                                 this.coords = reponse.data.results[0].geometry
                                 this.getMeteoIndex(eventDateBegin, eventDateEnd)
@@ -149,7 +149,7 @@
                         .then(reponse => {
                             this.event.itinerary = reponse.data
                             this.departure = new Date(this.event.fromDate.getTime()-this.event.itinerary.total_time*1000)
-                            console.log("API itineraire OK")
+                            console.log("API itineraire agenda OK")
                         })
                 }
             },
@@ -159,7 +159,7 @@
                         .get(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.coords.lat}&lon=${this.coords.lng}&exclude=current,minutely,hourly&appid=e77b050b2d9e74f5008e2cc553cf92b9&units=metric&lang=fr`)
                         .then(reponse => {
                             this.event.meteo = reponse.data.daily;
-                            console.log('API météo OK');
+                            console.log('API météo agenda OK');
                         })
                 }
             },
@@ -168,12 +168,6 @@
                 var date = new Date()
                 date.setHours(23)
                 date.setMinutes(59)
-                console.log("------------------")
-                //console.log(date.getTime())
-                console.log(eventDateBegin)
-                console.log(eventDateEnd)
-                //console.log(eventDateBegin.getTime())
-                console.log("------------------")
                 for(var i = 0; i < 7; i++){
                     if(date.getTime()-eventDateBegin.getTime() >= 0 && date.getTime()-eventDateEnd.getTime() <= 0){
                         this.meteoIndex.push(i)
@@ -238,8 +232,8 @@
                     this.modifying= false
                     this.getMeteoAndItenerary(this.event.fromDate,this.event.toDate)
                     this.calendarInBDD['data'] = this.calendar
-                    console.log("this.calendarInBDD ->")
-                    console.log(this.calendarInBDD)
+                    //console.log("this.calendarInBDD ->")
+                    //console.log(this.calendarInBDD)
                 }
             },
             modifyEvent : function (i) { //Affiche le menu d'éditage de l'evenement en mon "Modify"

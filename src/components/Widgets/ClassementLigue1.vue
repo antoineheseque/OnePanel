@@ -47,11 +47,7 @@
                 }).then(function (res) {
                     return res.json()
                 }).then(function (data) {
-                    console.log("\ndata_getClassement=")
-                    console.log(data.tableLigue1.standings[0].table)
-
                     this.tableLigue1_foot = data.tableLigue1.standings[0].table;
-
                 }.bind(this))
             },
             getImg: function (img) {

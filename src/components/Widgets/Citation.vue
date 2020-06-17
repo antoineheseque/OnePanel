@@ -25,17 +25,8 @@
                     return res.json()
                 }).then(function (data) {
                     this.quote= data.citations.Citation_jour;
-                    console.log("\ndata.citations.Citation_jour=")
-                    console.log(data.citations.Citation_jour)
-
                     this.author = data.citations.Auteur;
-                    console.log("\ndata.citations.Auteur=")
-                    console.log(data.citations.Auteur)
-
                     this.date= data.citations.date_citation;
-                    console.log("\ndata.citations.date_citation=")
-                    console.log(data.citations.date_citation)
-
                 }.bind(this))
             },
         },

@@ -168,8 +168,6 @@
                                 data: this.intellectualDataArray,
                             }]
                     }
-                    console.log(this.physicalDataArray)
-                    console.log(this.dateArray)
                 }
             },
             getDateWithDays: function(time){
@@ -182,7 +180,6 @@
                 return Math.round((date.getTime()-this.birthdayDate.getTime())/86400000)
             },
             getPhysicalState: function (t) {
-                //console.log(Math.sin((2*Math.PI*parseInt(t, 10))/23))
                 return Math.sin((2*Math.PI*parseInt(t, 10))/23)
             },
             getEmotionalState: function (t) {

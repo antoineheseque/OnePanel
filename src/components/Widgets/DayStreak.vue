@@ -30,9 +30,6 @@
                 }).then(function (res) {
                     return res.json()
                 }).then(function (data) {
-                    console.log("data.daystreak=")
-                    console.log(data.daystreak)
-
                     this.counter = data.daystreak;
                 }.bind(this))
             }
