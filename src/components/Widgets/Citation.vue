@@ -26,7 +26,7 @@
                 }).then(function (data) {
                     this.quote= data.citations.Citation_jour;
                     this.author = data.citations.Auteur;
-                    this.date= data.citations.date_citation;
+                    this.date= data.citations.date_citation.toLocaleString('fr-FR', { timeZone: 'UTC' }).slice(0,10);
                 }.bind(this))
             },
         },
