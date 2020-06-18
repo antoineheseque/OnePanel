@@ -5,7 +5,9 @@ var mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const format = require('fecha');
 const jwt = require("jsonwebtoken")
+const multer = require("multer")
 
+var upload = multer({dest: 'userImg/'})
 // Accès à la bdd avec sql.base. ...
 // J'ai fait une fonction dans bdd.js pour simplifier tout il faut la tester aussi jsp si ca marche
 // Pour l'utiliser:
@@ -368,6 +370,12 @@ router.post("/removeWidget", (req, res) => {
             });
         }
     });
+});
+
+router.post("/updateImg", upload.single('avatar'), (req, res) => {
+    if(req.file){
+        console.log(req.file)
+    }
 });
 
 module.exports = router

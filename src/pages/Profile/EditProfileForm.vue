@@ -44,6 +44,8 @@
                 </base-input>
             </div>
         </div>
+        <input type="file" @change="selectedImg">
+        <button @click="uploadImg">Upload</button>
         <base-button type="primary"  v-on:click="onClickEditProfile" :loading="isUpdatingProfile" :disabled="isUpdatingProfile" fill>Mettre à jour mon profil</base-button>
     </card>
 </template>
@@ -52,7 +54,7 @@
     import User from '@/user';
     import NotificationTemplate from "@/pages/Notifications/NotificationTemplate";
     import fr_datepicker from "vuejs-datepicker/dist/locale/translations/fr"
-
+    import axios from 'axios'
     export default {
         components: {
             Datepicker
@@ -62,7 +64,8 @@
                 passwordConfirmation:"",
                 isUpdatingProfile:false,
                 profile:"",
-                fr:fr_datepicker
+                fr:fr_datepicker,
+                selectedImgData: null
             }
         },
         mounted:function(){
@@ -95,6 +98,19 @@
                     timeout: 2000,
                     message: message
                 })
+            },
+            selectedImg : function (event) {
+                this.selectedImgData = event.target.files[0]
+                console.log(this.selectedImgData)
+            },
+            uploadImg : function () {
+                const fd = new FormData()
+                fd.append('avatar', this.selectedImgData, this.selectedImgData.name)
+                axios.post('/api/user/updateImg', fd)
+                    .then(res => {
+                        console.log(res)
+                    })
+
             }
         }
     }
