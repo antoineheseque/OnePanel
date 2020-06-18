@@ -49,7 +49,7 @@ router.post("/getData", (req, res)=>{
         values.push(value2)
 
         // BLOC 90 JOURS
-        for(let i = 7; i < 30; i++){
+        for(let i = 30; i < 90; i++){
             let date = new Date(data[i].date)
             date.setHours(date.getHours()+2)
             let monthStr = date.getMonth() + 1
