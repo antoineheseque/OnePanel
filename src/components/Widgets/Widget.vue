@@ -30,6 +30,7 @@
                     <poke v-if="widget.id==='pokemon'"></poke>
                     <transport v-if="widget.id==='transport'"></transport>
                     <meteo v-if="widget.id==='weather'" v-on:setInformations="setInformations"></meteo>
+                    <master v-if="widget.id==='master'"></master>
 
                     <horloge v-if="widget.id==='horloge'"></horloge>
                 </div>
@@ -51,6 +52,7 @@
     import Poke from "@/components/Widgets/Pokemon";
     import Horloge from "@/components/Widgets/Horloge";
     import Bitcoin from "@/components/Widgets/Bitcoin";
+    import Master from "@/components/Widgets/Master";
 
     export default {
         name: "widget",
@@ -67,7 +69,8 @@
             DayStreak,
             Agenda,
             Horloge,
-            Bitcoin
+            Bitcoin,
+            Master
         },
         props: {
             widget:"",
