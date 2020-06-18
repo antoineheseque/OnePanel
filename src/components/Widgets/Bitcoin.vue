@@ -90,10 +90,13 @@
                 return res.json()
             }).then(function (data) {
                 bitcoin.content = JSON.parse(data.values)
-                this.$redrawVueMasonry('containerId')
+                console.log(bitcoin.content)
                 this.initData(0);
             }.bind(this))
         },
+        updated(){
+            this.$redrawVueMasonry('containerId')
+        }
     }
 </script>
 <style scoped>
