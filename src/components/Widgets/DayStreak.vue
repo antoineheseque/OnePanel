@@ -20,7 +20,7 @@
             }
         },
         methods:{
-            updateCounter: function(id){
+            updateCounter: function(id){ //Récupère les donnnées
                 fetch('/api/widget/dayStreak/getDayStreak', {
                     method: 'POST',
                     headers: {

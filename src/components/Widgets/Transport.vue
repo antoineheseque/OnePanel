@@ -75,7 +75,7 @@
             }
         },
         methods:{
-            getData: function () {
+            getData: function () { //On appelle les APIs
                 axios //Appel à l'API pour avoir la position et la disponibilité des vLilles
                     .get(`https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=vlille-realtime&q=&rows=150&facet=libelle&facet=nom&facet=commune&facet=etat&facet=type&facet=etatconnexion`)
                     .then(reponse => {
@@ -92,7 +92,7 @@
                     })
 
             },
-            setDataAndName: function(){
+            setDataAndName: function(){ //On défini les arrêts et on implémente les données correspondantes
                 for(var index in this.busTrams){
                     if(!(this.busTrams[index].fields.nomstation in this.arret)){
                         this.arret[this.busTrams[index].fields.nomstation] = new Object();
@@ -106,14 +106,14 @@
                 this.setLocation()
                 this.sortData()
             },
-            setLocation: function(){
+            setLocation: function(){ //Ajoutes les positions pour les differents arrêts
                 for(var index in this.ileviaStop){
                     if((this.ileviaStop[index].fields.commercialstopname in this.arret)){
                         this.arret[this.ileviaStop[index].fields.commercialstopname]['location'] = this.ileviaStop[index].fields.geo
                     }
                 }
             },
-            sortData : function() {
+            sortData : function() { //On trie par date les prochaines passages de bus
                 for(var i in this.arret){
                     if(this.arret[i].location != undefined){
                         this.arret[i].data.sort(this.sortByDate)
@@ -121,7 +121,7 @@
                     }
                 }
             },
-            sortByDate: function(a, b){
+            sortByDate: function(a, b){ //Sorting par date les prochaines passages de bus
                 const dateA = a.heureestimeedepart.toUpperCase();
                 const dateB = b.heureestimeedepart.toUpperCase();
 
@@ -134,10 +134,10 @@
                 return comparison;
             },
 
-            getMarker: function (lat, lon) {
+            getMarker: function (lat, lon) { //Converti des latitudes longitudes pour leaflet
                 return L.latLng(lat, lon)
             },
-            convertDate: function (a) {
+            convertDate: function (a) { //Convertion de date
                 var date = new Date(a)
                 date.toDateString()
                 if(date.getMinutes() < 10){
@@ -147,15 +147,15 @@
                     return date.getHours() + 'h' + date.getMinutes() + ' le ' + date.getDate() + '/' + (date.getMonth()+1)
                 }
             },
-            updateToggleVlille : function () {
+            updateToggleVlille : function () { //Affiche les vlilles
                 this.toggleVLille = true
                 this.toggleBusTram = false
             },
-            updateToggleBusTram : function () {
+            updateToggleBusTram : function () { //Affiche les bus et les trams
                 this.toggleVLille = false
                 this.toggleBusTram = true
             },
-            getLocation : function(){
+            getLocation : function(){ //Calcule distance entre 2 points GPS
                 var coord = this;
                 var options = {
                     enableHighAccuracy: true,
@@ -177,11 +177,11 @@
 
                 navigator.geolocation.getCurrentPosition(success, error, options);
             },
-            getDistance : function (lat1, lon1, lat2, lon2) {
+            getDistance : function (lat1, lon1, lat2, lon2) { //Calcule distance entre 2 points GPS
                 const a1 = lat1 * Math.PI/180, a2 = lat2 * Math.PI/180, delta = (lon2-lon1) * Math.PI/180, R = 6371e3;
                 return Math.acos( Math.sin(a1)*Math.sin(a2) + Math.cos(a1)*Math.cos(a2) * Math.cos(delta) ) * R;
             },
-            changeLocation : function () {
+            changeLocation : function () { //Si l'utilisateur est à plus de 10km du centre de lille, on centre la carte sur Lille
                 if(this.getDistance(this.ourLocation.lat, this.ourLocation.lon, 50.629480, 3.057119) > 10000  || !this.locationState){
                     this.ourLocation.lat = 50.629480
                     this.ourLocation.lon = 3.057119

@@ -52,13 +52,13 @@
             }
         },
         methods:{
-            getChartOptions(index){
+            getChartOptions(index){ //Change les options
                 let options = chartConfigs.purpleChartOptions
                 options.scales.yAxes[0].ticks.suggestedMin = bitcoin.content[index].min
                 options.scales.yAxes[0].ticks.suggestedMax = bitcoin.content[index].max
                 return options
             },
-            initData(index) {
+            initData(index) { //Initialise les valeurs
                 let chartData = {
                     datasets: [{
                         fill: true,
@@ -84,7 +84,7 @@
             }
         },
         mounted(){
-            fetch('/api/widget/bitcoin/getData', {
+            fetch('/api/widget/bitcoin/getData', { //Récupère les données
                 method: 'POST'
             }).then(function (res) {
                 return res.json()
@@ -95,7 +95,7 @@
             }.bind(this))
         },
         updated(){
-            this.$redrawVueMasonry('containerId')
+            this.$redrawVueMasonry()
         }
     }
 </script>

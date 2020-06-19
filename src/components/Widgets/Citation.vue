@@ -18,7 +18,7 @@
             }
         },
         methods:{
-            getQuotes: function(){
+            getQuotes: function(){ //Récupère les donnnées
                 fetch('/api/widget/citations/getCitation', {
                     method: 'POST'
                 }).then(function (res) {

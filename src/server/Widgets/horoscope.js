@@ -37,8 +37,8 @@ function update_horoscope(){
 function generateSentences(){
     let sentences={
         "love":'Vous <verbeA>',
-        "work":'Vous <verbeT> <complementTravail>',
-        "health":'Vous <verbeS> <complementSante>'
+        "work":'Vous <verbeT>',
+        "health":'Vous <verbeS>'
     }
 
     sentences.love = randomizeTxt(sentences.love)

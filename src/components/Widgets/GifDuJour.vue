@@ -14,7 +14,7 @@
             }
         },
         methods:{
-            call: function(){
+            call: function(){ //Récupère les donnnées
                 fetch('/api/widget/daygif/getImage', {
                     method: 'POST'
                 }).then(function (res) {

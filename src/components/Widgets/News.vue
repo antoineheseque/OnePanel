@@ -21,7 +21,7 @@
             }
         },
         methods:{
-            call_news: function(){
+            call_news: function(){ //Récupère les infos news
                 fetch('/api/widget/news/getNews', {
                     method: 'POST'
                 }).then(function (res) {
@@ -31,7 +31,7 @@
                     this.allNews = this.newsBDD['data'];
                 }.bind(this))
             },
-            getDateArticles: function (index) {
+            getDateArticles: function (index) { //Remplace la date de l'article
                 var article = this.allNews[index].publishedAt.toString();
                 article = article.replace(/T/, '-');
                 article = article.replace(/Z/, ' ');
@@ -39,11 +39,11 @@
                 article = article.split('-').reverse().join('/').replace(/\//, '');
                 return article
             },
-            imageLoadError : function(index) {
+            imageLoadError : function(index) { //Si on ne trouve pas l'image on la remplace par defaut
                 console.log('Image failed to load')
                 this.allNews[index].urlToImage = 'https://resize-rfm.lanmedia.fr/f/webp/r/665,444,forcex,center-middle/img/var/rfm/storage/images/news/la-nuit-avec-moi-un-inedit-de-johnny-hallyday-dans-le-coffret-celebrant-l-annee-1969-19596/281155-1-fre-FR/La-Nuit-avec-Moi-un-inedit-de-Johnny-Hallyday-dans-le-coffret-celebrant-l-annee-1969.jpg'
             },
-            getImg: function (img) {
+            getImg: function (img) { //Convertion image http en https pour la sécurité
                 return img.replace(/http:/, 'https:');
             }
 

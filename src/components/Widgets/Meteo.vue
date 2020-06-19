@@ -104,7 +104,7 @@
                         this.sendInformationsToParent()
                     })
             },
-            getCoords: function(){
+            getCoords: function(){ //Récupere les coordonnées des villes
                 axios
                     .get(`https://api.opencagedata.com/geocode/v1/json?q=${this.requete}&key=8683c1d8657d40069fd08852599feaef`)
                     .then(reponse => {
@@ -121,14 +121,14 @@
                         console.log('API conversion Géo OK');
                     })
             },
-            getLatLon: function(i){
+            getLatLon: function(i){ //Récupère latitude longitude d'une position
                 this.lat = this.coordsCity[i].geometry.lat;
                 this.lon = this.coordsCity[i].geometry.lng;
                 this.method = 'position';
                 this.updateToggleResultLocationDaily();
                 this.goMeteoLocation7Days();
             },
-            getLocation : function(){
+            getLocation : function(){ //Récupère la localisation
                 var coord = this;
                 var options = {
                     enableHighAccuracy: true,
@@ -153,7 +153,7 @@
 
                 navigator.geolocation.getCurrentPosition(success, error, options);
             },
-            getDaysHourly : function () {
+            getDaysHourly : function () { //Récupère les 48 prochaines heures de météo
                 this.datesHourly = [];
                 for(var i = 0; i < 48; i++){
                     var date = new Date()
@@ -161,7 +161,7 @@
                     this.datesHourly.push(date)
                 }
             },
-            getDaysDaily : function () {
+            getDaysDaily : function () { //Récupère les dates des 7 prochains jours
                 this.datesDay = [];
                 for(var i = 0; i < 8; i++){
                     var date = new Date()
@@ -169,10 +169,10 @@
                     this.datesDay.push(date)
                 }
             },
-            getUrlImg : function (a) {
+            getUrlImg : function (a) { //Récupère les logos de la météo
                 return 'https://openweathermap.org/img/wn/' + a + '@2x.png'
             },
-            updateToggleResultLocationHourly : function () {
+            updateToggleResultLocationHourly : function () { //Affiche météo par heure selon la localisation
                 this.toggleResultLocationHourly = true;
                 this.toggleResultPositionToday = false;
                 this.toggleResultLocationDaily = false;
@@ -181,7 +181,7 @@
                 this.daysLength = "sur 48 heures"
                 this.sendInformationsToParent()
             },
-            updateToggleResultLocationDaily : function () {
+            updateToggleResultLocationDaily : function () { //Affiche météo d'une position journalière
                 this.toggleResultLocationHourly = false;
                 this.toggleResultPositionToday = false;
                 this.toggleResultLocationDaily = true;
@@ -190,14 +190,14 @@
                 this.toggleResultMoreInfo = false;
                 this.sendInformationsToParent()
             },
-            updateToggleResultPositionToday : function (i) {
+            updateToggleResultPositionToday : function (i) { //Affiche pour trouver une ville avec la barre de recherche
                 this.toggleResultLocationHourly = false;
                 this.toggleResultPositionToday = true;
                 this.toggleResultLocationDaily = false;
                 this.toggleResultMoreInfo = false;
                 this.index = i;
             },
-            updateToggleResultMoreInfo : function (i) {
+            updateToggleResultMoreInfo : function (i) { //Affiche le menu + d'info
                 this.temp = {
                     toggleResultLocationHourly : this.toggleResultLocationHourly,
                     toggleResultPositionToday : this.toggleResultPositionToday,
@@ -210,23 +210,23 @@
                 this.toggleResultMoreInfo = true;
                 this.index = i;
             },
-            toUpper : function (a) {
+            toUpper : function (a) { //Première lettre en majuscule
                 return a.substring(0,1).toUpperCase() + a.substring(1)
             },
-            timestampToDate : function (unix_timestamp) {
+            timestampToDate : function (unix_timestamp) { //Convertion timestamp -> en date
                 var date = new Date(unix_timestamp * 1000);
                 return {
                     hour : date.getHours(),
                     minute : date.getMinutes()
                 }
             },
-            goBack(){
+            goBack(){ //Retour
                 this.toggleResultLocationHourly = this.temp.toggleResultLocationHourly;
                 this.toggleResultPositionToday = this.temp.toggleResultPositionToday;
                 this.toggleResultLocationDaily = this.temp.toggleResultLocationDaily;
                 this.toggleResultMoreInfo = false;
             },
-            goBackToLocation(){
+            goBackToLocation(){ //Retour à la météo position
                 this.lat = this.temp.lat;
                 this.lon = this.temp.lon;
                 this.temps7days = this.temp.temps7days;
@@ -238,7 +238,7 @@
                 this.sendInformationsToParent()
                 this.updateToggleResultLocationHourly()
             },
-            sendInformationsToParent(){
+            sendInformationsToParent(){ //Change le titre du widget
                 this.$emit('setInformations', this.cityName + " " + this.daysLength)
             }
         },

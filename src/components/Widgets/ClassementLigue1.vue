@@ -41,7 +41,7 @@
             }
         },
         methods: {
-            call_classement: function () {
+            call_classement: function () { //Récupère les donnnées
                 fetch('/api/widget/foot/getClassement', {
                     method: 'POST',
                 }).then(function (res) {

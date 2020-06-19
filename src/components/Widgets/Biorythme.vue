@@ -106,7 +106,7 @@
             }
         },
         methods:{
-            getData(){
+            getData(){ //Modifie le graphique
                 this.haveBirthdayDate = !(User.profile.birthdayDate == null || User.profile.birthdayDate == undefined)
 
                 if (this.haveBirthdayDate) {
@@ -170,22 +170,22 @@
                     }
                 }
             },
-            getDateWithDays: function(time){
+            getDateWithDays: function(time){ //Recupère la date sous forme day/month pour le graphique
                 var date = new Date()
                 date.setTime(time)
                 return date.getDate() + '/' + (date.getMonth()+1)
             },
-            getYearsInDays: function () {
+            getYearsInDays: function () { //Recupère le nombre de jour depuis la naissance de l'utilisateur
                 var date = new Date()
                 return Math.round((date.getTime()-this.birthdayDate.getTime())/86400000)
             },
-            getPhysicalState: function (t) {
+            getPhysicalState: function (t) { //Calcul l'état Physique
                 return Math.sin((2*Math.PI*parseInt(t, 10))/23)
             },
-            getEmotionalState: function (t) {
+            getEmotionalState: function (t) { //Calcul l'état Emotionnel
                 return Math.sin((2*Math.PI*parseInt(t,10))/28)
             },
-            getIntellectualState: function (t) {
+            getIntellectualState: function (t) { //Calcul l'état Intellectuel
                 return Math.sin((2*Math.PI*parseInt(t,10))/32)
             }
         },

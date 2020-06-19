@@ -56,10 +56,10 @@
             }
         },
         methods:{
-            randomPokeid: function(){
+            randomPokeid: function(){ //Récupère un id aléatoire en 0 et 151
                 return (Math.floor(Math.random()*151))
             },
-            getPokedex: function(){
+            getPokedex: function(){ //Génère le pokedex
                 if (!this.pokemonCatch.length){
                     for(var i = 0; i < 151; i++)
                     {
@@ -71,12 +71,12 @@
                 this.togglePC=false
                 this.toggleMenu=false
             },
-            goBack: function() {
+            goBack: function() { //Retour
                 this.togglePokedex=false
                 this.togglePC=false
                 this.toggleMenu=true
             },
-            getPokemon: function(){
+            getPokemon: function(){ //Récupère un pokèmon
                 if (!this.pokemonCatch.length){
                     for(var i = 0; i < 151; i++)
                     {
@@ -97,7 +97,7 @@
                 this.pokedexCatch[id]=this.pokemonOfTheDay;
 
             },
-            seeMyPokemons:function(){
+            seeMyPokemons:function(){ //Affiche tous les pokémons capturés
                 if (!this.pokemonCatch.length){
                     var pokeCatch= {id:1, name:'inconnu', img:'https://www.pokepedia.fr/images/f/f7/Sprite_%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F_RS.png'}
                     this.pokemonCatch.push(pokeCatch)

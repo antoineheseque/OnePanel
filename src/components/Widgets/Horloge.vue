@@ -100,7 +100,7 @@
                         //console.log(data.timedata)
 
                         if(data.timedata !== undefined){
-                            this.timeData = JSON.parse(data.timedata[0].horloge_ville) // LE TIMEDATA EST BIEN CHARGE AU MOMENT DU REFRESH MAIS N'AFFICHE PAS LA SAUCE
+                            this.timeData = JSON.parse(data.timedata[0].horloge_ville)
                             //console.log("\ndata.timedata[0].horloge_ville=")
                             //console.log(this.timeData)
                             this.getTime()
@@ -109,10 +109,10 @@
 
                     }.bind(this))
                 },
-                getAccessTimeZone: function(){
+                getAccessTimeZone: function(){ //Ouvre la barre de recherche de ville
                     this.newHours= true
                 },
-                getTime: function(){
+                getTime: function(){ //Calcul l'heure avec la timeZone
                     for(var id in this.timeData){
                         var date = new Date()
                         this.today = date.toLocaleString('fr-FR')
@@ -131,7 +131,7 @@
                     setTimeout(this.getTime, 1000)
                 },
 
-                deleteItem : function (i) {
+                deleteItem : function (i) { //Supprimer une heure avec son ID
                     //console.log("\nthis.timeData avant splice=")
                     //console.log(this.timeData)
                     this.timeData.splice(i,1)

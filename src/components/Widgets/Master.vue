@@ -17,10 +17,10 @@
             }
         },
         methods:{
-            randomNumber: function(){
+            randomNumber: function(){ //Nombre aléatoire entre 0 et 9
                 return (Math.floor(Math.random()*9))
             },
-            getDomaine: function(){
+            getDomaine: function(){ //Récupère un domaine
                 this.domaine = this.domaines[this.randomNumber()]
             },
         },

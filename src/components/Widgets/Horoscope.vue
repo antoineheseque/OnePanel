@@ -8,10 +8,10 @@
                 <i class="tim-icons icon-heart-2"></i><b class="font-weight-bold"> Amour :</b> {{data.message.love}}
             </p>
             <p class="m-2 text-justify">
-                <i class="tim-icons icon-sound-wave"></i><b class="font-weight-bold"> Santé :</b> {{data.message.work}}
+                <i class="tim-icons icon-sound-wave"></i><b class="font-weight-bold"> Santé :</b> {{data.message.health}}
             </p>
             <p class="m-2 text-justify">
-                <i class="tim-icons icon-wallet-43"></i><b class="font-weight-bold"> Travail :</b> {{data.message.health}}
+                <i class="tim-icons icon-wallet-43"></i><b class="font-weight-bold"> Travail :</b> {{data.message.work}}
             </p>
         </div>
     </div>
@@ -41,7 +41,7 @@
         mounted() {
             this.haveBirthdayDate = !(User.profile.birthdayDate == null || User.profile.birthdayDate == undefined)
 
-            if (this.haveBirthdayDate) {
+            if (this.haveBirthdayDate) { //Affiche la date du jour dans le titre du widget
                 this.data.astrologicalSign = getAstrologicalSign()
                 getSentences(this.data.astrologicalSign).then((res) => {
                     this.data.message = JSON.parse(res)
@@ -59,7 +59,7 @@
         }
     }
 
-    function getSentences(sign){
+    function getSentences(sign){ //Récupère des données
         return new Promise((r) => {
             axios.post('/api/widget/horoscope/getHoroscope',{
                 data:sign
@@ -69,7 +69,7 @@
         });
     }
 
-    function getAstrologicalSign() {
+    function getAstrologicalSign() { //Récupère le signe astrologique selon la date de naissance
         let birthDate = new Date(User.profile.birthdayDate)
         var month = birthDate.getMonth()+1;
         var day = birthDate.getDate()+1;
