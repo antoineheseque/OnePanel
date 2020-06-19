@@ -100,7 +100,9 @@
                         console.log(data.timedata)
 
                         if(data.timedata !== undefined){
-                            this.timeData = data.timedata // LE TIMEDATA EST BIEN CHARGE AU MOMENT DU REFRESH MAIS N'AFFICHE PAS LA SAUCE
+                            this.timeData = JSON.parse(data.timedata[0].horloge_ville) // LE TIMEDATA EST BIEN CHARGE AU MOMENT DU REFRESH MAIS N'AFFICHE PAS LA SAUCE
+                            console.log("\ndata.timedata[0].horloge_ville=")
+                            console.log(this.timeData)
                             this.getTime()
                         }
 
@@ -130,6 +132,8 @@
                 },
 
                 deleteItem : function (i) {
+                    console.log("\nthis.timeData avant splice=")
+                    console.log(this.timeData)
                     this.timeData.splice(i,1)
                     this.time.splice(i,1)
                     this.toggleDelete = false
