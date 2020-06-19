@@ -31,7 +31,6 @@
                     <transport v-if="widget.id==='transport'"></transport>
                     <meteo v-if="widget.id==='weather'" v-on:setInformations="setInformations"></meteo>
                     <master v-if="widget.id==='master'"></master>
-
                     <horloge v-if="widget.id==='horloge'"></horloge>
                 </div>
             </div>

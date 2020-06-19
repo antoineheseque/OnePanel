@@ -14,18 +14,18 @@ function addBitcoinDay(){
         if(content.status == "ok"){
             let request = "INSERT INTO \`bitcoin\` (date,value) VALUES (?,?)"
             let date = format.format(new Date(content.values[0].x*1000), 'isoDate')
-            console.log(date)
+            //console.log(date)
 
             let completeRequest = mysql.format(request, [date, content.values[0].y]);
             sql.request(completeRequest).then((res) => {
-                console.log(res)
+                //.log(res)
             }).catch((err) => {
-                console.log(err)
+                //console.log(err)
             });
         }
 
     }).catch(function(err){
-        console.log(err)
+        //console.log(err)
     })
 }
 

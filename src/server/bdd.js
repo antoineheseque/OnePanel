@@ -14,7 +14,7 @@ exports.request = function (request) {
 
         con.query(request, function (err, result) {
             if (err){
-                console.log(err)
+                //console.log(err)
                 error(err)
             }else{
                 r(result)

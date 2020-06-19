@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="domaine container">
         <button @click="getDomaine" class="btn btn-success">Votre domaine de professionnalisation</button>
         <br>
         <p style="font-size: 20px" class="text-center">{{domaine}}</p>
@@ -32,3 +32,12 @@
         }
     }
 </script>
+
+<style scoped>
+    .domaine{
+        height: auto;
+        max-width: 100%;
+        overflow-x: hidden;
+        margin: auto;
+    }
+</style>

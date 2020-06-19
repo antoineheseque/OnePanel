@@ -19,7 +19,7 @@ function getNewsAPI(){
         var completeRequest = mysql.format(request, [news]);
         sql.request(completeRequest);
     }).catch(function(result){
-        console.log(result);
+        //console.log(result);
     })
 }
 

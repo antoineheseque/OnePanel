@@ -10,8 +10,8 @@ const sql = require('../bdd');
 function createImage(){
     axios.get("https://api.tenor.com/v1/trending?key=EW6KT86NL2K6&limit=1").then(function(r){
         const image_API = r.data.results[0]["media"][0]["gif"].url; // CONTIENT L'URL DE L'IMAGE
-        console.log("\ngifAPI=")
-        console.log(image_API)
+        //console.log("\ngifAPI=")
+        //console.log(image_API)
 
         //sql.request(`UPDATE \`dayGif\` SET url='${image_API}' WHERE id=1`)
         var request = "UPDATE \`dayGif\` SET url=? WHERE id=1"

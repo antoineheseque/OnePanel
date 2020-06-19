@@ -164,7 +164,7 @@ router.post("/login", (req, res) => {
 
                     }).catch((err) => {
                         console.log("Un problème est survenu dans la BDD")
-                        console.log(err)
+                        //console.log(err)
                     });
 
                 } else {
@@ -179,7 +179,7 @@ router.post("/login", (req, res) => {
         }
     }).catch((err) => {
         console.log("Un problème est survenu dans la BDD")
-        console.log(err)
+        //console.log(err)
     });
 });
 
@@ -234,8 +234,8 @@ router.post("/addWidget", (req, res) => {
                     // Récupération des données sur le widget voulu
                     widgetData = SQLwidgetData[0]
 
-                    console.log("Widget to add: " + widgetID)
-                    console.log(widgetList.widgets)
+                    //console.log("Widget to add: " + widgetID)
+                    //console.log(widgetList.widgets)
                     // Ajout du widget dans la liste des widgets de l'utilisateur
                     let data = {
                         "id":widgetID,
@@ -245,7 +245,7 @@ router.post("/addWidget", (req, res) => {
                     }
                     widgetList.widgets.push(data)
 
-                    console.log(widgetList.widgets)
+                    //console.log(widgetList.widgets)
 
                     var request = "UPDATE \`users\` SET widgets=? WHERE id=?"
                     var completeRequest = mysql.format(request, [JSON.stringify(widgetList), decoded.id]);
@@ -253,11 +253,11 @@ router.post("/addWidget", (req, res) => {
                         // Données mises a jours sur le site, on renvoi les infos du widget au client
                         res.json({"success":"true"})
                     }).catch((res) => {
-                        console.log(res)
+                        //console.log(res)
                         res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
                     })
                 }).catch((res) =>{
-                    console.log(res)
+                    //.log(res)
                     res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
                 })
 
@@ -266,7 +266,7 @@ router.post("/addWidget", (req, res) => {
                 // Return result
                 //res.json(data)
             }).catch((err) => {
-                console.log(err)
+                //console.log(err)
                 res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
             });
         }
@@ -280,7 +280,7 @@ router.post("/loadWidgets", (req, res) => {
     jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
         if (decoded === undefined) // Utilisateur valide
         {
-            console.log("Token non valide")
+            //console.log("Token non valide")
             res.json({"success":"false","reason":"Token non valide, veuillez vous reconnecter"})
         } else {
             // Token VALIDE
@@ -328,11 +328,11 @@ router.post("/loadWidgets", (req, res) => {
                     //console.log(widgets)
                     res.json({"success":"true","widgets":JSON.stringify(widgets)})
                 }).catch((err) => {
-                    console.log(err)
+                    //console.log(err)
                     res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
                 })
             }).catch((err) => {
-                console.log(err)
+                //console.log(err)
                 res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
             });
         }
@@ -353,12 +353,12 @@ router.post("/removeWidget", (req, res) => {
             var completeRequest = mysql.format(request, [decoded.id]);
             sql.request(completeRequest).then((result) => {
                 let userWidgets = JSON.parse(result[0].widgets)
-                console.log("Widget to remove: " + widgetID)
-                console.log(userWidgets)
+                //console.log("Widget to remove: " + widgetID)
+                //console.log(userWidgets)
                 var index = userWidgets.widgets.findIndex(element => element.id === widgetID)
-                console.log(index)
+                //console.log(index)
                 userWidgets.widgets.splice(index,1)
-                console.log(userWidgets)
+                //console.log(userWidgets)
                 var request = "UPDATE `users` SET widgets=? WHERE id=?"
                 var completeRequest = mysql.format(request, [JSON.stringify(userWidgets), decoded.id]);
                 sql.request(completeRequest).then((result) => {

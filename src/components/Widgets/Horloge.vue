@@ -52,12 +52,12 @@
                         return res.json()
                     }).then(function (data) {
                         var timeZoneConv=parseFloat(data.horloge.annotations.timezone.offset_string.slice(0,3))
-                        console.log("\ntimeZoneConv=")
-                        console.log(timeZoneConv)
+                        //console.log("\ntimeZoneConv=")
+                        //console.log(timeZoneConv)
 
                         var objectCity={name:data.horloge.formatted ,timeZone: timeZoneConv}
-                        console.log("\nobjectCity=")
-                        console.log(objectCity)
+                        //console.log("\nobjectCity=")
+                        //console.log(objectCity)
 
                         this.timeData.push(objectCity)
                         this.time = new Array(this.time.length+1)
@@ -65,8 +65,8 @@
                         this.getTime()
                         this.city = ''
 
-                        console.log("\njuste avant l'update bdd horloge : this.timeData=")
-                        console.log(this.timeData)
+                        //console.log("\njuste avant l'update bdd horloge : this.timeData=")
+                        //console.log(this.timeData)
 
                         this.update_bdd_horloge(User.profile.id,this.timeData)
                     }.bind(this))
@@ -82,7 +82,7 @@
                         return res.json()
                     }).then(function (data){
                         const message = data.message
-                        console.log(message)
+                        //console.log(message)
                     }.bind(this))
                 },
 
@@ -96,13 +96,13 @@
                     }).then(function (res) {
                         return res.json()
                     }).then(function (data) {
-                        console.log("\ndata.timedata=")
-                        console.log(data.timedata)
+                        //console.log("\ndata.timedata=")
+                        //console.log(data.timedata)
 
                         if(data.timedata !== undefined){
                             this.timeData = JSON.parse(data.timedata[0].horloge_ville) // LE TIMEDATA EST BIEN CHARGE AU MOMENT DU REFRESH MAIS N'AFFICHE PAS LA SAUCE
-                            console.log("\ndata.timedata[0].horloge_ville=")
-                            console.log(this.timeData)
+                            //console.log("\ndata.timedata[0].horloge_ville=")
+                            //console.log(this.timeData)
                             this.getTime()
                         }
 
@@ -132,8 +132,8 @@
                 },
 
                 deleteItem : function (i) {
-                    console.log("\nthis.timeData avant splice=")
-                    console.log(this.timeData)
+                    //console.log("\nthis.timeData avant splice=")
+                    //console.log(this.timeData)
                     this.timeData.splice(i,1)
                     this.time.splice(i,1)
                     this.toggleDelete = false
@@ -141,11 +141,11 @@
                 }
             },
             mounted(){
-                console.log("\nthis.userid=")
-                console.log(this.userid)
+                //console.log("\nthis.userid=")
+                //console.log(this.userid)
                 this.call_timedata(User.profile.id)
-                console.log("\nmounted_this.timeData=")
-                console.log(this.timeData)
+                //console.log("\nmounted_this.timeData=")
+                //console.log(this.timeData)
             },
             updated() {
                 this.$redrawVueMasonry()

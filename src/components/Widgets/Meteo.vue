@@ -255,7 +255,7 @@
 
 <style>
     .appMeteo {
-        height: 20em;
+        height: auto;
         margin: auto;
     }
     .hours {

@@ -3,14 +3,13 @@
         <l-map :zoom="zoom" :center="getMarker(ourLocation.lat, ourLocation.lon)">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <div v-if="toggleVLille">
-                <l-marker v-for="(station, index) in vlille" :key="index" :lat-lng="getMarker(station.geometry.coordinates[1],station.geometry.coordinates[0])" >
+                <l-marker v-for="(station, index) in vlille" :key="index" :lat-lng="getMarker(station.geometry.coordinates[1],station.geometry.coordinates[0])" v-if="getDistance(50.629480, 3.057119, station.geometry.coordinates[1], station.geometry.coordinates[0]) < 3000 || toggleAllVLille">
                     <l-popup>
                         <h6 class="color">Station {{station.fields.nom}}</h6>
                         <p class="color">{{station.fields.adresse}} - {{station.fields.commune}}</p>
                         <p class="color">Vélo disponible : {{station.fields.nbvelosdispo}}/{{station.fields.nbplacesdispo+station.fields.nbvelosdispo}}</p>
                         <p class="alert-info text-center color" v-if="station.fields.etatconnexion === 'CONNECTED' && station.fields.etat != 'EN MAINTENANCE'">{{station.fields.etat}}</p>
-                        <p class="alert-warning text-center color" v-else-if="station.fields.etat === 'EN MAINTENANCE'">{{station.fields.etat}}</p>
-                        <p class="alert-danger text-center color" v-else>{{station.fields.etat}}</p>
+                        <p class="alert-warning text-center color" v-else-if="station.fields.etat === 'EN MAINTENANCE'">{{station.fields.etat}}</p>                        <p class="alert-danger text-center color" v-else>{{station.fields.etat}}</p>
                     </l-popup>
                 </l-marker>
             </div>
@@ -29,6 +28,8 @@
         <button class="btn btn-success flexButton" @click="updateToggleBusTram" v-if="!toggleBusTram">Bus</button> <button class="btn btn-success flexButton" @click="updateToggleVlille" v-if="!toggleVLille">Vlille</button>
         <button class="btn btn-primary btn-sm" @click="toggleAllBusTram = !toggleAllBusTram" v-if="!toggleAllBusTram && toggleBusTram">Tous les arrêts</button>
         <button class="btn btn-secondary btn-sm" @click="toggleAllBusTram = !toggleAllBusTram" v-if="toggleAllBusTram && toggleBusTram">Moins d'arrêts</button>
+        <button class="btn btn-primary btn-sm" @click="toggleAllVLille = !toggleAllVLille" v-if="!toggleAllVLille && toggleVLille">Toutes les stations</button>
+        <button class="btn btn-secondary btn-sm" @click="toggleAllVLille = !toggleAllVLille" v-if="toggleAllVLille && toggleVLille">Moins de stations</button>
     </div>
 </template>
 
@@ -66,6 +67,7 @@
                 toggleVLille: true,
                 toggleBusTram: false,
                 toggleAllBusTram: false,
+                toggleAllVLille: false,
                 ourLocation : {
                     lat:'',
                     lon:''

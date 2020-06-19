@@ -1,6 +1,5 @@
 <template>
     <div class="agenda">
-        <!-- <h1 class="text-center">ToDo Manager</h1> -->
         <button class="btn btn-success m-2" @click="addData" v-if="!toggleAddEvent && !toggleSeeEvent">Ajouter un event</button>
         <div class="event" v-if="toggleAddEvent">
             <button class="btn btn-warning mb-3" @click="goBack">Retour</button>
