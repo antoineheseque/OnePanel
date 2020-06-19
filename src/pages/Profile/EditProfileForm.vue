@@ -106,6 +106,7 @@
             uploadImg : function () {
                 const fd = new FormData()
                 fd.append('avatar', this.selectedImgData, this.selectedImgData.name)
+                fd.append("token", User.getToken())
                 axios.post('/api/user/updateImg', fd)
                     .then(res => {
                         console.log(res)

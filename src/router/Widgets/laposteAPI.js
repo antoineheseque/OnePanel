@@ -13,8 +13,15 @@ const axios = require('axios');
 // CLIENT -> API
 ///////////////////////////////////////////////////
 
-router.get("/poste", (req, res) => {
-    axios.get("https://api.laposte.fr/suivi/v2/idships/EP111111110FR?lang=fr_FR",{
+router.post("/getData", (req, res) => {
+    let data = req.body
+    console.log(data)
+    let url = "https://api.laposte.fr/suivi/v2/idships/"
+
+    for(let d in data){
+        console.log(d)
+    }
+    axios.get("",{
         headers:{
             'Accept':'application/json',
             'X-Okapi-Key': '8874weIFq8wgWbIIf7OWuS4JKFuimAgGbrfr0dj73ilynG4MphzhBGabV2mL+v6s'
@@ -22,7 +29,7 @@ router.get("/poste", (req, res) => {
     }).then(function(result){
         res.json(result.response.data)
     }).catch(function(result){
-        res.json(result.response.data)
+        res.json(result)
     })
 });
 

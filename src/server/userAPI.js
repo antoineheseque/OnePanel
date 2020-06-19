@@ -7,7 +7,18 @@ const format = require('fecha');
 const jwt = require("jsonwebtoken")
 const multer = require("multer")
 
-var upload = multer({dest: 'userImg/'})
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "/userImg/");
+    },
+    filename: (req, file, cb) => {
+        let extension = file.filename.match(/(\\.[^.]+)$/);
+        console.log("extention file: " + extension)
+        console.log(req.body.name)
+        cb(null, req.userID + extension)
+    }
+})
+var upload = multer({storage:storage}).single('avatar')
 // Accès à la bdd avec sql.base. ...
 // J'ai fait une fonction dans bdd.js pour simplifier tout il faut la tester aussi jsp si ca marche
 // Pour l'utiliser:
@@ -372,10 +383,27 @@ router.post("/removeWidget", (req, res) => {
     });
 });
 
-router.post("/updateImg", upload.single('avatar'), (req, res) => {
-    if(req.file){
-        console.log(req.file)
+router.post("/updateImg", (req, res) => {
+    const file = req.file
+    if (!file) {
+        console.log("PAS DE FICHIER")
+        res.sendStatus(400)
     }
+    console.log(file)
+    res.send(file)
+    /*jwt.verify(req.body.token, process.env.SECRET_JWT, function(err, decoded) {
+
+        if(decoded === undefined)
+            console.log("error")
+        else {
+            // Token valide, on accepte l'image
+            let nameID = decoded.id
+            console.log("NOM DE LA PERSONNE " + nameID)
+            upload(nameID, function(err){
+                console.log("test")
+            })
+        }
+    });*/
 });
 
 module.exports = router

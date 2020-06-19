@@ -31,6 +31,7 @@
                     <transport v-if="widget.id==='transport'"></transport>
                     <meteo v-if="widget.id==='weather'" v-on:setInformations="setInformations"></meteo>
                     <master v-if="widget.id==='master'"></master>
+                    <la-poste v-if="widget.id==='la-poste'"></la-poste>
                     <horloge v-if="widget.id==='horloge'"></horloge>
                 </div>
             </div>
@@ -52,6 +53,7 @@
     import Horloge from "@/components/Widgets/Horloge";
     import Bitcoin from "@/components/Widgets/Bitcoin";
     import Master from "@/components/Widgets/Master";
+    import LaPoste from "@/components/Widgets/LaPoste";
 
     export default {
         name: "widget",
@@ -69,7 +71,8 @@
             Agenda,
             Horloge,
             Bitcoin,
-            Master
+            Master,
+            LaPoste
         },
         props: {
             widget:"",
