@@ -1,6 +1,6 @@
 <template>
     <div class="domaine container">
-        <button @click="getDomaine" class="btn btn-success">Votre domaine de professionnalisation</button>
+        <button @click="getDomaine" type="button" class="btn btn-success btn-block" style="margin: auto">Votre domaine</button>
         <br>
         <p style="font-size: 20px" class="text-center">{{domaine}}</p>
     </div>

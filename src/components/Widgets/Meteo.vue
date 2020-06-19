@@ -14,6 +14,7 @@
         <div class="form-groupe m-1" v-if="toggleResultPositionToday">
             <label for="position">Entrez le nom d'une ville</label>
             <input type="text" id="position" class="form-control" v-model="requete" @keypress.enter="getCoords">
+            <button type="button" class="btn btn-success btn-sm" @click="getCoords" v-if="requete">Valider</button>
         </div>
 
         <div class="m-2 horizontalScrollItems" v-if="toggleResultLocationHourly">
