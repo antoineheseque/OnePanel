@@ -21,10 +21,6 @@ router.post("/getAPIPosCalendar", (req, res) => {
     let token = req.body.token
     let eventad = req.body.eventAdress
 
-    console.log("\ngetAPIPosCalendar:")
-    console.log("\neventad=")
-    console.log(eventad)
-
     jwt.verify(token, process.env.SECRET_JWT, function (err, decoded) {
         if (decoded === undefined) // UTILISATEUR INVALIDE
         {
@@ -34,8 +30,6 @@ router.post("/getAPIPosCalendar", (req, res) => {
        //Récup position de l'évent + appel météo et itineraire si OK
             axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${eventad}&key=8683c1d8657d40069fd08852599feaef`).then(function (r) {
                 const pos = r.data;
-                console.log("\npos=")
-                console.log(pos)
 
                 res.json({"pos": pos})
             }).catch(function (result) {

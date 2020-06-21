@@ -59,7 +59,7 @@
                         if(!Widgets.widgets.some(item => item.visible === true))
                             this.widgetsVisible = false
                     }else{
-                        this.notify('error', data.reason)
+                        this.notify('danger', data.reason)
                     }
                 }.bind(this))
             },

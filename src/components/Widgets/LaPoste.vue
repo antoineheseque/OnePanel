@@ -1,14 +1,19 @@
 <template>
     <div>
         <div class="form-group m-1" @keypress.enter="addPackage">
-        <label for="nomColis">Nom du Colis: </label>
-        <input type="text" id="nomColis" class="form-control" v-model="tempPackageID">
+            <label for="nomColis">Nom du Colis: </label>
+            <input type="text" id="nomColis" class="form-control" v-model="tempPackageID">
 
-        <button class="btn btn-primary" @click="addPackage" >Suivre le colis</button>
-        <div v-for="(packa, i) in packages" :key="i" class="m-1">
-            <p>{{packa.id}} -> {{packa.status}}</p>
-            <button class="btn btn-primary" @click="removePackage(packa.id)" >Supprimer</button>
-        </div>
+            <button class="btn btn-primary" @click="addPackage" >Suivre le colis</button>
+            <div v-if="isLoading">
+                <h4>Chargement ...</h4>
+            </div>
+            <div v-else v-for="(packa, i) in packages" :key="i" class="m-1">
+                <div class="row">
+                    <p class="col-md-8"><a :href="packa.url">{{packa.name}}</a> -> {{packa.status}}</p>
+                    <div class="col-md-4"><button class="btn btn-sm" @click="removePackage(packa.id)" >Supprimer</button></div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -21,16 +26,17 @@
         data(){
             return {
                 packages: [
-                    {id: "ADQNBCUBC4", status: "Inconnu"},
-                    {id: "DEF456", status: "Inconnu"}
+                    {id: "FV343883482JB", status: "Inconnu", url:"#",name:""},
+                    {id: "4P36275770836", status: "Inconnu", url:"#",name:""}
                 ],
-                tempPackageID:""
+                tempPackageID:"",
+                isLoading:true
             }
         },
         methods:{
             addPackage: function(){
                 if(this.tempPackageID.length > 0){
-                    this.packages.push({id:this.tempPackageID,status: "Inconnu"})
+                    this.packages.push({id:this.tempPackageID,status: "Inconnu",url:"",name:""})
                     this.tempPackageID = ""
 
                     // On actualise la liste
@@ -54,11 +60,14 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body:{"packages":JSON.stringify(this.packages)}
+                    body:JSON.stringify({packages:this.packages})
                 }).then(function (res) {
                     return res.json()
                 }).then(function (data) {
-                    console.log(data)
+                    console.log("finis chargement la poste")
+                    console.log(data.packages)
+                    this.packages = JSON.parse(data).packages
+                    this.isLoading = false
                 }.bind(this))
             }
         },

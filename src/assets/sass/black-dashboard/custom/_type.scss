@@ -30,11 +30,11 @@ h1,h2,h3,h4,h5,h6{
 }
 
 a{
-    color: $primary-states;
+    color: $opacity-8;
     font-weight: $font-weight-light;
     &:hover,
     &:focus{
-        color: $primary;
+        color: $opacity-5;
     }
 }
 h1, .h1 {
