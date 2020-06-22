@@ -1,7 +1,7 @@
 <template>
     <div class="pokemon">
         <div class="mb-5">
-            <button class="btn btn-danger" @click="getPokedex">Pokedex</button>
+            <button class="btn btn-danger" @click="updatePokedex">Pokedex</button>
             <button class="btn btn-dark" @click="seeMyPokemons">Boite de pokemon</button>
         </div>
         <div v-if="togglePokedex">
@@ -68,67 +68,28 @@
                 }).then(function (res) {
                     return res.json()
                 }).then(function (data) {
-                    console.log("\ndata=")
-                    console.log(data)
-
                     this.lastUpdate=data.pokemoncatch[0].date_pokemon
-                    //console.log("\nthis.lastUpdate=")
-                    //console.log(this.lastUpdate)
-
-                    //console.log("\nthis.lastUpdate.slice(0,10)=")
-                    //console.log(this.lastUpdate.slice(0,10))
-
-                    //console.log("\n(new Date()).toISOString().slice(0,10)=")
-                    //console.log((new Date()).toISOString().slice(0,10))
-
-                    //console.log("\nthis.toggleNewPokemon = true")
-                    //console.log(this.toggleNewPokemon)
-
+                    var pokemon_day = {}
                     if(this.lastUpdate.slice(0,10) === (new Date()).toISOString().slice(0,10)){
                         this.toggleNewPokemon = false
-                        console.log("\nthis.toggleNewPokemon = false")
-                        console.log(this.toggleNewPokemon)
-
-                        console.log("\ndata.length=")
-                        console.log((data.pokemoncatch[0].pokemon_catch[0]).length)
-
-                        console.log("\ndata.pokemoncatch[0].pokemon_catch=")
-                        console.log(JSON.parse(data.pokemoncatch[0].pokemon_catch))
 
                         var poke_parse =JSON.parse(data.pokemoncatch[0].pokemon_catch)
                         var length = (poke_parse).length-1;
 
-
-                        var pokemon_day={
+                        pokemon_day={
                             id:0,
                             name :poke_parse[length].name,
                             img :poke_parse[length].img
                         }
-
                         this.pokemonOfTheDay = pokemon_day
-                        console.log("\npokemon_day=")
-                        console.log(pokemon_day)
-
-                        console.log("\nthis.pokemonOfTheDay.name")
-                        console.log(this.pokemonOfTheDay.name)
-
-                        console.log("\nthis.pokemonOfTheDay.img")
-                        console.log(this.pokemonOfTheDay.img)
                     }
-
-                    console.log("\nthis.toggleNewPokemon_apres=")
-                    console.log(this.toggleNewPokemon)
 
                     if(data.pokemoncatch !== undefined){
                         this.pokemonCatch = JSON.parse(data.pokemoncatch[0].pokemon_catch)
-                        console.log("\ndata.pokemoncatch[0].pokemon_catch=")
-                        console.log(this.pokemonCatch)
-
-                        /*if(this.lastUpdate.slice(0,10) === (new Date()).toISOString().slice(0,10)){
-                             this.toggleNewPokemon = false
-                        }*/
-
+                        this.getPokemon()
+                        this.pokemonOfTheDay = pokemon_day
                     }
+                    this.ready = true
                 }.bind(this))
             },
             update_bdd_pokemon: function(id,PokemonCatch,lastUpdate){ //PERMET DE SOIT UPDATE SA BDD, SOIT INSERER SON TIMEDATA DANS LA BDD
@@ -142,7 +103,6 @@
                     return res.json()
                 }).then(function (data){
                     const message = data.message
-                    console.log(message)
                 }.bind(this))
             },
             randomPokeid: function(){ //Récupère un id aléatoire en 0 et 151
@@ -150,12 +110,17 @@
             },
             getPokedex: function(){ //Génère le pokedex
                 if (!this.pokemonCatch.length){
-                    for(var i = 0; i < 151; i++)
-                    {
+                    for(var i = 0; i < 151; i++) {
                         var pokedex={id:i+1, name:'inconnu', img:'https://www.pokepedia.fr/images/f/f7/Sprite_%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F_RS.png'}
                         this.pokedexCatch.push(pokedex)
                     }
                 }
+                for(var index in this.pokemonCatch){
+                    this.pokedexCatch[this.pokemonCatch[index].id-1] = {id:this.pokemonCatch[index].id, name:this.pokemonCatch[index].name, img:this.pokemonCatch[index].img}
+                }
+            },
+
+            updatePokedex : function(){
                 this.togglePokedex=true
                 this.togglePC=false
                 this.toggleMenu=false
@@ -166,21 +131,7 @@
                 this.toggleMenu=true
             },
             getPokemon: function(){ //Récupère un pokèmon
-                if (!this.pokemonCatch.length){
-                    for(var i = 0; i < 151; i++)
-                    {
-                        var pokedex={id:i+1, name:'inconnu', img:'https://www.pokepedia.fr/images/f/f7/Sprite_%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F_RS.png'}
-                        this.pokedexCatch.push(pokedex)
-                    }
-                }
                 var id = this.randomPokeid();
-                /*if(this.toggleNewPokemon === false){
-                    console.log("\nthis.pokemonCatch.length:" )
-                    console.log(this.pokemonCatch.length)
-                    id=this.pokemonCatch[this.pokemonCatch.length].id
-                    console.log("\nid_toggleNewPokemon === false:" )
-                    console.log(id)
-                }*/
                 var pok =this.namePokemon.results[id].name
                 this.pokemonOfTheDay={id:id+1, name:pok,img:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+(id+1)+'.png'}
                 for(var j=this.pokemonCatch.length-1 ; j>0;j--){
@@ -190,42 +141,28 @@
                         this.pokemonCatch[j-1]={id: echange.id, name: echange.name, img:echange.img};
                     }
                 }
-                this.pokedexCatch[id]=this.pokemonOfTheDay;
-
+                this.getPokedex()
             },
             seeMyPokemons:function(){ //Affiche tous les pokémons capturés
-                if (!this.pokemonCatch.length){
-                    var pokeCatch= {id:1, name:'inconnu', img:'https://www.pokepedia.fr/images/f/f7/Sprite_%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F_RS.png'}
-                    this.pokemonCatch.push(pokeCatch)
-                }
                 this.togglePokedex=false
                 this.togglePC=true
                 this.toggleMenu=false
             },
             newPokemon : function () { //comparer la date du dernier ajout de pokemon
-                //this.lastUpdate = new Date()
-                console.log("\nlastUpdate_newPokemon=")
-                console.log(this.lastUpdate)
                 if(this.lastUpdate.slice(0,10) !== (new Date()).toISOString().slice(0,10)){
                     this.lastUpdate= (new Date()).toISOString()
                     this.pokemonCatch.push(this.pokemonOfTheDay)
                     this.toggleNewPokemon = false
-
-                    console.log("\nlastUpdate_newPokemon_apres_condition=")
-                    console.log(this.lastUpdate)
                     this.update_bdd_pokemon(User.profile.id,this.pokemonCatch, this.lastUpdate)
+                    this.getPokedex()
                 }else{
                     this.toggleNewPokemon = false
-                    //this.lastUpdate= (new Date()).toISOString().slice(0,10)
-                    //this.update_bdd_pokemon(User.profile.id,this.pokemonCatch, this.lastUpdate)
                 }
-                //update_bdd_pokemonCatch
-
             }
         },
         mounted(){
-            this.call_pokemonCatch(User.profile.id)
             this.getPokemon()
+            this.call_pokemonCatch(User.profile.id)
         },
         updated() {
             this.$redrawVueMasonry()

@@ -64,8 +64,6 @@
                 }).then(function (res) {
                     return res.json()
                 }).then(function (data) {
-                    console.log("finis chargement la poste")
-                    console.log(data.packages)
                     this.packages = JSON.parse(data).packages
                     this.isLoading = false
                 }.bind(this))

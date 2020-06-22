@@ -167,13 +167,7 @@
                         return res.json()
                     }).then(function (data) {
                         this.event.meteo = data.mete.daily;
-                        console.log("Météo : ")
-                        console.log(data.mete.daily)
-                        console.log(this.meteoIndex)
                     }.bind(this))
-                }
-                else{
-                    console.log("prrout")
                 }
             },
 
@@ -238,7 +232,6 @@
                     }
                     date.setDate(parseInt(date.getDate()+1,10))
                     dateB.setDate(parseInt(dateB.getDate()+1,10))
-                    //console.log(this.meteoIndex)
                 }
             },
             addData: function(){ //Affiche le menu d'éditage de l'evenement

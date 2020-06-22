@@ -1,9 +1,5 @@
 <template>
     <div>
-        <!--
-        <base-button type="primary" v-on:click="call" fill>Test Appel LaPoste API</base-button>
-        <base-button type="primary" v-on:click="test" fill>Test console log widgets</base-button>
-        -->
         <h3 v-if="!widgetsVisible">C'est bien vide ici... Allez ajouter un widget!</h3>
         <div v-else v-masonry transition-duration="0.2s" item-selector=".mansoryItem" column-width="10">
             <widget v-masonry-tile v-for="(widget, idx) in widgets.widgets" :key="idx" :widget="widget" v-if="widget.visible" class="mansoryItem">
