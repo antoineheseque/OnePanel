@@ -6,17 +6,11 @@ const NotFound = () => import(/* webpackChunkName: "dashboard" */"@/pages/NotFou
 
 // Admin pages
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */"@/pages/Dashboard.vue");
-const Dashboard2 = () => import(/* webpackChunkName: "dashboard" */"@/pages/Dashboard-old.vue");
 const Profile = () => import(/* webpackChunkName: "common" */ "@/pages/Profile.vue");
 const AddWidget = () => import(/* webpackChunkName: "common" */ "@/pages/AddWidget.vue");
 const LogIn = () => import(/* webpackChunkName: "common" */"@/pages/Login.vue");
 const LogOut = () => import(/* webpackChunkName: "common" */"@/pages/Logout.vue");
 const Register = () => import(/* webpackChunkName: "common" */"@/pages/Register.vue");
-const Icons = () => import(/* webpackChunkName: "common" */ "@/pages/Icons.vue");
-const Maps = () => import(/* webpackChunkName: "common" */ "@/pages/Maps.vue");
-const Typography = () => import(/* webpackChunkName: "common" */ "@/pages/Typography.vue");
-const TableList = () => import(/* webpackChunkName: "common" */ "@/pages/TableList.vue");
-const WidgetTest = () => import(/* webpackChunkName: "common" */ "@/pages/WidgetTest.vue");
 
 const routes = [
     {
@@ -35,11 +29,6 @@ const routes = [
                 meta: {
                     requiresAuth: true
                 }
-            },
-            {
-                path: "dashboard2",
-                name: "dashboard2",
-                component: Dashboard2,
             },
             {
                 path: "profile",
@@ -80,31 +69,6 @@ const routes = [
                 meta: {
                     requiresAuth: true
                 }
-            },
-            {
-                path: "widgettest",
-                name: "widgettest",
-                component: WidgetTest
-            },
-            {
-                path: "icons",
-                name: "icons",
-                component: Icons
-            },
-            {
-                path: "maps",
-                name: "maps",
-                component: Maps
-            },
-            {
-                path: "typography",
-                name: "typography",
-                component: Typography
-            },
-            {
-                path: "table-list",
-                name: "table-list",
-                component: TableList
             },
             {
                 path: "*",

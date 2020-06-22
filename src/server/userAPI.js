@@ -9,15 +9,42 @@ const multer = require("multer")
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "/userImg/");
+        console.log(__dirname + "/../../public/img/profiles/")
+        cb(null, __dirname + "/../../public/img/profiles/");
     },
     filename: (req, file, cb) => {
-        let extension = file.filename.match(/(\\.[^.]+)$/);
-        cb(null, req.userID + extension)
+        let extension = file.originalname.match(/\.(gif|jpe?g|tiff|png|webp|bmp)$/i);
+        cb(null, req.userID + extension[0])
     }
 })
-var upload = multer({storage:storage}).single('avatar')
+var upload = multer({storage:storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
+        }
+    }
+}).single('image');
 
+// Accès à la bdd avec sql.base. ...
+// J'ai fait une fonction dans bdd.js pour simplifier tout il faut la tester aussi jsp si ca marche
+// Pour l'utiliser:
+
+/* ENVOYER UNE REQUETE
+sql.request("FROM * IN AEZIOEZI").then((result) => {
+    // Résultat de la requete ici;
+})
+ */
+
+/* CONVERTIR LE MDP LORS DE L'INSCRIPTION
+bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(data.password, salt, function(err, hash) {
+
+    });
+});
+ */
 
 router.post("/updateProfile", (req, res) => {
     let data = req.body
@@ -29,6 +56,9 @@ router.post("/updateProfile", (req, res) => {
         return;
     }
 
+    /*sql.request(`SELECT * FROM \`users\` WHERE id='${data.id}' LIMIT 1`).then((result) => {*/
+
+    /*sql.request(`UPDATE \`users\` SET username='${data.username}', email='${data.email}', firstName='${data.firstName}', lastName='${data.lastName}', birthdayDate='${date}' WHERE id='${data.id}'`).then((result) => {*/
 
 
 
@@ -99,6 +129,7 @@ router.post("/register", (req, res) => {
     // ON INSCRIT L'UTILISATEUR (ON SAURA SI L'UTILISATEUR EXISTE DEJA AVEC LA REPONSE DE LA REQUETE
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(data.password, salt, function(err, hash) {
+            /*sql.request(`INSERT INTO \`users\` (username, password) VALUES ('${data.username}', '${hash}')`).then((result) => { */// ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
 
             var request = "INSERT INTO \`users\` (username,password) VALUES (?,?)"
             var completeRequest = mysql.format(request, [[data.username],[hash]]);
@@ -129,6 +160,9 @@ router.post("/login", (req, res) => {
         return;
     }
 
+    /*sql.request(`SELECT * FROM \`users\` WHERE username='${data.username}' LIMIT 1`).then((result) => */
+                    /*sql.request(`INSERT INTO \`logins\` (userID) VALUES ('${data.id}')`).then(() => {*/ // ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
+
 
     var request = "SELECT * FROM \`users\` WHERE username=? LIMIT 1"
     var completeRequest = mysql.format(request, [data.username]);
@@ -150,6 +184,7 @@ router.post("/login", (req, res) => {
 
                     }).catch((err) => {
                         console.log("Un problème est survenu dans la BDD")
+                        //console.log(err)
                     });
 
                 } else {
@@ -164,6 +199,7 @@ router.post("/login", (req, res) => {
         }
     }).catch((err) => {
         console.log("Un problème est survenu dans la BDD")
+        //console.log(err)
     });
 });
 
@@ -177,6 +213,7 @@ router.post("/verifyToken", (req, res) => {
             if(data.needProfile === "false")
                 res.json({'isVerified':"true"})
             else{
+                /*sql.request(`SELECT * FROM \`users\` WHERE id='${decoded.id}' LIMIT 1`).then((result) => */
 
                 var request = "SELECT * FROM \`users\` WHERE id=? LIMIT 1"
                 var completeRequest = mysql.format(request, [decoded.id]);
@@ -214,10 +251,11 @@ router.post("/addWidget", (req, res) => {
                 var request = "SELECT * FROM \`widgets\` WHERE id=? LIMIT 1"
                 var completeRequest = mysql.format(request, [widgetID]);
                 sql.request(completeRequest).then((SQLwidgetData) => {
-
                     // Récupération des données sur le widget voulu
                     widgetData = SQLwidgetData[0]
 
+                    //console.log("Widget to add: " + widgetID)
+                    //console.log(widgetList.widgets)
                     // Ajout du widget dans la liste des widgets de l'utilisateur
                     let data = {
                         "id":widgetID,
@@ -227,21 +265,28 @@ router.post("/addWidget", (req, res) => {
                     }
                     widgetList.widgets.push(data)
 
+                    //console.log(widgetList.widgets)
+
                     var request = "UPDATE \`users\` SET widgets=? WHERE id=?"
                     var completeRequest = mysql.format(request, [JSON.stringify(widgetList), decoded.id]);
                     sql.request(completeRequest).then((SQLupdatedData) => {
                         // Données mises a jours sur le site, on renvoi les infos du widget au client
                         res.json({"success":"true"})
                     }).catch((res) => {
+                        //console.log(res)
                         res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
                     })
                 }).catch((res) =>{
+                    //.log(res)
                     res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
                 })
 
                 // On renvoi un JSON pour le widget pret à afficher
 
+                // Return result
+                //res.json(data)
             }).catch((err) => {
+                //console.log(err)
                 res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
             });
         }
@@ -255,6 +300,7 @@ router.post("/loadWidgets", (req, res) => {
     jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
         if (decoded === undefined) // Utilisateur valide
         {
+            //console.log("Token non valide")
             res.json({"success":"false","reason":"Token non valide, veuillez vous reconnecter"})
         } else {
             // Token VALIDE
@@ -299,11 +345,14 @@ router.post("/loadWidgets", (req, res) => {
 
                         widgets.push(data)
                     }
+                    //console.log(widgets)
                     res.json({"success":"true","widgets":JSON.stringify(widgets)})
                 }).catch((err) => {
+                    //console.log(err)
                     res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
                 })
             }).catch((err) => {
+                //console.log(err)
                 res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
             });
         }
@@ -324,11 +373,12 @@ router.post("/removeWidget", (req, res) => {
             var completeRequest = mysql.format(request, [decoded.id]);
             sql.request(completeRequest).then((result) => {
                 let userWidgets = JSON.parse(result[0].widgets)
-
+                //console.log("Widget to remove: " + widgetID)
+                //console.log(userWidgets)
                 var index = userWidgets.widgets.findIndex(element => element.id === widgetID)
-
+                //console.log(index)
                 userWidgets.widgets.splice(index,1)
-
+                //console.log(userWidgets)
                 var request = "UPDATE `users` SET widgets=? WHERE id=?"
                 var completeRequest = mysql.format(request, [JSON.stringify(userWidgets), decoded.id]);
                 sql.request(completeRequest).then((result) => {
@@ -342,13 +392,28 @@ router.post("/removeWidget", (req, res) => {
     });
 });
 
-router.post("/updateImg", (req, res) => {
-    const file = req.file
-    if (!file) {
-        console.log("PAS DE FICHIER")
-        res.sendStatus(400)
-    }
-    res.send(file)
+router.post("/updateImg", upload,(req, res) => {
+    console.log("FINITO")
+    console.log(req.body)
+    //let token = req.body
+    /*
+    jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
+        if(decoded === undefined)
+            console.log("error")
+        else {
+            // Token valide, on accepte l'image
+            let nameID = decoded.id
+            console.log("NOM DE LA PERSONNE " + nameID)
+            upload(req2, res2, function(err){
+                if(err){
+                    console.log("Ya eu un prblm:: " + err)
+                }
+                else{
+                    console.log("SUCCESSSSSSSSSSSS")
+                }
+            })
+        }
+    });*/
 });
 
 module.exports = router
