@@ -1,11 +1,11 @@
 <template>
     <div class="pokemon">
         <div class="mb-5">
-            <button class="btn btn-danger" @click="updatePokedex">Pokedex</button>
-            <button class="btn btn-dark" @click="seeMyPokemons">Boite de pokemon</button>
+            <button class="btn btn-danger btn-sm" @click="updatePokedex">Pokedex</button>
+            <button class="btn btn-dark btn-sm" @click="seeMyPokemons">Boite de pokemon</button>
         </div>
         <div v-if="togglePokedex">
-            <button class="btn btn-success" @click="goBack">Retour</button>
+            <button class="btn btn-success btn-sm" @click="goBack">Retour</button>
             <div v-for="(pokedex, i) in pokedexCatch" :key="i" class="onePokemon">
                 <p>{{pokedex.id}}</p>
                 <p>{{pokedex.name}}</p>
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div v-if="togglePC">
-            <button class="btn btn-success" @click="goBack">Retour</button>
+            <button class="btn btn-success btn-sm" @click="goBack">Retour</button>
             <div class="test m-1">
                 <div v-for="(pokeCatch, i) in pokemonCatch" :key="i" class="onePokemon">
                     <table class="table">
@@ -33,7 +33,7 @@
             <p>{{pokemonOfTheDay.name}}</p>
             <img :src="pokemonOfTheDay.img" alt="pokeIcon" >
             <button class="btn btn-success" v-if="toggleNewPokemon" @click="newPokemon">Enregistrer</button>
-            <button class="btn btn-success" v-if="!toggleNewPokemon" disabled>Enregistrer</button>
+            <button class="btn btn-success" v-if="!toggleNewPokemon" disabled>Déjà enregistré</button>
         </div>
     </div>
 </template>
@@ -172,7 +172,7 @@
 
 <style scoped>
     .icon{
-        width: 40px;
+        width: 50px;
         height: auto;
     }
 

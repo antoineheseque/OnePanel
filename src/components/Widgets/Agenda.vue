@@ -4,7 +4,6 @@
         <div class="event" v-if="toggleAddEvent">
             <button class="btn btn-warning mb-3" @click="goBack">Retour</button>
             <button class="btn btn-danger ml-4" @click="deleteEvent(index)" v-if="modifying">Supprimer</button>
-            {{modifying}} {{index}}
             <div class="row">
                 <div class="col-sm-1">
                     <label>Du</label>

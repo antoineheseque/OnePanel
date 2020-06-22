@@ -18,6 +18,7 @@
 <script>
     import LineChart from '../Charts/LineChart.js'
     import User from '@/user';
+    import config from "@/config";
 
     export default {
         name: "Biorythme",
@@ -34,7 +35,7 @@
                 intellectualDataArray:[],
                 purpleLineChart: {
                     gradientStops:[ 1, 0.4, 0 ],
-                    gradientColors:	[ 'rgba(72,72,176,0.2)', 'rgba(72,72,176,0.0)', 'rgba(119,52,169,0)' ],
+                    gradientColors:	config.colors.primaryGradient,
                     extraOptions: {
                         maintainAspectRatio: true,
                         legend: {
@@ -43,8 +44,8 @@
                         responsive: true,
                         tooltips: {
                             backgroundColor: '#f5f5f5',
-                            titleFontColor: '#333',
-                            bodyFontColor: '#666',
+                            titleFontColor: '#f5f5f5',
+                            bodyFontColor: '#f5f5f5',
                             bodySpacing: 4,
                             xPadding: 12,
                             mode: "nearest",
@@ -56,7 +57,7 @@
                                 barPercentage: 0,
                                 gridLines: {
                                     drawBorder: false,
-                                    color: 'rgba(29,140,248,0.0)',
+                                    color: '#f5f5f5',
                                     zeroLineColor: "transparent",
                                 },
                                 ticks: {
@@ -88,17 +89,17 @@
                         datasets: [{
                             label: "Forme physique",
                             fill: true,
-                            borderColor: '#d048b6',
+                            borderColor: config.colors.primary,
                             borderWidth: 2,
                             borderDash: [],
                             borderDashOffset: 0.0,
-                            pointBackgroundColor: '#d048b6',
+                            pointBackgroundColor: config.colors.primary,
                             pointBorderColor: 'rgba(255,255,255,0)',
-                            pointHoverBackgroundColor: '#d048b6',
+                            pointHoverBackgroundColor: config.colors.primary,
                             pointBorderWidth: 20,
                             pointHoverRadius: 4,
                             pointHoverBorderWidth: 15,
-                            pointRadius: 4,
+                            pointRadius: 3,
                             data: [],
                         }]
                     }
