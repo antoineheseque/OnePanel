@@ -3,6 +3,8 @@
         <button class="btn btn-success m-2" @click="addData" v-if="!toggleAddEvent && !toggleSeeEvent">Ajouter un event</button>
         <div class="event" v-if="toggleAddEvent">
             <button class="btn btn-warning mb-3" @click="goBack">Retour</button>
+            <button class="btn btn-danger ml-4" @click="deleteEvent(index)" v-if="modifying">Supprimer</button>
+            {{modifying}} {{index}}
             <div class="row">
                 <div class="col-sm-1">
                     <label>Du</label>
@@ -27,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input type="text" class="form-control" id="title" placeholder="Titre" v-model="event.title" value="Mon événement">
+                <input type="text" class="form-control" id="title" v-model="event.title">
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
@@ -35,7 +37,7 @@
             </div>
             <div class="form-group">
                 <label for="adress">Adresse</label>
-                <input type="text" class="form-control" id="adress" placeholder="Adresse" v-model="event.address">
+                <input type="text" class="form-control" id="adress" v-model="event.address">
             </div>
             <p>{{error}}</p>
             <button type="submit" class="btn btn-primary mb-2" @click="getData">Envoyer</button>
@@ -52,7 +54,7 @@
             <button class="btn btn-danger ml-4" @click="toggleMoreInfo = !toggleMoreInfo" v-if="toggleMoreInfo && event.itinerary">Moins d'info</button>
             <div>
                 <h5>Titre : {{event.title}}</h5>
-                <p><b>Du :</b> {{event.fromDate.toLocaleString('fr-FR', { timeZone: 'UTC' })}} → {{event.toDate.toLocaleString('fr-FR', { timeZone: 'UTC' })}} à {{event.address}}</p>
+                <p><b>Du :</b> {{event.fromDate.toLocaleString('fr-FR', { timeZone: 'UTC' }).slice(0,14)}} → {{event.toDate.toLocaleString('fr-FR', { timeZone: 'UTC' })}} <template v-if="event.address">à {{event.address}}</template></p>
                 <p><b>Description :</b> {{event.description}}</p>
                 <div v-if="toggleMoreInfo">
                     <div v-if="event.itinerary" class="itinerary">
@@ -128,8 +130,6 @@
         },
         methods:{
             call_api_pos: function(id,eventAdress,eventDateBegin, eventDateEnd){ // BALANCE LA POS
-                console.log("\nthis.event=")
-                console.log(this.event)
                 if(this.event.address !== undefined) {
                     this.getDaysDaily()
                     fetch('/api/widget/agenda/getAPIPosCalendar', {
@@ -141,22 +141,13 @@
                     }).then(function (res) {
                         return res.json()
                     }).then(function (data) {
-                        console.log("\ndata call_api_pos=");
-                        console.log(data);
-                        console.log("\nthis.meteoIndex_avant_data_total_results=")
-                        console.log(this.meteoIndex)
                         if (data.pos.total_results !== 0) {
-                            console.log("API Coords agenda OK")
-                            console.log("\n this.event.address=")
-                            console.log(data.pos.results[0].formatted)
                             this.event.address = data.pos.results[0].formatted
                             this.coords = data.pos.results[0].geometry
 
-                            console.log("\neventDateEnd avant this.getMeteoIndex=")
-                            console.log(eventDateEnd)
-
                             this.getMeteoIndex(eventDateBegin, eventDateEnd)
                             this.call_api_meteo(User.profile.id,this.coords.lat,this.coords.lng)
+
                             this.call_api_Itinerary(User.profile.id,this.coords.lat,this.coords.lng,this.ourLocation.lat,this.ourLocation.lon)
 
                             this.update_bdd_agenda(User.profile.id, this.calendar)
@@ -165,8 +156,6 @@
                 }
             },
             call_api_meteo: function(id,coordslat, coordslng){ // BALANCE LA METEO
-                console.log("\nthis.meteoIndex=")
-                console.log(this.meteoIndex)
                 if(this.meteoIndex.length !== 0) {
                     fetch('/api/widget/agenda/getAPIMeteoCalendar', {
                         method: 'POST',
@@ -177,14 +166,17 @@
                     }).then(function (res) {
                         return res.json()
                     }).then(function (data) {
-                        console.log("\ndata call_api_meteo=");
-                        console.log(data.daily);
-                        this.event.meteo = data.daily;
-
+                        this.event.meteo = data.mete.daily;
+                        console.log("Météo : ")
+                        console.log(data.mete.daily)
+                        console.log(this.meteoIndex)
                     }.bind(this))
                 }
+                else{
+                    console.log("prrout")
+                }
             },
-            //call_api_Itinerary(User.profile.id,this.coords.lat,this.coords.lng,this.ourLocation.lat,this.ourLocation.lon)
+
             call_api_Itinerary: function(id,coordslat, coordslng, ourLocationlat, ourLocationlon){ // BALANCE L'INITENAIRE
                 if(this.locationState){
                     fetch('/api/widget/agenda/getAPIItineraryCalendar', {
@@ -196,12 +188,8 @@
                     }).then(function (res) {
                         return res.json()
                     }).then(function (data) {
-                        console.log("\ndata call_api_Itinerary=");
-                        console.log(data.Iti);
-
                         this.event.itinerary = data.Iti
                         this.departure = new Date(this.event.fromDate.getTime()-this.event.itinerary.total_time*1000)
-
                     }.bind(this))
                 }
             },
@@ -215,8 +203,6 @@
                 }).then(function (res) {
                     return res.json()
                 }).then(function (data){
-                    const message = data.message
-                    console.log(message)
                 }.bind(this))
             },
 
@@ -230,83 +216,29 @@
                 }).then(function (res) {
                     return res.json()
                 }).then(function (data) {
-                    console.log("\ndata.calendar=")
-                    console.log(data.calendar)
-
                     if(data.calendar !== undefined){
                         this.calendar = JSON.parse(data.calendar[0].Calendar)
-                        console.log("\ndata.calendar[0].Calendar=")
-                        console.log(this.calendar)
                     }
 
                 }.bind(this))
             },
-           /* getMeteoAndItenerary : function(eventDateBegin, eventDateEnd) { //Récup position de l'évent + appel météo et itineraire si OK
-                if(this.event.address != undefined){
-                    this.getDaysDaily()
-                    axios
-                        .get(`https://api.opencagedata.com/geocode/v1/json?q=${this.event.address}&key=8683c1d8657d40069fd08852599feaef`)
-                        .then(reponse => {
-                            if(reponse.data.total_results != 0){
-                                console.log("API Coords agenda OK")
-                                this.event.address = reponse.data.results[0].formatted
-                                this.coords = reponse.data.results[0].geometry
-                                this.getMeteoIndex(eventDateBegin, eventDateEnd)
-                                this.getMeteo()
-                                this.getItinerary()
-                            }
-                        })
-                }
-            },*/
-            /*getItinerary : function () { //Récup Temps de trajet + distance
-                if(this.locationState){
-                    axios
-                        .get(`https://maps.open-street.com/api/route/?origin=${this.ourLocation.lat.toFixed(10)},${this.ourLocation.lon.toFixed(10)}&destination=${this.coords.lat},${this.coords.lng}&mode=driving&key=1b83806fc9844c5ab47c094a3b8007e0`)
-                        .then(reponse => {
-                            this.event.itinerary = reponse.data
-                            this.departure = new Date(this.event.fromDate.getTime()-this.event.itinerary.total_time*1000)
-                            console.log("API itineraire agenda OK")
-                        })
-                }
-            },*/
-            /*getMeteo : function () { //Récup Météo
-                if(this.meteoIndex.length != 0) {
-                    axios //Appel à l'API pour avoir toutes les infos sur les 7 prochains jours
-                        .get(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.coords.lat}&lon=${this.coords.lng}&exclude=current,minutely,hourly&appid=e77b050b2d9e74f5008e2cc553cf92b9&units=metric&lang=fr`)
-                        .then(reponse => {
-                            this.event.meteo = reponse.data.daily;
-                            console.log('API météo agenda OK');
-                        })
-                }
-            },*/
 
             getMeteoIndex: function(eventDateBegin, eventDateEnd) { //Regarde sur quel date on à la météo et qui est compatible avec l'évenement
                 var date = new Date()
-                console.log("\ndate getMeteoIndex =")
-                console.log(date)
                 date.setHours(23)
-                console.log("\ndate getMeteoIndex setHours=")
-                console.log(date)
                 date.setMinutes(59)
-                console.log("\ndate getMeteoIndex setMinutes=")
-                console.log(date)
-                console.log("\ndate getMeteoIndex date.getTime()=")
-                console.log(date.getTime())
-                console.log("\neventDateBegin=")
-                console.log(eventDateBegin)
-                console.log("\neventDateEnd=")
-                console.log(eventDateEnd)
-                console.log("\n=this.event.fromDate = eventDateBegin ")
-                console.log(this.event.fromDate)
-                console.log("\nthis.event.toDate= eventDateEnd")
-                console.log(this.event.toDate)
+                var dateB = new Date()
+                dateB.setHours(0)
+                dateB.setMinutes(0)
 
 
                 for(var i = 0; i < 7; i++){
-                    if(date.getTime()-eventDateBegin.getTime() >= 0 && date.getTime()-eventDateEnd.getTime() <= 0){
+                    if(date.getTime()-eventDateBegin.getTime() >= 0 && dateB.getTime()-eventDateEnd.getTime() <= 0){
                         this.meteoIndex.push(i)
                     }
                     date.setDate(parseInt(date.getDate()+1,10))
+                    dateB.setDate(parseInt(dateB.getDate()+1,10))
+                    //console.log(this.meteoIndex)
                 }
             },
             addData: function(){ //Affiche le menu d'éditage de l'evenement
@@ -324,25 +256,7 @@
                     itinerary:''
                 }
             },
-            /*addData2: function(eventDateBegin, eventDateEnd){ //Affiche le menu d'éditage de l'evenement
-                //this.getMeteoIndex(eventDateBegin, eventDateEnd)
-                //this.call_api_meteo(User.profile.id,this.coords.lat,this.coords.lng)
 
-                this.toggleAddEvent = true
-                this.toggleAllEvent = false
-                this.toggleAllEvent = false
-                this.modifying = false
-                this.event = {
-                    fromDate:new Date(),
-                    toDate:new Date(),
-                    title:undefined,
-                    description:undefined,
-                    address:undefined,
-                    meteo:'',
-                    itinerary:''
-                }
-                this.update_bdd_agenda(User.profile.id, this.calendar)
-            },*/
             getData: function(){ //Récupere l'éditage de l'evenement, analyse les données, et push les événements si tout est OK dans calendar
                 this.toggleSeeEvent = false
                 if(this.event.fromDate !== undefined && this.fromTime !== undefined){
@@ -361,14 +275,8 @@
                 }
                 else{
                     this.toggleAddEvent = false
-                    if(!this.modifying)
+                    if(!this.modifying){
                         this.calendar.push(this.event)
-                    else
-                        this.calendar[this.index] = this.event
-                    if(this.modifying){
-                        this.toggleSeeEvent= true
-                    }
-                    else {
                         this.event= {
                             fromDate:undefined,
                             toDate:undefined,
@@ -380,14 +288,15 @@
                         }
                         this.toggleAllEvent= true
                     }
+                    else{
+                        this.calendar[this.index] = this.event
+                        this.call_api_pos(User.profile.id,this.event.address,this.event.fromDate,this.event.toDate)
+                        this.toggleSeeEvent= true
+                    }
                     this.error = ''
                     this.modifying= false
-                    //this.call_api_pos(User.profile.id,this.event.fromDate,this.event.toDate)
                     this.calendarInBDD['data'] = this.calendar
-                    //console.log("this.calendarInBDD ->")
-                    //console.log(this.calendarInBDD)
                     this.update_bdd_agenda(User.profile.id, this.calendar)
-                    //this.toggleAllEvent= true
                 }
 
             },
@@ -398,6 +307,7 @@
                 this.modifying = true;
                 this.meteoIndex = []
                 this.event = this.calendar[i]
+
             },
             seeEvent: function (i) { //Affiche les infos de l'evenement
                 this.toggleMoreInfo = false
@@ -413,10 +323,6 @@
 
                 this.departure = new Date(this.event.fromDate.getTime()-this.event.itinerary.total_time*1000)
                 if(!this.event.itinerary)
-
-                    console.log("\nthis.event.toDate avant this.call_api_pos=")
-                    console.log(this.event.toDate)
-                    //eventAdress,eventDateBegin, eventDateEnd
                     this.call_api_pos(User.profile.id,this.event.address,this.event.fromDate,this.event.toDate)
                 this.index = i
             },
@@ -473,6 +379,13 @@
             getURLItinerary: function () { //renvoie à l'itineraire Google Map
                 return `https://www.google.fr/maps/dir/${this.ourLocation.lat},${this.ourLocation.lon}/${this.coords.lat},${this.coords.lng}/`
             },
+            deleteEvent : function (i) {
+                this.calendar.splice(i,1)
+                this.toggleAddEvent = false;
+                this.toggleSeeEvent = false;
+                this.toggleAllEvent = true;
+                this.update_bdd_agenda(User.profile.id, this.calendar)
+            }
         },
         mounted() {
             this.getLocation()
