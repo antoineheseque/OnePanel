@@ -66,8 +66,6 @@
         },
         mounted(){
             if(Widgets.widgets.length === 0){
-                console.log("EGAL A 0")
-
                 fetch("/api/user/loadWidgets", {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },
@@ -77,7 +75,6 @@
                 }).then(function (data) {
                     if(data.success == "true") {
                         this.widgetList = JSON.parse(data.widgets)
-                        console.log(widgets)
                     }else{
                         this.notify('danger', data.reason)
                     }

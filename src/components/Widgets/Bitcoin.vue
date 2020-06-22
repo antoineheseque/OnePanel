@@ -90,7 +90,6 @@
                 return res.json()
             }).then(function (data) {
                 bitcoin.content = JSON.parse(data.values)
-                //console.log(bitcoin.content)
                 this.initData(0);
             }.bind(this))
         },
