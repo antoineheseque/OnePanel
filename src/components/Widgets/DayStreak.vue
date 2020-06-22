@@ -14,9 +14,7 @@
         name: "DayStreak",
         data() {
             return {
-                //dateInBDD: '', //Dernière date de connexion de l'utilisateur
                 counter: '0', //Counter actuel de l'utilisateur
-                //date_actuelle: ''
             }
         },
         methods:{

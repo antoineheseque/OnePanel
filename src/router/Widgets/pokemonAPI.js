@@ -11,7 +11,6 @@ const jwt = require("jsonwebtoken")
 router.post("/getPokemon", (req, res) => {
 
     let token = req.body.token
-    //let time_Data = req.body.timeData
 
     // Vérification de l'utilisateur
     jwt.verify(token, process.env.SECRET_JWT, function (err, decoded) {
@@ -27,13 +26,13 @@ router.post("/getPokemon", (req, res) => {
 
                 if (result[0] === undefined) { // BDD VIDE
 
+
                     var request3 = "INSERT INTO \`Pokemon\` (userID) VALUE (?)"
                     var completeRequest3 = mysql.format(request3, [decoded.id]);
                     sql.request(completeRequest3).then(function (result) {
+
                         var date =new Date();
                         (date).setDate((date).getDate()-1)
-
-
 
                         var request2 = "UPDATE \`Pokemon\` SET date_pokemon=?  WHERE userID=?"
                         var completeRequest2 = mysql.format(request2, [date, decoded.id]);
@@ -48,6 +47,7 @@ router.post("/getPokemon", (req, res) => {
                     var request4 = "SELECT pokemon_catch,date_pokemon FROM \`Pokemon\` WHERE userID=?"
                     var completeRequest4 = mysql.format(request4, [decoded.id]);
                     sql.request(completeRequest4).then(function (result) {
+
                         res.json({"pokemoncatch": result})
                     })
 
@@ -66,6 +66,7 @@ router.post("/getPokemon2", (req, res) => {
     let pokemon_catch = JSON.stringify(req.body.PokemonCatch)
     let date_poke = new Date(req.body.lastUpdate)
 
+
     // Vérification de l'utilisateur
     jwt.verify(token, process.env.SECRET_JWT, function (err, decoded) {
         if (decoded === undefined) // UTILISATEUR INVALIDE
@@ -77,6 +78,7 @@ router.post("/getPokemon2", (req, res) => {
             var request = "SELECT pokemon_catch FROM \`Pokemon\` WHERE userID=?"
             var completeRequest = mysql.format(request, [decoded.id]);
             sql.request(completeRequest).then(function (result) {
+
                 if (result.length > 0) { // BDD NON VIDE
 
                     var request2 = "UPDATE \`Pokemon\` SET pokemon_catch=?, date_pokemon=?  WHERE userID=?"

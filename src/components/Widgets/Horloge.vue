@@ -52,12 +52,16 @@
                         return res.json()
                     }).then(function (data) {
                         var timeZoneConv=parseFloat(data.horloge.annotations.timezone.offset_string.slice(0,3))
+
                         var objectCity={name:data.horloge.formatted ,timeZone: timeZoneConv}
+
                         this.timeData.push(objectCity)
                         this.time = new Array(this.time.length+1)
                         this.newHours=false
                         this.getTime()
                         this.city = ''
+
+
                         this.update_bdd_horloge(User.profile.id,this.timeData)
                     }.bind(this))
                 },
@@ -72,6 +76,7 @@
                         return res.json()
                     }).then(function (data){
                         const message = data.message
+
                     }.bind(this))
                 },
 
@@ -85,6 +90,8 @@
                     }).then(function (res) {
                         return res.json()
                     }).then(function (data) {
+
+
                         if(data.timedata !== undefined){
                             this.timeData = JSON.parse(data.timedata[0].horloge_ville)
                             this.getTime()
@@ -116,6 +123,7 @@
                 },
 
                 deleteItem : function (i) { //Supprimer une heure avec son ID
+
                     this.timeData.splice(i,1)
                     this.time.splice(i,1)
                     this.toggleDelete = false

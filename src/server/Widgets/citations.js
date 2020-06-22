@@ -18,6 +18,7 @@ function createCitation(){
         sql.request(completeRequest);
 
     }).catch(function(err){
+        console.log(err)
     })
 }
 

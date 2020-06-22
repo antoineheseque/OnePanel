@@ -18,7 +18,8 @@ function getNewsAPI(){
         var request = "UPDATE \`dayNews\` SET News=? WHERE id=1"
         var completeRequest = mysql.format(request, [news]);
         sql.request(completeRequest);
-    }).catch(function(result){
+    }).catch(function(err){
+        console.log(err);
     })
 }
 

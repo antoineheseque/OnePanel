@@ -22,7 +22,7 @@ router.post("/getDayStreak", (req, res) => {
             var request = "SELECT * from \`dayStreak\` WHERE userID=? LIMIT 1"
             var query = mysql.format(request, [decoded.id]);
             sql.request(query).then(function (result) {
-                //console.log(result)
+
                 if(result.length > 0){
                     // Utilisateur existant, on compare les dates
                     var userData = result[0]
@@ -55,7 +55,6 @@ router.post("/getDayStreak", (req, res) => {
                     request = "INSERT INTO \`dayStreak\` (userID,lastDate, counter) VALUES (?,CURRENT_TIMESTAMP,0)"
                     query = mysql.format(request, [decoded.id]);
                     sql.request(query).then(function (result2) {
-                        //console.log("success")
                         res.json({"daystreak":0})
                     })
                 }

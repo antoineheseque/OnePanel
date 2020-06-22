@@ -13,7 +13,6 @@ const bitcoin = require('./Widgets/bitcoin')
 function refreshAPI(){
     // On Récupère tout les widgets
     getWidgets().then((res) => {
-        console.log(res)
         for(let id in res){
             let widget = res[id]
 

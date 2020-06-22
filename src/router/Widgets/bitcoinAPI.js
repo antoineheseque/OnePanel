@@ -10,7 +10,6 @@ router.post("/getData", (req, res)=>{
     let values = []
     sql.request(`SELECT * from \`bitcoin\` ORDER BY date DESC LIMIT 90`).then(function(result){
         let data = result
-        //console.log(data)
 
         let numbers = []
         let labels = []
@@ -29,7 +28,7 @@ router.post("/getData", (req, res)=>{
             "data":[...numbers].reverse(),
             "labels":[...labels].reverse()
         }
-        //console.log(value)
+
         values.push(value)
 
         // BLOC 30 JOURS

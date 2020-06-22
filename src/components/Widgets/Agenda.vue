@@ -169,6 +169,9 @@
                         this.event.meteo = data.mete.daily;
                     }.bind(this))
                 }
+                else{
+                    console.log("erreur call_api_meteo")
+                }
             },
 
             call_api_Itinerary: function(id,coordslat, coordslng, ourLocationlat, ourLocationlon){ // BALANCE L'INITENAIRE

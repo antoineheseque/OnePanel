@@ -18,10 +18,12 @@ function addBitcoinDay(){
             let completeRequest = mysql.format(request, [date, content.values[0].y]);
             sql.request(completeRequest).then((res) => {
             }).catch((err) => {
+                console.log(err)
             });
         }
 
     }).catch(function(err){
+        console.log(err)
     })
 }
 

@@ -1,7 +1,6 @@
 var express = require('express')
 var router = express.Router()
 const sql = require('../../server/bdd')
-const axios = require('axios');
 
 ///////////////////////////////////////////////////
 // CLIENT -> SERVEUR
