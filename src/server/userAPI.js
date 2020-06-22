@@ -9,22 +9,58 @@ const multer = require("multer")
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log(__dirname + "/../../public/img/profiles/")
         cb(null, __dirname + "/../../public/img/profiles/");
     },
     filename: (req, file, cb) => {
         let extension = file.originalname.match(/\.(gif|jpe?g|tiff|png|webp|bmp)$/i);
-        cb(null, req.userID + extension[0])
+        let fileName = req.body.newFileName + extension[0]
+        req.body.fileName = fileName
+        cb(null, fileName)
     }
 })
 var upload = multer({storage:storage,
     fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-            cb(null, true);
-        } else {
-            cb(null, false);
-            return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
-        }
+        let token = req.body.token
+
+        // ON REGARDE SI TOKEN VALIDE ET ON RECUPERE ID UTILISATEUR
+        jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
+            if (decoded !== undefined) // Utilisateur valide
+            {
+                let id = decoded.id
+                console.log(id)
+
+                let extension = file.originalname.match(/\.(gif|jpe?g|tiff|png|webp|bmp)$/i);
+
+
+                if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+
+                    bcrypt.genSalt(10, function(err, salt) { // ON GENERE UN NOM DE FICHIER HASH ( SECURISE )
+                        bcrypt.hash("image"+id, salt, function(err, hash) {
+                            let key = hash+"_img"
+                            key = key.replace(/\//g, "-")
+                            req.body.newFileName = key
+
+                            var request = "UPDATE \`users\` SET profilePicture=? WHERE id=?"
+                            var completeRequest = mysql.format(request, [key+extension[0],id]);
+                            sql.request(completeRequest).then(function (result) {// ENVOI DE L'UTILISATEUR DANS L'HISTORIQUE LOGIN
+                                if (result.affectedRows === 1) {
+                                    cb(null, true);
+                                }
+                            }).catch((err) => {
+                                console.log(err)
+                                cb(null, false);
+                                return cb(new Error('Erreur dans la base de donnée'));
+                            });
+                        });
+                    });
+
+
+                } else {
+                    cb(null, false);
+                    return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
+                }
+            }
+        });
     }
 }).single('image');
 
@@ -393,27 +429,28 @@ router.post("/removeWidget", (req, res) => {
 });
 
 router.post("/updateImg", upload,(req, res) => {
-    console.log("FINITO")
-    console.log(req.body)
-    //let token = req.body
-    /*
+    console.log(req.body.fileName)
+    res.send({"fileName":req.body.fileName})
+});
+
+router.post("/removeImg", upload,(req, res) => {
+    let token = req.body.token
+
     jwt.verify(token, process.env.SECRET_JWT, function(err, decoded) {
-        if(decoded === undefined)
-            console.log("error")
-        else {
-            // Token valide, on accepte l'image
-            let nameID = decoded.id
-            console.log("NOM DE LA PERSONNE " + nameID)
-            upload(req2, res2, function(err){
-                if(err){
-                    console.log("Ya eu un prblm:: " + err)
-                }
-                else{
-                    console.log("SUCCESSSSSSSSSSSS")
-                }
-            })
+        if (decoded === undefined) // Utilisateur valide
+        {
+            res.json({"success":"false", "reason":"Token non valide, veuillez vous reconnecter"})
+        } else {
+            var request = "UPDATE `users` SET profilePicture=NULL WHERE id=?"
+            var completeRequest = mysql.format(request, [decoded.id]);
+            sql.request(completeRequest).then((result) => {
+                res.json({"success":"true"})
+            }).catch((err) => {
+                console.log(err)
+                res.json({"success":"false", "reason":"Problème dans la base de donnée: " + err})
+            });
         }
-    });*/
+    });
 });
 
 module.exports = router

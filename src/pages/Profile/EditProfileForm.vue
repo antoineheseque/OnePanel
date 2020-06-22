@@ -43,9 +43,16 @@
                             v-model="passwordConfirmation">
                 </base-input>
             </div>
+            <div class="col-md-6">
+                <div class="form-group datepicker-div">
+                    <label class="control-label">Envoyer une photo de profil</label>
+                    <base-input type="file" class="form-control" @change="selectedImg" :label="imageName == '' ? 'Sélectionner' : imageName">
+                    </base-input>
+                    <base-button class="btn btn-sm" @click="removeProfilePicture" :loading="isUpdatingProfile" :disabled="isUpdatingProfile">Supprimer</base-button>
+                    <base-button class="float-right btn btn-sm" @click="uploadImg" :loading="isUpdatingProfile" :disabled="isUpdatingProfile">Envoyer</base-button>
+                </div>
+            </div>
         </div>
-        <input type="file" @change="selectedImg">
-        <button @click="uploadImg">Upload</button>
         <base-button type="primary"  v-on:click="onClickEditProfile" :loading="isUpdatingProfile" :disabled="isUpdatingProfile" fill>Mettre à jour mon profil</base-button>
     </card>
 </template>
@@ -65,7 +72,8 @@
                 isUpdatingProfile:false,
                 profile:"",
                 fr:fr_datepicker,
-                selectedImgData: null
+                selectedImgData: null,
+                imageName:""
             }
         },
         mounted:function(){
@@ -101,18 +109,45 @@
             },
             selectedImg : function (event) {
                 this.selectedImgData = event.target.files[0]
+                this.imageName = this.selectedImgData.name.toString()
+            },
+            removeProfilePicture : function () {
+                this.isUpdatingProfile = true
+
+                fetch('/api/user/removeImg', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({"token":User.getToken()})
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (result) {
+                    this.isUpdatingProfile = false
+
+                    if(result.success == "true"){ // Si l'utilisateur à pu être connecté
+                        this.profile.profilePicture = null
+                        this.notify('info', `L'image a bien été supprimée`)
+                    }
+                    else{
+                        this.notify('danger', result.reason)
+                    }
+                }.bind(this))
             },
             uploadImg : function () {
+                this.isUpdatingProfile = true
                 var formData = new FormData()
-                formData.append("image", this.selectedImgData)
                 formData.append("token", User.getToken().toString())
+                formData.append("image", this.selectedImgData)
                 fetch('/api/user/updateImg', {
                     method: 'POST',
                     body: formData,
                 }).then(function (res) {
                     return res.json();
                 }).then(function (result) {
-                    console.log(result)
+                    this.profile.profilePicture = result.fileName
+                    this.isUpdatingProfile = false
+                    this.notify('info', `L'image a bien été changée`)
                 }.bind(this))
 
                 /*const fd = new FormData()

@@ -38,9 +38,7 @@ export default {
             lastName: '',
             birthdayDate: '',
             registerDate: '',
-            address: '',
-            city: '',
-            country: ''
+            profilePicture:''
     },
     isConnected: async function(){
         const token = getCookie('token')
