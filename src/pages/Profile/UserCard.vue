@@ -8,7 +8,7 @@
       <div class="block block-three"></div>
       <div class="block block-four"></div>
 
-      <img class="avatar" src="img/default-avatar.png" alt="...">
+      <img class="avatar" :src="image" alt="...">
       <h5 class="title">{{profile.firstName + " " + profile.lastName}}</h5>
       <h5 class="description">{{profile.username}}</h5>
     </div>
@@ -27,6 +27,15 @@
           return {};
         }
       }
+    },
+    data(){
+      return{
+        image:"img/profile.jpg"
+      }
+    },
+    mounted() {
+      if(profile.profilePicture != NULL)
+        this.image = "img/profiles/" + profile.profilePicture
     }
   }
 </script>

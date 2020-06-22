@@ -101,17 +101,27 @@
             },
             selectedImg : function (event) {
                 this.selectedImgData = event.target.files[0]
-                console.log(this.selectedImgData)
             },
             uploadImg : function () {
-                const fd = new FormData()
+                var formData = new FormData()
+                formData.append("image", this.selectedImgData)
+                formData.append("token", User.getToken().toString())
+                fetch('/api/user/updateImg', {
+                    method: 'POST',
+                    body: formData,
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (result) {
+                    console.log(result)
+                }.bind(this))
+
+                /*const fd = new FormData()
                 fd.append('avatar', this.selectedImgData, this.selectedImgData.name)
                 fd.append("token", User.getToken())
                 axios.post('/api/user/updateImg', fd)
                     .then(res => {
                         console.log(res)
-                    })
-
+                    })*/
             }
         }
     }
