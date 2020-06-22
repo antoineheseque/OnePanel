@@ -40,6 +40,8 @@
 
 <script>
     import pokemon from "../../assets/json/pokemonName.json";
+    import User from '@/user';
+
     export default {
         name: "Poke",
         data(){
@@ -52,10 +54,97 @@
                 toggleNewPokemon:true,
                 namePokemon: pokemon,
                 pokemonOfTheDay: {},
-                lastUpdate: new Date(2020,5,8)
+                lastUpdate: ''
             }
         },
         methods:{
+            call_pokemonCatch: function(id){ //REGARDE SI L'UTILISATEUR AVAIT DEJA UN TIMEDATA DANS LA BDD
+                fetch('/api/widget/pokemon/getPokemon', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({"id":id,"token":User.getToken()})
+                }).then(function (res) {
+                    return res.json()
+                }).then(function (data) {
+                    console.log("\ndata=")
+                    console.log(data)
+
+                    this.lastUpdate=data.pokemoncatch[0].date_pokemon
+                    //console.log("\nthis.lastUpdate=")
+                    //console.log(this.lastUpdate)
+
+                    //console.log("\nthis.lastUpdate.slice(0,10)=")
+                    //console.log(this.lastUpdate.slice(0,10))
+
+                    //console.log("\n(new Date()).toISOString().slice(0,10)=")
+                    //console.log((new Date()).toISOString().slice(0,10))
+
+                    //console.log("\nthis.toggleNewPokemon = true")
+                    //console.log(this.toggleNewPokemon)
+
+                    if(this.lastUpdate.slice(0,10) === (new Date()).toISOString().slice(0,10)){
+                        this.toggleNewPokemon = false
+                        console.log("\nthis.toggleNewPokemon = false")
+                        console.log(this.toggleNewPokemon)
+
+                        console.log("\ndata.length=")
+                        console.log((data.pokemoncatch[0].pokemon_catch[0]).length)
+
+                        console.log("\ndata.pokemoncatch[0].pokemon_catch=")
+                        console.log(JSON.parse(data.pokemoncatch[0].pokemon_catch))
+
+                        var poke_parse =JSON.parse(data.pokemoncatch[0].pokemon_catch)
+                        var length = (poke_parse).length-1;
+
+
+                        var pokemon_day={
+                            id:0,
+                            name :poke_parse[length].name,
+                            img :poke_parse[length].img
+                        }
+
+                        this.pokemonOfTheDay = pokemon_day
+                        console.log("\npokemon_day=")
+                        console.log(pokemon_day)
+
+                        console.log("\nthis.pokemonOfTheDay.name")
+                        console.log(this.pokemonOfTheDay.name)
+
+                        console.log("\nthis.pokemonOfTheDay.img")
+                        console.log(this.pokemonOfTheDay.img)
+                    }
+
+                    console.log("\nthis.toggleNewPokemon_apres=")
+                    console.log(this.toggleNewPokemon)
+
+                    if(data.pokemoncatch !== undefined){
+                        this.pokemonCatch = JSON.parse(data.pokemoncatch[0].pokemon_catch)
+                        console.log("\ndata.pokemoncatch[0].pokemon_catch=")
+                        console.log(this.pokemonCatch)
+
+                        /*if(this.lastUpdate.slice(0,10) === (new Date()).toISOString().slice(0,10)){
+                             this.toggleNewPokemon = false
+                        }*/
+
+                    }
+                }.bind(this))
+            },
+            update_bdd_pokemon: function(id,PokemonCatch,lastUpdate){ //PERMET DE SOIT UPDATE SA BDD, SOIT INSERER SON TIMEDATA DANS LA BDD
+                fetch('/api/widget/pokemon/getPokemon2', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({"id":id,"token":User.getToken(),"PokemonCatch":PokemonCatch, "lastUpdate":lastUpdate})
+                }).then(function (res) {
+                    return res.json()
+                }).then(function (data){
+                    const message = data.message
+                    console.log(message)
+                }.bind(this))
+            },
             randomPokeid: function(){ //Récupère un id aléatoire en 0 et 151
                 return (Math.floor(Math.random()*151))
             },
@@ -85,6 +174,13 @@
                     }
                 }
                 var id = this.randomPokeid();
+                /*if(this.toggleNewPokemon === false){
+                    console.log("\nthis.pokemonCatch.length:" )
+                    console.log(this.pokemonCatch.length)
+                    id=this.pokemonCatch[this.pokemonCatch.length].id
+                    console.log("\nid_toggleNewPokemon === false:" )
+                    console.log(id)
+                }*/
                 var pok =this.namePokemon.results[id].name
                 this.pokemonOfTheDay={id:id+1, name:pok,img:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+(id+1)+'.png'}
                 for(var j=this.pokemonCatch.length-1 ; j>0;j--){
@@ -107,14 +203,28 @@
                 this.toggleMenu=false
             },
             newPokemon : function () { //comparer la date du dernier ajout de pokemon
-                if(this.lastUpdate.toISOString().slice(0,10) != (new Date()).toISOString().slice(0,10)){
-                    this.lastUpdate= new Date()
+                //this.lastUpdate = new Date()
+                console.log("\nlastUpdate_newPokemon=")
+                console.log(this.lastUpdate)
+                if(this.lastUpdate.slice(0,10) !== (new Date()).toISOString().slice(0,10)){
+                    this.lastUpdate= (new Date()).toISOString()
                     this.pokemonCatch.push(this.pokemonOfTheDay)
                     this.toggleNewPokemon = false
+
+                    console.log("\nlastUpdate_newPokemon_apres_condition=")
+                    console.log(this.lastUpdate)
+                    this.update_bdd_pokemon(User.profile.id,this.pokemonCatch, this.lastUpdate)
+                }else{
+                    this.toggleNewPokemon = false
+                    //this.lastUpdate= (new Date()).toISOString().slice(0,10)
+                    //this.update_bdd_pokemon(User.profile.id,this.pokemonCatch, this.lastUpdate)
                 }
+                //update_bdd_pokemonCatch
+
             }
         },
         mounted(){
+            this.call_pokemonCatch(User.profile.id)
             this.getPokemon()
         },
         updated() {

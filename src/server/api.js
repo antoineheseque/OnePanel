@@ -10,6 +10,7 @@ const classementLigue1API = require('../router/Widgets/classementLigue1API')
 const bitcoinAPI = require('../router/Widgets/bitcoinAPI')
 const horlogeAPI = require('../router/Widgets/horlogeAPI')
 const agendaAPI = require('../router/Widgets/agendaAPI')
+const pokemonAPI = require('../router/Widgets/pokemonAPI')
 const crypto = require('crypto')
 
 module.exports = app => {
@@ -28,6 +29,7 @@ module.exports = app => {
     app.use('/api/widget/bitcoin', bitcoinAPI)
     app.use('/api/widget/horloge', horlogeAPI)
     app.use('/api/widget/agenda', agendaAPI)
+    app.use('/api/widget/pokemon', pokemonAPI)
 
     require('./dataRefresh');
 }
