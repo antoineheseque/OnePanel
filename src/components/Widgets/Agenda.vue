@@ -53,7 +53,7 @@
             <button class="btn btn-danger ml-4" @click="toggleMoreInfo = !toggleMoreInfo" v-if="toggleMoreInfo && event.itinerary">Moins d'info</button>
             <div>
                 <h5>Titre : {{event.title}}</h5>
-                <p><b>Du :</b> {{event.fromDate.toLocaleString('fr-FR', { timeZone: 'UTC' }).slice(0,14)}} → {{event.toDate.toLocaleString('fr-FR', { timeZone: 'UTC' })}} <template v-if="event.address">à {{event.address}}</template></p>
+                <p><b>Du :</b> {{event.fromDate.toLocaleString('fr-FR', { timeZone: 'UTC' })}} → {{event.toDate.toLocaleString('fr-FR', { timeZone: 'UTC' })}} <template v-if="event.address">à {{event.address}}</template></p>
                 <p><b>Description :</b> {{event.description}}</p>
                 <div v-if="toggleMoreInfo">
                     <div v-if="event.itinerary" class="itinerary">
@@ -83,7 +83,6 @@
     import fr_datepicker from "vuejs-datepicker/dist/locale/translations/fr"
     import VueTimepicker from 'vue2-timepicker'
     import 'vue2-timepicker/dist/VueTimepicker.css'
-    import axios from "axios";
     import User from '@/user';
 
     export default {

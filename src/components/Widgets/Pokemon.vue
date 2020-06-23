@@ -1,11 +1,11 @@
 <template>
     <div class="pokemon">
         <div class="mb-5">
-            <button class="btn btn-danger btn-sm" @click="updatePokedex">Pokedex</button>
-            <button class="btn btn-dark btn-sm" @click="seeMyPokemons">Boite de pokemon</button>
+            <button class="btn btn-danger" @click="updatePokedex">Pokedex</button>
+            <button class="btn btn-dark" @click="seeMyPokemons">Boite de pokemon</button>
         </div>
         <div v-if="togglePokedex">
-            <button class="btn btn-success btn-sm" @click="goBack">Retour</button>
+            <button class="btn btn-success" @click="goBack">Retour</button>
             <div v-for="(pokedex, i) in pokedexCatch" :key="i" class="onePokemon">
                 <p>{{pokedex.id}}</p>
                 <p>{{pokedex.name}}</p>
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div v-if="togglePC">
-            <button class="btn btn-success btn-sm" @click="goBack">Retour</button>
+            <button class="btn btn-success" @click="goBack">Retour</button>
             <div class="test m-1">
                 <div v-for="(pokeCatch, i) in pokemonCatch" :key="i" class="onePokemon">
                     <table class="table">
@@ -33,7 +33,7 @@
             <p>{{pokemonOfTheDay.name}}</p>
             <img :src="pokemonOfTheDay.img" alt="pokeIcon" >
             <button class="btn btn-success" v-if="toggleNewPokemon" @click="newPokemon">Enregistrer</button>
-            <button class="btn btn-success" v-if="!toggleNewPokemon" disabled>Déjà enregistré</button>
+            <button class="btn btn-success" v-if="!toggleNewPokemon" disabled>Enregistrer</button>
         </div>
     </div>
 </template>
@@ -70,12 +70,13 @@
                 }).then(function (data) {
                     this.lastUpdate=data.pokemoncatch[0].date_pokemon
                     var pokemon_day = {}
+                    var ready = false
                     if(this.lastUpdate.slice(0,10) === (new Date()).toISOString().slice(0,10)){
                         this.toggleNewPokemon = false
 
                         var poke_parse =JSON.parse(data.pokemoncatch[0].pokemon_catch)
                         var length = (poke_parse).length-1;
-
+                        ready = true
                         pokemon_day={
                             id:0,
                             name :poke_parse[length].name,
@@ -83,13 +84,13 @@
                         }
                         this.pokemonOfTheDay = pokemon_day
                     }
-
-                    if(data.pokemoncatch !== undefined){
+                    if(JSON.parse(data.pokemoncatch[0].pokemon_catch).length){
                         this.pokemonCatch = JSON.parse(data.pokemoncatch[0].pokemon_catch)
                         this.getPokemon()
-                        this.pokemonOfTheDay = pokemon_day
+                        if(ready){
+                            this.pokemonOfTheDay = pokemon_day
+                        }
                     }
-                    this.ready = true
                 }.bind(this))
             },
             update_bdd_pokemon: function(id,PokemonCatch,lastUpdate){ //PERMET DE SOIT UPDATE SA BDD, SOIT INSERER SON TIMEDATA DANS LA BDD
@@ -172,7 +173,7 @@
 
 <style scoped>
     .icon{
-        width: 50px;
+        width: 40px;
         height: auto;
     }
 
