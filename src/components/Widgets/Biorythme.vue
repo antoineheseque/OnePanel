@@ -1,12 +1,13 @@
 <template>
     <div>
         <div v-if="haveBirthdayDate">
-            <line-chart
-                    :chart-data="purpleLineChart.chartData"
-                    :gradient-color="purpleLineChart.gradientColors"
-                    :gradient-stops="purpleLineChart.gradientStops"
-                    :extra-options="purpleLineChart.extraOptions"
-                    :height="150">
+            <line-chart ref="bigChart"
+                        chart-id="big-line-chart"
+                    :chart-data="chart.chartData"
+                    :gradient-color="chart.gradientColors"
+                    :gradient-stops="chart.gradientStops"
+                        :extra-options="chart.extraOptions"
+                    height="160%">
             </line-chart>
             <p class="text-center"> Vous vivez depuis {{getYearsInDays()}} jours</p>
         </div>
@@ -19,6 +20,7 @@
     import LineChart from '../Charts/LineChart.js'
     import User from '@/user';
     import config from "@/config";
+    import * as chartConfigs from "@/components/Charts/config";
 
     export default {
         name: "Biorythme",
@@ -33,57 +35,10 @@
                 physicalDataArray:[],
                 emotionalDataArray:[],
                 intellectualDataArray:[],
-                purpleLineChart: {
+                chart: {
                     gradientStops:[ 1, 0.4, 0 ],
                     gradientColors:	config.colors.primaryGradient,
-                    extraOptions: {
-                        maintainAspectRatio: true,
-                        legend: {
-                            display: false
-                        },
-                        responsive: true,
-                        tooltips: {
-                            backgroundColor: '#f5f5f5',
-                            titleFontColor: '#f5f5f5',
-                            bodyFontColor: '#f5f5f5',
-                            bodySpacing: 4,
-                            xPadding: 12,
-                            mode: "nearest",
-                            intersect: 0,
-                            position: "nearest"
-                        },
-                        scales: {
-                            yAxes: [{
-                                barPercentage: 0,
-                                gridLines: {
-                                    drawBorder: false,
-                                    color: '#f5f5f5',
-                                    zeroLineColor: "transparent",
-                                },
-                                ticks: {
-                                    suggestedMin: 50,
-                                    suggestedMax: 110,
-                                    padding: 0,
-                                    fontColor: "#ff8a76"
-                                }
-                            }],
-
-                            xAxes: [{
-                                barPercentage: 1.6,
-                                gridLines: {
-                                    drawBorder: false,
-                                    color: 'rgba(220,53,69,0.1)',
-                                    zeroLineColor: "transparent",
-                                },
-                                ticks: {
-                                    padding: 20,
-                                    fontColor: "#ff8a76"
-                                }
-                            }]
-                        }
-
-
-                    },
+                    extraOptions: chartConfigs.purpleChartOptions,
                     chartData: {
                         labels: [],
                         datasets: [{
@@ -118,7 +73,7 @@
                         this.intellectualDataArray.push((this.getIntellectualState((this.getYearsInDays()+i))*100).toFixed(2))
                         this.dateArray.push(this.getDateWithDays(date.getTime()+i*86400000))
                     }
-                    this.purpleLineChart.chartData = {
+                    this.chart.chartData = {
                         labels: this.dateArray,
                         datasets: [{
                             label: "Forme physique",
@@ -130,9 +85,9 @@
                             pointBackgroundColor: '#d048b6',
                             pointBorderColor: 'rgba(255,255,255,0)',
                             pointHoverBackgroundColor: '#d048b6',
-                            pointBorderWidth: 20,
-                            pointHoverRadius: 4,
-                            pointHoverBorderWidth: 15,
+                            pointBorderWidth: 6,
+                            pointHoverRadius: 8,
+                            pointHoverBorderWidth: 6,
                             pointRadius: 4,
                             data: this.physicalDataArray,
                         },
@@ -146,9 +101,9 @@
                                 pointBackgroundColor: '#f8ec15',
                                 pointBorderColor: 'rgba(255,255,255,0)',
                                 pointHoverBackgroundColor: '#f8ec15',
-                                pointBorderWidth: 20,
-                                pointHoverRadius: 4,
-                                pointHoverBorderWidth: 15,
+                                pointBorderWidth: 6,
+                                pointHoverRadius: 8,
+                                pointHoverBorderWidth: 6,
                                 pointRadius: 4,
                                 data: this.emotionalDataArray,
                             },
@@ -162,9 +117,9 @@
                                 pointBackgroundColor: '#26c151',
                                 pointBorderColor: 'rgba(57,177,31,0)',
                                 pointHoverBackgroundColor: '#26c151',
-                                pointBorderWidth: 20,
-                                pointHoverRadius: 4,
-                                pointHoverBorderWidth: 15,
+                                pointBorderWidth: 6,
+                                pointHoverRadius: 8,
+                                pointHoverBorderWidth: 6,
                                 pointRadius: 4,
                                 data: this.intellectualDataArray,
                             }]

@@ -2,7 +2,7 @@ div.vdp-datepicker.form-control {
   padding: 0;
 }
 
-.vdp-datepicker input{
+.vdp-datepicker input, .time-picker input{
   width: 100%;
   min-height: 100%;
   background-color: transparent !important;
@@ -10,12 +10,13 @@ div.vdp-datepicker.form-control {
   color: rgba(255, 255, 255, 0.8) !important;
   padding: 0.5rem 0.7rem;
 }
+
 .vdp-datepicker input:focus{
   outline-width: 0px;
   outline-offset: 0px;
 }
 
-.vdp-datepicker__calendar{
+.vdp-datepicker__calendar, .vue__time-picker .time-picker .timepicker{
   color: #F1FAEE !important;
   background-color: #192D4F !important;
   border: 1px solid #192D4F !important;

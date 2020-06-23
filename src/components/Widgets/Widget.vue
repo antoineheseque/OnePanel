@@ -3,7 +3,7 @@
         <div class="card" :class="[type && `card-${type}`]">
             <div class="card-header">
                 <slot name="title" class="header">
-                    <h5 class="title d-inline" v-if="weatherInformations && widget.id==='meteo'">{{widget.name + " de " + weatherInformations}}</h5>
+                    <h5 class="title d-inline" v-if="weatherInformations && widget.id==='weather'">{{widget.name + " de " + weatherInformations}}</h5>
                     <h5 class="title d-inline" v-else-if="horoscopeInformations && widget.id==='horoscope'">{{widget.name + " " + horoscopeInformations}}</h5>
                     <h5 class="title d-inline" v-else>{{widget.name}}</h5>
 

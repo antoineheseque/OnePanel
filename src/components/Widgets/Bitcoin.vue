@@ -33,6 +33,7 @@
     import LineChart from '../Charts/LineChart.js'
     import * as chartConfigs from "@/components/Charts/config";
     import config from "@/config";
+
     export default {
         name: "bitcoin",
         components:{
