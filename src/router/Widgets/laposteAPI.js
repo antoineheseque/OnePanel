@@ -25,7 +25,6 @@ router.post("/getData", (req, res) => {
 
         // Remplir avec le return message
         for(let idx in data) {
-            console.log(idx)
             if (result.data[idx].returnCode == 400 || result.data[idx].returnCode == 104) {
                 data[idx].name = data[idx].id
                 data[idx].status = "Le numéro de colis n'a pas été trouvé, veuillez le supprimer."

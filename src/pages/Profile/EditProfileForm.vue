@@ -84,8 +84,6 @@
                 this.isUpdatingProfile = true
                 this.profile.password = this.passwordConfirmation
                 User.onClickEditProfile(this.profile).then((result) =>{
-                    console.log(result)
-
                     if(result.updated === true){ // Si l'utilisateur à pu être connecté
                         this.notify('info', `Les données ont été sauvegardées.`)
                     }
@@ -149,14 +147,6 @@
                     this.isUpdatingProfile = false
                     this.notify('info', `L'image a bien été changée`)
                 }.bind(this))
-
-                /*const fd = new FormData()
-                fd.append('avatar', this.selectedImgData, this.selectedImgData.name)
-                fd.append("token", User.getToken())
-                axios.post('/api/user/updateImg', fd)
-                    .then(res => {
-                        console.log(res)
-                    })*/
             }
         }
     }

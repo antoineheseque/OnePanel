@@ -30,15 +30,6 @@
             }
         },
         methods: {
-            call: function() {
-                fetch("/api/widgets/poste", {
-                    method: "GET"
-                }).then(function (res) {
-                    return res.json()
-                }).then(function (data) {
-                    console.log(data)
-                })
-            },
             onClickRemove: function(widgetID){
                 fetch("/api/user/removeWidget", {
                     method: "POST",
